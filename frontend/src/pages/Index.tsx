@@ -12,6 +12,7 @@ import { Loader2, RefreshCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import clsx from "clsx";
 import { CompanionCharacter } from "@/components/PetFrog";
+import { AppLogo } from "@/components/AppLogo";
 
 interface IndexProps {
   onTriggerFrog?: (urgency: 'calm' | 'snark' | 'disappointed' | 'intervention' | 'done', message: string) => void;
@@ -146,9 +147,9 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex items-start justify-between mb-8">
-          <div className="text-center flex-1">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent flex items-center justify-center gap-3">
-              <Calendar className="h-8 w-8 text-primary" />
+          <div className="text-center flex-1 space-y-4">
+            <AppLogo />
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
               Deadline Shamer Dashboard
             </h1>
             <p className="text-muted-foreground text-lg mt-2">
