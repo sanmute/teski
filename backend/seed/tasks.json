@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hw_linear_algebra_2",
+    "source": "mock",
+    "title": "Linear Algebra HW 2",
+    "course": "MATH-201",
+    "due_iso": "2025-09-16T15:00:00Z",
+    "status": "open",
+    "confidence": 0.95,
+    "notes": "Submit as PDF"
+  },
+  {
+    "id": "essay_draft",
+    "source": "mock",
+    "title": "Essay Draft: Systems Thinking",
+    "course": "ENG-140",
+    "due_iso": "2025-09-18T12:00:00Z",
+    "status": "open",
+    "confidence": 0.9,
+    "notes": "1500 words"
+  },
+  {
+    "id": "lab_report_3",
+    "source": "mock",
+    "title": "Lab Report 3: Dynamics",
+    "course": "ME-220",
+    "due_iso": "2025-09-15T20:00:00Z",
+    "status": "overdue",
+    "confidence": 0.9,
+    "notes": "Include plots"
+  },
+  {
+    "id": "quiz_prep",
+    "source": "mock",
+    "title": "Quiz Prep: Probability",
+    "course": "STAT-110",
+    "due_iso": "2025-09-21T08:00:00Z",
+    "status": "open",
+    "confidence": 0.8,
+    "notes": "Review Bayes"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "name": "Teski – Deadline Shamer",
+  "short_name": "Teski",
+  "description": "Keep your study deadlines on track with Teski the deadline frog.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/teski-frog.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/teski-frog.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ]
+}
