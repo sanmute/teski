@@ -136,3 +136,14 @@ These steps give a repeatable local storyline you can narrate while screensharin
 - Document any institution-specific integrations in `docs/` (create if needed) to share with collaborators.
 
 Happy studying with Teski!
+
+
+
+© 2025 Santeri Mutanen/Teski Team. All Rights Reserved.
+
+This project, including its code, design, documentation, and related assets (“Teski”), is the intellectual property of the project authors.
+	•	You may view and use the code for personal, educational, or evaluation purposes.
+	•	You may not copy, modify, distribute, sublicense, or use any part of this project, in whole or in part, for commercial or non-commercial purposes without prior written consent from the authors.
+	•	Unauthorized use, reproduction, or distribution of this project is strictly prohibited and may result in legal action.
+
+If you wish to collaborate, contribute, or license this project, please contact the authors directly through semutanen@gmail.com.
