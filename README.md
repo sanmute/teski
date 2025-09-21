@@ -88,6 +88,24 @@ Makefile        Common setup/build/dev commands
   ```
   Uses a background process group to boot both servers (Ctrl+C stops both).
 
+### Text-Based Demo Walkthrough
+Follow this guided flow if you need to provide judges a quick demo without deploying anywhere:
+
+1. **Start both services** with `make dev` (see above). Wait until Vite reports the dev URL and Uvicorn logs `Application startup complete`.
+2. **Visit the dashboard** at http://localhost:5173. The header should show Teski’s frog logo with the “Deadline Shamer Dashboard” title.
+3. **Load sample tasks**:
+   - If you want real data, click “Import ICS Calendar” and choose an `.ics` file.
+   - Otherwise, enable demo mode from the “Settings” side panel (or leave it on by default if you never imported data). You’ll see example tasks such as “Linear Algebra HW 2” and “Mechanical Engineering Lab Report”.
+4. **Trigger reminders** by clicking the ✅ action on a task; the toast confirms the update and the task moves to the completed section. Use the “Undo” button on any completed task to bring it back.
+5. **Show backend capability** (optional): run this curl command to seed mock data through the API while the server is running:
+   ```bash
+   curl -X POST http://localhost:8000/api/tasks/mock-load
+   ```
+   The response reports how many tasks were inserted; refresh the dashboard to see them.
+6. **Highlight integrations** by navigating to the Moodle import card and pointing out the upload flow, or open DevTools → Application → Service Workers to show the registered `service-worker.js`.
+
+These steps give a repeatable local storyline you can narrate while screensharing. Include them in your submission notes if hosts need instructions on how to reproduce the demo.
+
 ## Building for Production
 - **Frontend bundle:** `cd frontend && npm run build`
 - **Compile backend bytecode (optional):** `python -m compileall backend`
