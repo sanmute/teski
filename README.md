@@ -88,8 +88,7 @@ Makefile        Common setup/build/dev commands
   ```
   Uses a background process group to boot both servers (Ctrl+C stops both).
 
-### Text-Based Demo Walkthrough
-Follow this guided flow if you need to provide judges a quick demo without deploying anywhere:
+### Demo Walkthrough
 
 1. **Start both services** with `make dev` (see above). Wait until Vite reports the dev URL and Uvicorn logs `Application startup complete`.
 2. **Visit the dashboard** at http://localhost:5173. The header should show Teski’s frog logo with the “Deadline Shamer Dashboard” title.
