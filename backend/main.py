@@ -55,6 +55,12 @@ app.include_router(topics_route.router)
 from .routes import push as push_route
 app.include_router(push_route.router)
 
+# >>> LEADERBOARD START MAIN ROUTER
+from .routes import leaderboard as leaderboard_route
+
+app.include_router(leaderboard_route.router)
+# >>> LEADERBOARD END MAIN ROUTER
+
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
 

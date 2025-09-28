@@ -117,6 +117,7 @@ def init_db():
         from .models import Task, Reminder
         from .models_studypack import StudyPack
         from .models_integrations import MoodleFeed
+        from .models_leaderboard import Leaderboard, LeaderboardMember, PointsEvent, WeeklyScore
         from .models_push import PushSubscription
         SQLModel.metadata.create_all(engine)
         print("[DB] ORM tables ensured (Task, Reminder, StudyPack)", file=sys.stderr)

@@ -5,6 +5,19 @@ from datetime import datetime
 from enum import Enum
 from .settings import DEFAULT_TIMEZONE
 
+
+# >>> LEADERBOARD START USER MODEL
+class User(SQLModel, table=True):
+    """Minimal user model used for leaderboard membership."""
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    email: str = Field(index=True, sa_column_kwargs={"unique": True})
+    display_name: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(DEFAULT_TIMEZONE))
+
+
+# >>> LEADERBOARD END USER MODEL
+
 # Define Enums for Source, Status, and Escalation
 class SourceEnum(str, Enum):
     gmail = "gmail"
