@@ -119,6 +119,10 @@ def init_db():
         from .models_integrations import MoodleFeed
         from .models_leaderboard import Leaderboard, LeaderboardMember, PointsEvent, WeeklyScore
         from .models_push import PushSubscription
+        # >>> DFE START
+        from .models_dfe import SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate
+        _ = (SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate)
+        # <<< DFE END
         SQLModel.metadata.create_all(engine)
         print("[DB] ORM tables ensured (Task, Reminder, StudyPack)", file=sys.stderr)
     except Exception as e:

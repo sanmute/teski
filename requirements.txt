@@ -8,3 +8,6 @@ ics==0.7.2
 httpx==0.27.2
 python-dotenv==1.0.1
 pywebpush==1.15.2
+# >>> DFE START
+Jinja2==3.1.4
+# <<< DFE END

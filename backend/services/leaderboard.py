@@ -30,6 +30,16 @@ from backend.utils.crypto import anon_handle
 from backend.utils.time import now_utc, to_week_key, start_end_of_week_iso
 
 
+# >>> LEADERBOARD START UTIL
+def _scalar(first_value):
+    if first_value is None:
+        return None
+    if isinstance(first_value, (tuple, list)):
+        return first_value[0] if first_value else None
+    return first_value
+# >>> LEADERBOARD END UTIL
+
+
 def _ensure_join_code(db: Session) -> str:
     for _ in range(5):
         code = generate_join_code()
@@ -212,7 +222,6 @@ def _member_summary(
         raise HTTPException(status_code=500, detail="User missing")
 
     year, number = week
-    weekly_points = 0
     weekly_points_row = db.exec(
         select(WeeklyScore.points).where(
             WeeklyScore.leaderboard_id == board.id,
@@ -221,7 +230,8 @@ def _member_summary(
             WeeklyScore.week_number == number,
         )
     ).first()
-    weekly_points = weekly_points_row[0] if weekly_points_row else 0
+    weekly_points_value = _scalar(weekly_points_row)
+    weekly_points = int(weekly_points_value or 0)
 
     total_points_row = db.exec(
         select(func.coalesce(func.sum(PointsEvent.points), 0)).where(
@@ -229,7 +239,8 @@ def _member_summary(
             PointsEvent.user_id == member.user_id,
         )
     ).first()
-    lifetime = int(total_points_row[0]) if total_points_row else 0
+    lifetime_value = _scalar(total_points_row)
+    lifetime = int(lifetime_value or 0)
 
     handle = anon_handle(user.id, user.email)
     display_name = user.display_name if member.display_consent and user.display_name else None

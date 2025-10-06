@@ -61,6 +61,12 @@ from .routes import leaderboard as leaderboard_route
 app.include_router(leaderboard_route.router)
 # >>> LEADERBOARD END MAIN ROUTER
 
+# >>> DFE START
+from .routes import dfe_tasks as dfe_tasks_route
+
+app.include_router(dfe_tasks_route.router)
+# <<< DFE END
+
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
 
