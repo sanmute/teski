@@ -1,6 +1,8 @@
 from __future__ import annotations
-from sqlmodel import SQLModel, Field
-from typing import Optional
+from sqlmodel import SQLModel, Field, UniqueConstraint
+from typing import Optional, Dict, Any
+from sqlalchemy import Column
+from sqlalchemy.types import JSON
 from datetime import datetime
 from enum import Enum
 from .settings import DEFAULT_TIMEZONE
@@ -17,6 +19,17 @@ class User(SQLModel, table=True):
 
 
 # >>> LEADERBOARD END USER MODEL
+
+# >>> PERSONA START
+class Persona(SQLModel, table=True):
+    __tablename__ = "personas"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    code: str = Field(index=True)
+    display_name: str
+    config: Dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    __table_args__ = (UniqueConstraint("code", name="uq_persona_code"),)
+# <<< PERSONA END
 
 # Define Enums for Source, Status, and Escalation
 class SourceEnum(str, Enum):

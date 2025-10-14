@@ -55,6 +55,12 @@ app.include_router(topics_route.router)
 from .routes import push as push_route
 app.include_router(push_route.router)
 
+# >>> PERSONA START
+from .routes import persona as persona_route
+
+app.include_router(persona_route.router)
+# <<< PERSONA END
+
 # >>> LEADERBOARD START MAIN ROUTER
 from .routes import leaderboard as leaderboard_route
 

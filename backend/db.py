@@ -149,3 +149,8 @@ def init_db():
 def get_session():
     with Session(engine) as session:
         yield session
+
+# >>> PERSONA START
+def get_engine():
+    return engine
+# <<< PERSONA END

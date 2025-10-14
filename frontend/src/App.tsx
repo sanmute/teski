@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import { PetFrog, CompanionCharacter } from "@/components/PetFrog";
+// >>> PERSONA START
+import PersonaPreviewPage from "./pages/PersonaPreview";
+// <<< PERSONA END
 
 const queryClient = new QueryClient();
 
@@ -52,6 +55,12 @@ const App = () => {
     setFrogState(prev => ({ ...prev, isVisible: false }));
   };
 
+  // >>> PERSONA START
+  const personaRoutes = (
+    <Route path="/personas/preview" element={<PersonaPreviewPage />} />
+  );
+  // <<< PERSONA END
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
@@ -70,6 +79,7 @@ const App = () => {
                   />
                 }
               />
+              {personaRoutes}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

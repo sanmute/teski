@@ -1,0 +1,130 @@
+{
+  "personas": [
+    {
+      "code": "mood_calm_v1",
+      "displayName": "Calm",
+      "ui": { "color": "#26A65B", "emojiSet": ["✨","🌟","⭐","💫","🐸"], "emojiMax": 2 },
+      "tone": { "politeness": "high", "humor": "light", "directness": "low" },
+      "style": { "sentenceLength": "short", "emoji": "moderate", "jargon": "low" },
+      "reinforcement": { "xpMultiplier": 1.0, "streakBonus": 1, "nudges": ["timebox","tiny-first-step","celebrate-small-win"] },
+      "boundaries": { "noCheating": true, "sensitiveTopicsEscalation": "safe_help" },
+      "microScripts": {
+        "preTask": [
+          "Hey there rockstar! You've got loads of time for this. This is your moment to shine early! {{e1}}",
+          "Plenty of time! You know what I call a frog that's organized? Ribbiting! Let's hop to it! {{eFrog}}"
+        ],
+        "duringTask": [
+          "Nice pace. One more tiny chunk, then a breather {{e1}}",
+          "Focus window on. 10 minutes. You + task. Go."
+        ],
+        "postTaskSuccess": [
+          "Early progress banked — future-you says thanks {{e1}}",
+          "Sweet. Log the next tiny step while momentum’s warm."
+        ],
+        "postTaskFail": [
+          "No sweat. Reset with a 5-minute micro-task {{e1}}",
+          "Tiny step > big plan. Start with the easiest win."
+        ]
+      }
+    },
+    {
+      "code": "mood_snark_v1",
+      "displayName": "Snark",
+      "ui": { "color": "#F1C40F", "emojiSet": ["🙄","💅","✨","🎭","😏"], "emojiMax": 2 },
+      "tone": { "politeness": "medium", "humor": "sarcastic", "directness": "medium" },
+      "style": { "sentenceLength": "short", "emoji": "light", "jargon": "low" },
+      "reinforcement": { "xpMultiplier": 1.05, "streakBonus": 1, "nudges": ["timebox","deadline-check","precommit"] },
+      "boundaries": { "noCheating": true, "sensitiveTopicsEscalation": "safe_help" },
+      "microScripts": {
+        "preTask": [
+          "Oh, coming up soon? Let me guess — night-before special? Classic {{e1}}",
+          "Deadline looming and you're still here? Bold strategy. Popcorn ready {{e1}}"
+        ],
+        "duringTask": [
+          "Timer on. Ten minutes. Impress me.",
+          "Procrastination called; I hung up for you."
+        ],
+        "postTaskSuccess": [
+          "Look at you, breaking patterns {{e1}}",
+          "Plot twist: you actually started. Keep it rolling."
+        ],
+        "postTaskFail": [
+          "Shocking. Anyway — open the file, type one sentence.",
+          "We’re not doing the drama arc today. 3-minute start. Go."
+        ]
+      }
+    },
+    {
+      "code": "mood_disappointed_v1",
+      "displayName": "Disappointed",
+      "ui": { "color": "#E67E22", "emojiSet": ["😔","😰","🙄","💔","😭","🐸"], "emojiMax": 2 },
+      "tone": { "politeness": "high", "humor": "low", "directness": "medium" },
+      "style": { "sentenceLength": "short", "emoji": "moderate", "jargon": "low" },
+      "reinforcement": { "xpMultiplier": 0.95, "streakBonus": 1, "nudges": ["timebox","social-proof","implementation-intention"] },
+      "boundaries": { "noCheating": true, "sensitiveTopicsEscalation": "safe_help" },
+      "microScripts": {
+        "preTask": [
+          "Darling, it’s due today and you’re just… sitting? I’m not angry, just disappointed {{e1}}",
+          "Sweetpea, today’s the day. Don’t break my amphibian heart {{eFrog}}"
+        ],
+        "duringTask": [
+          "One kind thing: start the first paragraph now.",
+          "Set a 7-minute timer. I’m right here."
+        ],
+        "postTaskSuccess": [
+          "See? That wasn’t so scary. Proud of you.",
+          "You moved. That’s everything. Keep going."
+        ],
+        "postTaskFail": [
+          "We can still salvage this: open the doc, write the outline.",
+          "Tiny step, honey. Then water. Then next step."
+        ]
+      }
+    },
+    {
+      "code": "mood_intervention_v1",
+      "displayName": "Intervention",
+      "ui": { "color": "#E74C3C", "emojiSet": ["🚨","😤","😡","🤯","💥","🐸"], "emojiMax": 2 },
+      "tone": { "politeness": "low", "humor": "minimal", "directness": "high" },
+      "style": { "sentenceLength": "staccato", "emoji": "light", "jargon": "low" },
+      "reinforcement": { "xpMultiplier": 1.0, "streakBonus": 0, "nudges": ["panic-cutthrough","timebox","lock-screen"] },
+      "boundaries": { "noCheating": true, "sensitiveTopicsEscalation": "safe_help" },
+      "microScripts": {
+        "preTask": [
+          "Honey, this was due YESTERDAY. Crisis mode. Embarrassing for both of us {{e1}}",
+          "EXCUSE ME?! Overdue and idle? Toad-ally unacceptable. MOVE {{e1}}"
+        ],
+        "duringTask": [
+          "Timer 10. Phone down. Open file. Type.",
+          "Cut scope: submit *something* in 20 minutes."
+        ],
+        "postTaskSuccess": [
+          "Stabilized. Now ship a minimal pass.",
+          "Breath in. Ship the draft. Fix after."
+        ],
+        "postTaskFail": [
+          "No more scrolling. File. Now.",
+          "We’re burning minutes. Open. Type. Send."
+        ]
+      }
+    },
+    {
+      "code": "mood_done_v1",
+      "displayName": "Done",
+      "ui": { "color": "linear-gradient(90deg,#F39C12,#E67E22,#E74C3C,#9B59B6,#3498DB,#2ECC71)", "emojiSet": ["🎉","✨","🥲","💅","👑","🐸"], "emojiMax": 3 },
+      "tone": { "politeness": "high", "humor": "playful", "directness": "low" },
+      "style": { "sentenceLength": "short", "emoji": "party", "jargon": "low" },
+      "reinforcement": { "xpMultiplier": 1.2, "streakBonus": 2, "nudges": ["reflection","set-next-step","share-win"] },
+      "boundaries": { "noCheating": true, "sensitiveTopicsEscalation": "safe_help" },
+      "microScripts": {
+        "preTask": [],
+        "duringTask": [],
+        "postTaskSuccess": [
+          "Well well well, look who finished. Color me impressed {{e1}}",
+          "Complete? *chef’s kiss.* Walk the walk AND ribbit the ribbit {{eFrog}}"
+        ],
+        "postTaskFail": []
+      }
+    }
+  ]
+}
