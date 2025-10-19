@@ -73,6 +73,12 @@ from .routes import dfe_tasks as dfe_tasks_route
 app.include_router(dfe_tasks_route.router)
 # <<< DFE END
 
+# >>> MEMORY START
+from .routes import memory as memory_route
+
+app.include_router(memory_route.router)
+# <<< MEMORY END
+
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
 

@@ -119,6 +119,11 @@ def init_db():
         from .models_integrations import MoodleFeed
         from .models_leaderboard import Leaderboard, LeaderboardMember, PointsEvent, WeeklyScore
         from .models_push import PushSubscription
+        # >>> MEMORY START
+        from .models_memory import MemoryStat, MistakeLog, ResurfacePlan
+
+        _ = (MemoryStat, MistakeLog, ResurfacePlan)
+        # <<< MEMORY END
         # >>> DFE START
         from .models_dfe import SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate
         _ = (SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate)

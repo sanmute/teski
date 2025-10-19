@@ -13,3 +13,11 @@ DEFAULT_TZ = "Europe/Helsinki"
 TESKI_PARAM_SALT = getenv("TESKI_PARAM_SALT", "teski-dfe-param")
 EWMA_ALPHA = float(getenv("TESKI_EWMA_ALPHA", "0.15"))
 # <<< DFE END
+
+# >>> MEMORY START
+class MemorySettings:
+    DECAY_HALF_LIFE_DAYS: float = float(getenv("TESKI_MEMORY_HALFLIFE_DAYS", "7.0"))
+
+
+memory_settings = MemorySettings()
+# <<< MEMORY END

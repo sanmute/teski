@@ -18,6 +18,12 @@ from backend.schemas_dfe_tasks import TaskTemplateCreate
 from backend.settings import EWMA_ALPHA, TESKI_PARAM_SALT
 from backend.utils.evalsafe import eval_numeric_formula, eval_predicate
 from backend.utils.rand import deterministic_seed, sample_params
+from backend.services.memory import log_mistake, mark_mastered
+
+try:
+    from backend.services.leaderboard import award_points
+except Exception:  # pragma: no cover - optional dependency
+    award_points = None
 
 MAX_SAMPLING_RETRIES = 25
 _TEMPLATE_ENV = Environment(undefined=StrictUndefined)
@@ -219,4 +225,55 @@ def grade_and_update(session: Session, instance_id: int, user_id: int, answer: A
 
     session.commit()
     return bool(correct), float(updated_value)
+
+
+# >>> MEMORY START
+def grade_and_update_with_memory(
+    session: Session, instance_id: int, user_id: int, answer: Any, latency_ms: Optional[int]
+) -> Tuple[bool, float]:
+    correct, mastery = grade_and_update(session, instance_id, user_id, answer, latency_ms)
+
+    skill_id: Optional[int] = None
+    template_code: Optional[str] = None
+    try:
+        instance = session.get(TaskInstance, instance_id)
+        template = session.get(TaskTemplate, instance.template_id) if instance else None
+        if template:
+            skill_id = template.skill_id
+            template_code = template.code
+    except Exception:
+        skill_id, template_code = None, None
+
+    if correct:
+        mark_mastered(session, user_id=user_id, skill_id=skill_id, template_code=template_code)
+        if award_points and template_code:
+            try:
+                from backend.models_leaderboard import LeaderboardMember  # type: ignore
+
+                membership = session.exec(
+                    select(LeaderboardMember).where(LeaderboardMember.user_id == user_id)
+                ).first()
+                if membership:
+                    award_points(
+                        session,
+                        leaderboard_id=membership.leaderboard_id,
+                        user_id=user_id,
+                        event_type="mastery_bonus",
+                        points=3,
+                        meta={"template_code": template_code},
+                    )
+            except Exception:
+                pass
+    else:
+        log_mistake(
+            session,
+            user_id=user_id,
+            skill_id=skill_id,
+            template_code=template_code,
+            instance_id=instance_id,
+            error_type="recall",
+            detail={"latency_ms": latency_ms},
+        )
+    return correct, mastery
+# <<< MEMORY END
 # <<< DFE END
