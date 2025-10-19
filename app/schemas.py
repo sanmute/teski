@@ -23,33 +23,50 @@ class ReviewIn(BaseModel):
 
 class ReviewOut(BaseModel):
     memory_id: UUID
-    due_at: datetime
+    concept: str
+    next_due_at: datetime
     interval_days: int
     ease: float
+    xp_awarded: int
+    persona_msg: str
+
+
+class NextReviewItem(BaseModel):
+    memory_id: UUID
+    concept: str
+    due_at: datetime
 
 
 class NextReviewOut(BaseModel):
-    items: List[ReviewOut]
+    items: List[NextReviewItem]
     remaining_today: int
 
 
 class PersonaOut(BaseModel):
     user_id: UUID
     persona: str
+    warmup: bool
+    copy: str
     warmup_ts: Optional[datetime] = None
 
 
 class StatsOut(BaseModel):
     user_id: UUID
-    daily_due: int
-    completed_today: int
+    today_reviewed: int
+    daily_cap: int
     streak_days: int
+    due_count: int
 
 
 class AssignABIn(BaseModel):
     user_id: UUID
     experiment: str
-    bucket: str
+
+
+class MistakeOut(BaseModel):
+    memory_id: UUID
+    concept: str
+    subtype: str
 
 
 class XPOut(BaseModel):

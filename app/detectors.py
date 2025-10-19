@@ -58,10 +58,10 @@ def classify_mistake(
         if user_num != 0 and correct_num != 0 and math.isfinite(user_num) and math.isfinite(correct_num):
             if math.isclose(abs(user_num), abs(correct_num), rel_tol=1e-6) and (user_num * correct_num) < 0:
                 return "sign"
-            if math.isclose(user_num, correct_num, rel_tol=0.05, abs_tol=1e-9):
-                return "near_miss"
             if math.isclose(user_num, correct_num, rel_tol=0.001, abs_tol=0.01):
                 return "rounding"
+            if math.isclose(user_num, correct_num, rel_tol=0.05, abs_tol=1e-9):
+                return "near_miss"
 
     user_unit = _extract_unit(ua)
     correct_unit = _extract_unit(ca)

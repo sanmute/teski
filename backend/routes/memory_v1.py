@@ -6,7 +6,6 @@ from sqlmodel import Session, select
 
 from backend.db import get_session
 from backend.routes.deps import get_current_user
-from backend.utils.ab import ab_bucket
 from backend.utils.analytics import emit
 from backend.models_memory import MistakeLog
 from backend.schemas_memory import (
@@ -21,7 +20,9 @@ from backend.services.memory_v1 import (
     log_mistake_v1,
     mark_review_result,
 )
-from backend.services.nudges import persona_line_for_subtype
+from app.abtest import assign as assign_bucket
+from app.analytics import log as log_event
+from app.personas import get_persona_copy
 
 try:
     from backend.services.persona import get_persona
@@ -65,8 +66,9 @@ def build_reviews_endpoint(
 def next_reviews_endpoint(
     count: int = 2, session: Session = Depends(get_session), user=Depends(get_current_user)
 ) -> WarmupOut:
-    if ab_bucket(user.id, "memory_v1") == "B":
+    if assign_bucket(user, "memory_v1") == "B":
         emit("memory.review_shown", user.id, {"count": 0})
+        log_event("memory.review_shown", {"count": 0, "bucket": "B"}, user)
         return WarmupOut(items=[])
 
     items = fetch_due_reviews(session, user_id=user.id, count=count)
@@ -78,7 +80,18 @@ def next_reviews_endpoint(
                 mood_code = persona_obj.config.get("memoryMood", mood_code) or mood_code
         except Exception:
             pass
-    for item in items:
+    def _persona_name(code: str) -> str:
+        code = (code or "").lower()
+        if "snark" in code:
+            return "Snark"
+        if "coach" in code:
+            return "Coach"
+        if "encour" in code:
+            return "Encourager"
+        return "Calm"
+
+    persona_name = _persona_name(mood_code)
+    for idx, item in enumerate(items):
         tpl_code = item.get("template_code")
         if not tpl_code:
             continue
@@ -93,9 +106,16 @@ def next_reviews_endpoint(
         )
         last = session.exec(stmt).first()
         subtype = getattr(last, "error_subtype", None) if last else None
-        item["prompt"] = persona_line_for_subtype(subtype, mood_code)
+        context = {
+            "warmup": idx == 0,
+            "concept": tpl_code,
+            "user_id": user.id,
+            "error_subtype": subtype,
+        }
+        item["prompt"] = get_persona_copy(persona_name, context)
 
     emit("memory.review_shown", user.id, {"count": len(items)})
+    log_event("memory.review_shown", {"count": len(items), "bucket": "A"}, user)
     return WarmupOut(items=[ReviewItemOut(**item) for item in items])
 
 
@@ -109,11 +129,9 @@ def review_result_endpoint(
     card = mark_review_result(session, user_id=user.id, template_code=template_code, correct=correct)
     if not card:
         raise HTTPException(status_code=404, detail="review_card_not_found")
-    emit(
-        "memory.review_answered",
-        user.id,
-        {"template_code": template_code, "correct": bool(correct)},
-    )
+    payload = {"template_code": template_code, "correct": bool(correct)}
+    emit("memory.review_answered", user.id, payload)
+    log_event("memory.review_answered", payload, user)
     return {
         "next_review_at": card.next_review_at.isoformat(),
         "easiness": card.easiness,

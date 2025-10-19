@@ -20,9 +20,10 @@ from app.models import (
     MistakeSubtype,
     Task as NewTask,
     User as NewUser,
-    XPEvent,
 )
 from app.scheduler import review as scheduler_review, schedule_from_mistake
+from app.xp import award as award_xp
+from app.badges import check_nemesis
 
 
 def _should_dual_write() -> bool:
@@ -77,17 +78,17 @@ def record_mistake_dual_write(
 
     with _session_scope() as session:
         try:
-            new_user_id = _ensure_user(session, legacy_user)
-            new_task_id = None
+            new_user = _ensure_user(session, legacy_user)
+            new_task = None
             if legacy_task:
-                new_task_id = _ensure_task(session, new_user_id, legacy_task)
+                new_task = _ensure_task(session, new_user, legacy_task)
             _upsert_memory_and_mistake(
                 session,
-                user_id=new_user_id,
+                user=new_user,
                 concept=(concept or "unknown"),
                 subtype=subtype,
                 raw=payload,
-                new_task_id=new_task_id,
+                task=new_task,
             )
             session.commit()
         except Exception:
@@ -95,10 +96,12 @@ def record_mistake_dual_write(
             raise
 
 
-def _ensure_user(session: Session, legacy_user: LegacyUser) -> UUID:
+def _ensure_user(session: Session, legacy_user: LegacyUser) -> NewUser:
     mapping = session.get(LegacyUserMap, legacy_user.id)
     if mapping:
-        return mapping.user_id
+        user = session.get(NewUser, mapping.user_id)
+        if user:
+            return user
 
     new_user = NewUser(
         id=uuid4(),
@@ -115,17 +118,19 @@ def _ensure_user(session: Session, legacy_user: LegacyUser) -> UUID:
         )
     )
     session.flush()
-    return new_user.id
+    return new_user
 
 
-def _ensure_task(session: Session, new_user_id: UUID, legacy_task: LegacyTask) -> UUID:
+def _ensure_task(session: Session, new_user: NewUser, legacy_task: LegacyTask) -> NewTask:
     mapping = session.get(LegacyTaskMap, legacy_task.id)
     if mapping:
-        return mapping.task_id
+        task = session.get(NewTask, mapping.task_id)
+        if task:
+            return task
 
     new_task = NewTask(
         id=uuid4(),
-        user_id=new_user_id,
+        user_id=new_user.id,
         title=legacy_task.title,
         course=legacy_task.course,
         due_at=_coerce_datetime(getattr(legacy_task, "due_iso", None)),
@@ -139,17 +144,17 @@ def _ensure_task(session: Session, new_user_id: UUID, legacy_task: LegacyTask) -
         )
     )
     session.flush()
-    return new_task.id
+    return new_task
 
 
 def _upsert_memory_and_mistake(
     session: Session,
     *,
-    user_id: UUID,
+    user: NewUser,
     concept: str,
     subtype: str,
     raw: str,
-    new_task_id: Optional[UUID],
+    task: Optional[NewTask],
 ) -> None:
     try:
         subtype_enum = MistakeSubtype(subtype)
@@ -158,7 +163,7 @@ def _upsert_memory_and_mistake(
 
     result = session.exec(
         select(MemoryItem).where(
-            MemoryItem.user_id == user_id,
+            MemoryItem.user_id == user.id,
             MemoryItem.concept == concept,
         )
     )
@@ -166,8 +171,8 @@ def _upsert_memory_and_mistake(
     if memory is None:
         memory = MemoryItem(
             id=uuid4(),
-            user_id=user_id,
-            task_id=new_task_id,
+            user_id=user.id,
+            task_id=getattr(task, "id", None),
             concept=concept,
             due_at=datetime.utcnow(),
             ease=2.5,
@@ -181,8 +186,8 @@ def _upsert_memory_and_mistake(
     session.add(
         Mistake(
             id=uuid4(),
-            user_id=user_id,
-            task_id=new_task_id,
+            user_id=user.id,
+            task_id=getattr(task, "id", None),
             concept=concept,
             subtype=subtype_enum,
             raw=raw,
@@ -209,28 +214,30 @@ def record_review_dual_write(
 
     with _session_scope() as session:
         try:
-            new_user_id = _ensure_user(session, legacy_user)
-            new_task_id = None
+            new_user = _ensure_user(session, legacy_user)
+            new_task = None
             if legacy_task:
-                new_task_id = _ensure_task(session, new_user_id, legacy_task)
+                new_task = _ensure_task(session, new_user, legacy_task)
 
             concept_value = concept or (legacy_task.title if legacy_task else "unknown")
 
             memory = session.exec(
                 select(MemoryItem).where(
-                    MemoryItem.user_id == new_user_id,
+                    MemoryItem.user_id == new_user.id,
                     MemoryItem.concept == concept_value,
                 )
             ).first()
-            new_user = session.get(NewUser, new_user_id)
             if memory is None:
                 memory = schedule_from_mistake(
                     session,
                     user=new_user,
                     concept=concept_value,
-                    task_id=new_task_id,
+                    task_id=getattr(new_task, "id", None),
                 )
             scheduler_review(session, new_user, memory, grade)
+            award_xp(new_user, reason="review", memory=memory, session=session)
+            if grade >= 4:
+                check_nemesis(new_user, concept_value, session=session)
             session.commit()
         except Exception:
             session.rollback()
@@ -253,16 +260,8 @@ def record_xp_event(
 
     with _session_scope() as session:
         try:
-            new_user_id = _ensure_user(session, legacy_user)
-            session.add(
-                XPEvent(
-                    id=uuid4(),
-                    user_id=new_user_id,
-                    amount=amount,
-                    reason=reason,
-                    ts=datetime.utcnow(),
-                )
-            )
+            new_user = _ensure_user(session, legacy_user)
+            award_xp(new_user, reason=reason, base=amount, mastery_bonus=0, session=session)
             session.commit()
         except Exception:
             session.rollback()
