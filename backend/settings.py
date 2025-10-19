@@ -21,3 +21,15 @@ class MemorySettings:
 
 memory_settings = MemorySettings()
 # <<< MEMORY END
+
+# >>> MEMORY V1 START
+class MemoryV1Settings:
+    DEFAULT_EASINESS: float = float(getenv("TESKI_SRS_EASINESS", "2.3"))
+    MAX_WARMUP_ITEMS: int = int(getenv("TESKI_WARMUP_MAX", "2"))
+    DAILY_REVIEW_CAP: int = int(getenv("TESKI_SRS_DAILY_CAP", "6"))
+    QUEUE_BACKOFF_THRESHOLD: int = int(getenv("TESKI_SRS_QUEUE_BACKOFF", "20"))
+    DISABLE_MEMORY_V1: bool = getenv("TESKI_MEMORY_DISABLE", "false").lower() == "true"
+
+
+memory_v1_settings = MemoryV1Settings()
+# <<< MEMORY V1 END

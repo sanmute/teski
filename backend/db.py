@@ -124,6 +124,11 @@ def init_db():
 
         _ = (MemoryStat, MistakeLog, ResurfacePlan)
         # <<< MEMORY END
+        # >>> MEMORY V1 START
+        from .models_memory import ReviewCard
+
+        _ = (ReviewCard,)
+        # <<< MEMORY V1 END
         # >>> DFE START
         from .models_dfe import SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate
         _ = (SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate)

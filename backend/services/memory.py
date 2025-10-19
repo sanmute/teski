@@ -36,6 +36,7 @@ def log_mistake(
     instance_id: Optional[int],
     error_type: str,
     detail: Dict[str, Any],
+    error_subtype: Optional[str] = None,
 ) -> MistakeLog:
     now = _now_utc()
     mistake = MistakeLog(
@@ -44,6 +45,7 @@ def log_mistake(
         template_code=template_code,
         instance_id=instance_id,
         error_type=error_type,
+        error_subtype=error_subtype,
         detail=detail,
         occurred_at=now,
     )

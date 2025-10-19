@@ -59,4 +59,34 @@ def generate_nudge(persona_cfg: Dict[str, Any], phase: str, context: Dict[str, A
             "now": datetime.now(timezone.utc).isoformat(),
         },
     }
+
+
+# >>> PERS-WARM START
+_SUBTYPE_LINES = {
+    "near_miss": {
+        "calm": "So close yesterday — lock it in 🌿",
+        "snark": "Nearly there last time. Finish the arc 😏",
+    },
+    "sign": {
+        "calm": "Watch the sign; same magnitude, flipped.",
+        "snark": "Minus signs: the silent boss battle.",
+    },
+    "unit": {
+        "calm": "Unit check first, answer second.",
+        "snark": "kN ≠ N. Choose your fighter.",
+    },
+    "recall": {
+        "calm": "Quick retrieval, then we cruise.",
+        "snark": "Brains love spaced snacks. Take a bite.",
+    },
+}
+
+
+def persona_line_for_subtype(subtype: str, mood_code: str) -> str:
+    mood = "calm"
+    if mood_code and "snark" in mood_code:
+        mood = "snark"
+    bank = _SUBTYPE_LINES.get(subtype or "recall", _SUBTYPE_LINES["recall"])
+    return bank.get(mood, bank["calm"])
+# <<< PERS-WARM END
 # <<< PERSONA END

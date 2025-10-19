@@ -19,11 +19,23 @@ from backend.settings import EWMA_ALPHA, TESKI_PARAM_SALT
 from backend.utils.evalsafe import eval_numeric_formula, eval_predicate
 from backend.utils.rand import deterministic_seed, sample_params
 from backend.services.memory import log_mistake, mark_mastered
+from backend.services.memory_v1 import classify_error_subtype, log_mistake_v1, mark_review_result
+from backend.utils.detectors import (
+    classify_numeric_near_miss,
+    classify_sign_flip,
+    classify_unit_confusion,
+)
+from backend.utils.analytics import emit
 
 try:
     from backend.services.leaderboard import award_points
 except Exception:  # pragma: no cover - optional dependency
     award_points = None
+
+try:
+    from backend.services.persona import get_persona
+except Exception:  # pragma: no cover - optional dependency
+    get_persona = None
 
 MAX_SAMPLING_RETRIES = 25
 _TEMPLATE_ENV = Environment(undefined=StrictUndefined)
@@ -228,24 +240,62 @@ def grade_and_update(session: Session, instance_id: int, user_id: int, answer: A
 
 
 # >>> MEMORY START
-def grade_and_update_with_memory(
-    session: Session, instance_id: int, user_id: int, answer: Any, latency_ms: Optional[int]
-) -> Tuple[bool, float]:
-    correct, mastery = grade_and_update(session, instance_id, user_id, answer, latency_ms)
-
-    skill_id: Optional[int] = None
-    template_code: Optional[str] = None
+def _resolve_task_context(
+    session: Session, instance_id: int
+) -> Tuple[Optional["TaskInstance"], Optional["TaskTemplate"], Optional[int], Optional[str]]:
     try:
         instance = session.get(TaskInstance, instance_id)
-        template = session.get(TaskTemplate, instance.template_id) if instance else None
-        if template:
-            skill_id = template.skill_id
-            template_code = template.code
     except Exception:
-        skill_id, template_code = None, None
+        return None, None, None, None
+    if not instance:
+        return None, None, None, None
+    try:
+        template = session.get(TaskTemplate, instance.template_id)
+    except Exception:
+        return instance, None, None, None
+    if not template:
+        return instance, None, None, None
+    return instance, template, template.skill_id, template.code
+
+
+# >>> DETECTORS START
+def _infer_error_subtype(
+    submitted: Any,
+    truth: Optional[float],
+    *,
+    answer_text: str | None = None,
+    expected_unit: str | None = None,
+) -> str:
+    try:
+        if truth is not None:
+            if classify_sign_flip(submitted, truth):
+                return "sign"
+            if classify_numeric_near_miss(submitted, truth):
+                return "near_miss"
+    except Exception:
+        pass
+    if answer_text and expected_unit:
+        try:
+            if classify_unit_confusion(answer_text, expected_unit):
+                return "unit"
+        except Exception:
+            pass
+    return "recall"
+# <<< DETECTORS END
+
+
+def grade_and_update_with_memory_v1(
+    session: Session, instance_id: int, user_id: int, answer: Any, latency_ms: Optional[int]
+) -> Tuple[bool, float]:
+    """Grades a submission, updates mastery, and records memory signals with heuristic error subtypes."""
+    correct, mastery = grade_and_update(session, instance_id, user_id, answer, latency_ms)
+
+    instance, template, skill_id, template_code = _resolve_task_context(session, instance_id)
 
     if correct:
         mark_mastered(session, user_id=user_id, skill_id=skill_id, template_code=template_code)
+        if template_code:
+            mark_review_result(session, user_id=user_id, template_code=template_code, correct=True)
         if award_points and template_code:
             try:
                 from backend.models_leaderboard import LeaderboardMember  # type: ignore
@@ -259,12 +309,46 @@ def grade_and_update_with_memory(
                         leaderboard_id=membership.leaderboard_id,
                         user_id=user_id,
                         event_type="mastery_bonus",
-                        points=3,
+                        points=5,
                         meta={"template_code": template_code},
+                    )
+                    emit(
+                        "memory.mastery_bonus_awarded",
+                        user_id,
+                        {"points": 5, "template_code": template_code},
                     )
             except Exception:
                 pass
     else:
+        detail: Dict[str, Any] = {"latency_ms": latency_ms}
+        if get_persona:
+            try:
+                persona = get_persona(session, "teacher")
+                if persona:
+                    detail["persona_copy"] = persona.display_name or persona.code
+            except Exception:
+                pass
+        subtype = "recall"
+        truth_value: Optional[float] = None
+        expected_unit: Optional[str] = None
+        if template and template.task_type == TaskTypeEnum.NUMERIC:
+            spec = template.answer_spec or {}
+            formula = spec.get("formula")
+            if formula and instance is not None:
+                try:
+                    truth_value = float(eval_numeric_formula(formula, instance.params))
+                except Exception:
+                    truth_value = None
+            expected_unit = spec.get("unit")
+        answer_text = str(answer) if isinstance(answer, (str, int, float)) else None
+        inferred = _infer_error_subtype(
+            answer, truth_value, answer_text=answer_text, expected_unit=expected_unit
+        )
+        if inferred:
+            subtype = inferred
+        elif template_code:
+            subtype = classify_error_subtype(detail)
+        detail["reason"] = subtype
         log_mistake(
             session,
             user_id=user_id,
@@ -272,8 +356,28 @@ def grade_and_update_with_memory(
             template_code=template_code,
             instance_id=instance_id,
             error_type="recall",
-            detail={"latency_ms": latency_ms},
+            detail=detail,
+            error_subtype=subtype,
         )
+        log_mistake_v1(
+            session,
+            user_id=user_id,
+            skill_id=skill_id,
+            template_code=template_code,
+            instance_id=instance_id,
+            error_type="mistake",
+            error_subtype=subtype,
+            detail=detail,
+        )
+        if template_code:
+            mark_review_result(session, user_id=user_id, template_code=template_code, correct=False)
+
     return correct, mastery
+
+
+def grade_and_update_with_memory(
+    session: Session, instance_id: int, user_id: int, answer: Any, latency_ms: Optional[int]
+) -> Tuple[bool, float]:
+    return grade_and_update_with_memory_v1(session, instance_id, user_id, answer, latency_ms)
 # <<< MEMORY END
 # <<< DFE END

@@ -16,7 +16,7 @@ from backend.schemas_dfe_tasks import (
 from backend.services.dfe_tasks import (
     create_template,
     get_or_create_skill,
-    grade_and_update_with_memory,
+    grade_and_update_with_memory_v1,
     instantiate_for_user,
 )
 
@@ -119,6 +119,6 @@ def submit_answer_endpoint(
         {"correct": true, "mastery_after": 0.2}
     """
 
-    correct, mastery = grade_and_update_with_memory(session, instance_id, user.id, payload.answer, payload.latency_ms)
+    correct, mastery = grade_and_update_with_memory_v1(session, instance_id, user.id, payload.answer, payload.latency_ms)
     return AttemptResult(correct=correct, mastery_after=mastery)
 # <<< DFE END

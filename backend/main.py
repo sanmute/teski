@@ -79,6 +79,12 @@ from .routes import memory as memory_route
 app.include_router(memory_route.router)
 # <<< MEMORY END
 
+# >>> MEMORY V1 START
+from .routes import memory_v1 as memory_v1_route
+
+app.include_router(memory_v1_route.router)
+# <<< MEMORY V1 END
+
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
 
