@@ -1,34 +1,45 @@
 from __future__ import annotations
 
+import json
+import os
+from dataclasses import dataclass, field
 from functools import lru_cache
 from typing import List
 
-from pydantic import BaseSettings, Field
+
+def _get_env(name: str, default: str) -> str:
+    return os.getenv(name, default)
 
 
-class Settings(BaseSettings):
-    DATABASE_URL: str = Field(
-        default="sqlite+aiosqlite:///./teski.db",
-        env="DATABASE_URL",
-    )
-    DAILY_REVIEW_CAP: int = Field(default=60, env="DAILY_REVIEW_CAP")
-    KILL_SWITCH: bool = Field(default=False, env="KILL_SWITCH")
-    AB_BUCKETS: List[str] = Field(
-        default_factory=lambda: ["control", "variant_a"],
-        env="AB_BUCKETS",
-    )
-    PERSONA_DEFAULT: str = Field(default="Calm", env="PERSONA_DEFAULT")
-    XP_BASE: int = Field(default=10, env="XP_BASE")
-    XP_MASTERY_BONUS: int = Field(default=50, env="XP_MASTERY_BONUS")
-    NEMESIS_RECOVERY_THRESHOLD: int = Field(
-        default=3,
-        env="NEMESIS_RECOVERY_THRESHOLD",
-    )
-    SRS_LEEWAY_MIN: int = Field(default=10, env="SRS_LEEWAY_MIN")
+def _parse_bool(value: str) -> bool:
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+
+def _parse_list(value: str) -> List[str]:
+    value = value.strip()
+    if not value:
+        return []
+    if value.startswith("["):
+        try:
+            parsed = json.loads(value)
+            if isinstance(parsed, list):
+                return [str(item) for item in parsed]
+        except json.JSONDecodeError:
+            pass
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+@dataclass
+class Settings:
+    DATABASE_URL: str = field(default_factory=lambda: _get_env("DATABASE_URL", "sqlite:///./teski_v2.db"))
+    DAILY_REVIEW_CAP: int = field(default_factory=lambda: int(_get_env("DAILY_REVIEW_CAP", "60")))
+    KILL_SWITCH: bool = field(default_factory=lambda: _parse_bool(_get_env("KILL_SWITCH", "false")))
+    AB_BUCKETS: List[str] = field(default_factory=lambda: _parse_list(_get_env("AB_BUCKETS", "")) or ["control", "variant_a"])
+    PERSONA_DEFAULT: str = field(default_factory=lambda: _get_env("PERSONA_DEFAULT", "Calm"))
+    XP_BASE: int = field(default_factory=lambda: int(_get_env("XP_BASE", "10")))
+    XP_MASTERY_BONUS: int = field(default_factory=lambda: int(_get_env("XP_MASTERY_BONUS", "50")))
+    NEMESIS_RECOVERY_THRESHOLD: int = field(default_factory=lambda: int(_get_env("NEMESIS_RECOVERY_THRESHOLD", "3")))
+    SRS_LEEWAY_MIN: int = field(default_factory=lambda: int(_get_env("SRS_LEEWAY_MIN", "10")))
 
 
 @lru_cache()

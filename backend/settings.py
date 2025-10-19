@@ -17,6 +17,7 @@ EWMA_ALPHA = float(getenv("TESKI_EWMA_ALPHA", "0.15"))
 # >>> MEMORY START
 class MemorySettings:
     DECAY_HALF_LIFE_DAYS: float = float(getenv("TESKI_MEMORY_HALFLIFE_DAYS", "7.0"))
+    MEMORY_V2_DUAL_WRITE: bool = getenv("TESKI_MEMORY_V2_DUAL_WRITE", "false").lower() == "true"
 
 
 memory_settings = MemorySettings()

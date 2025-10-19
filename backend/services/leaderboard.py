@@ -28,6 +28,7 @@ from backend.schemas_leaderboard import LeaderboardOut, MemberOut, LeaderboardSt
 from backend.utils.codes import generate_join_code
 from backend.utils.crypto import anon_handle
 from backend.utils.time import now_utc, to_week_key, start_end_of_week_iso
+from backend.services.memory_bridge import record_xp_event
 
 
 # >>> LEADERBOARD START UTIL
@@ -170,6 +171,12 @@ def award_points(
     db.add(score)
     db.commit()
     db.refresh(event)
+
+    try:
+        record_xp_event(db, user_id=user_id, amount=points_value, reason=event_type)
+    except Exception:
+        pass
+
     return event
 
 

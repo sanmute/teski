@@ -20,11 +20,12 @@ from backend.utils.evalsafe import eval_numeric_formula, eval_predicate
 from backend.utils.rand import deterministic_seed, sample_params
 from backend.services.memory import log_mistake, mark_mastered
 from backend.services.memory_v1 import classify_error_subtype, log_mistake_v1, mark_review_result
-from backend.utils.detectors import (
-    classify_numeric_near_miss,
-    classify_sign_flip,
-    classify_unit_confusion,
+from backend.services.memory_bridge import (
+    record_mistake_dual_write,
+    record_review_dual_write,
+    record_xp_event,
 )
+from app.detectors import classify_mistake
 from backend.utils.analytics import emit
 
 try:
@@ -260,27 +261,42 @@ def _resolve_task_context(
 
 # >>> DETECTORS START
 def _infer_error_subtype(
-    submitted: Any,
-    truth: Optional[float],
     *,
-    answer_text: str | None = None,
-    expected_unit: str | None = None,
+    instance: Optional["TaskInstance"],
+    template: Optional["TaskTemplate"],
+    submitted: Any,
+    correct_value: Optional[float],
 ) -> str:
-    try:
-        if truth is not None:
-            if classify_sign_flip(submitted, truth):
-                return "sign"
-            if classify_numeric_near_miss(submitted, truth):
-                return "near_miss"
-    except Exception:
-        pass
-    if answer_text and expected_unit:
-        try:
-            if classify_unit_confusion(answer_text, expected_unit):
-                return "unit"
-        except Exception:
-            pass
-    return "recall"
+    prompt_text = ""
+    if instance and getattr(instance, "rendered_text", None):
+        prompt_text = str(instance.rendered_text)
+
+    if correct_value is not None and math.isfinite(correct_value):
+        correct_str = str(correct_value)
+    elif template and template.answer_spec:
+        correct_str = str(template.answer_spec.get("answer") or "")
+    else:
+        correct_str = ""
+
+    answer_text = "" if submitted is None else str(submitted)
+
+    context: Dict[str, object] = {}
+    if template and template.answer_spec:
+        spec = template.answer_spec
+        keywords = spec.get("keywords")
+        if isinstance(keywords, list):
+            context["concept_keywords"] = keywords
+        expected_unit = spec.get("unit")
+        if expected_unit:
+            context["expected_unit"] = expected_unit
+
+    subtype = classify_mistake(
+        prompt_text=prompt_text,
+        user_answer=answer_text,
+        correct_answer=correct_str,
+        context=context,
+    )
+    return subtype or "recall"
 # <<< DETECTORS END
 
 
@@ -292,6 +308,8 @@ def grade_and_update_with_memory_v1(
 
     instance, template, skill_id, template_code = _resolve_task_context(session, instance_id)
 
+    concept_ref = template.code if template else template_code or "unknown"
+    review_grade = 5 if correct else 2
     if correct:
         mark_mastered(session, user_id=user_id, skill_id=skill_id, template_code=template_code)
         if template_code:
@@ -317,6 +335,12 @@ def grade_and_update_with_memory_v1(
                         user_id,
                         {"points": 5, "template_code": template_code},
                     )
+                    record_xp_event(
+                        session,
+                        user_id=user_id,
+                        amount=5,
+                        reason="mastery_bonus",
+                    )
             except Exception:
                 pass
     else:
@@ -330,7 +354,6 @@ def grade_and_update_with_memory_v1(
                 pass
         subtype = "recall"
         truth_value: Optional[float] = None
-        expected_unit: Optional[str] = None
         if template and template.task_type == TaskTypeEnum.NUMERIC:
             spec = template.answer_spec or {}
             formula = spec.get("formula")
@@ -339,15 +362,13 @@ def grade_and_update_with_memory_v1(
                     truth_value = float(eval_numeric_formula(formula, instance.params))
                 except Exception:
                     truth_value = None
-            expected_unit = spec.get("unit")
-        answer_text = str(answer) if isinstance(answer, (str, int, float)) else None
         inferred = _infer_error_subtype(
-            answer, truth_value, answer_text=answer_text, expected_unit=expected_unit
+            instance=instance,
+            template=template,
+            submitted=answer,
+            correct_value=truth_value,
         )
-        if inferred:
-            subtype = inferred
-        elif template_code:
-            subtype = classify_error_subtype(detail)
+        subtype = inferred or classify_error_subtype(detail)
         detail["reason"] = subtype
         log_mistake(
             session,
@@ -371,6 +392,21 @@ def grade_and_update_with_memory_v1(
         )
         if template_code:
             mark_review_result(session, user_id=user_id, template_code=template_code, correct=False)
+        record_mistake_dual_write(
+            session,
+            user_id=user_id,
+            concept=concept_ref,
+            subtype=subtype,
+            detail=detail,
+        )
+
+    record_review_dual_write(
+        session,
+        user_id=user_id,
+        concept=concept_ref,
+        grade=review_grade,
+        task_id=None,
+    )
 
     return correct, mastery
 

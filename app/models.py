@@ -5,12 +5,23 @@ from enum import Enum
 from typing import Optional
 from uuid import UUID, uuid4
 
+from sqlalchemy import MetaData
 from sqlalchemy.dialects.sqlite import JSON
 from sqlmodel import Field, SQLModel
 
 
+app_metadata = MetaData()
+
+
 def _utcnow() -> datetime:
     return datetime.utcnow()
+
+
+class AppSQLModel(SQLModel, table=False):
+    """Base class binding models to app_metadata."""
+
+    __abstract__ = True
+    metadata = app_metadata
 
 
 class MistakeSubtype(str, Enum):
@@ -22,7 +33,7 @@ class MistakeSubtype(str, Enum):
     OTHER = "other"
 
 
-class User(SQLModel, table=True):
+class User(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     created_at: datetime = Field(default_factory=_utcnow, index=True)
     timezone: str = Field(default="UTC")
@@ -31,7 +42,7 @@ class User(SQLModel, table=True):
     persona: Optional[str] = Field(default=None, index=True)
 
 
-class Task(SQLModel, table=True):
+class Task(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     title: str
@@ -40,7 +51,7 @@ class Task(SQLModel, table=True):
     created_at: datetime = Field(default_factory=_utcnow, index=True)
 
 
-class MemoryItem(SQLModel, table=True):
+class MemoryItem(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     task_id: Optional[UUID] = Field(default=None, foreign_key="task.id", index=True)
@@ -53,7 +64,7 @@ class MemoryItem(SQLModel, table=True):
     lapses: int = Field(default=0, ge=0)
 
 
-class Mistake(SQLModel, table=True):
+class Mistake(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     task_id: Optional[UUID] = Field(default=None, foreign_key="task.id", index=True)
@@ -63,7 +74,7 @@ class Mistake(SQLModel, table=True):
     created_at: datetime = Field(default_factory=_utcnow, index=True)
 
 
-class ReviewLog(SQLModel, table=True):
+class ReviewLog(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     memory_id: UUID = Field(foreign_key="memoryitem.id", index=True)
@@ -74,21 +85,21 @@ class ReviewLog(SQLModel, table=True):
     delta_seconds: int = Field(default=0)
 
 
-class PersonaState(SQLModel, table=True):
+class PersonaState(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     persona: str = Field(index=True)
     warmup_ts: Optional[datetime] = Field(default=None, index=True)
 
 
-class Badge(SQLModel, table=True):
+class Badge(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     kind: str = Field(index=True)
     acquired_at: datetime = Field(default_factory=_utcnow, index=True)
 
 
-class ABTestAssignment(SQLModel, table=True):
+class ABTestAssignment(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     experiment: str = Field(index=True)
@@ -96,7 +107,7 @@ class ABTestAssignment(SQLModel, table=True):
     assigned_at: datetime = Field(default_factory=_utcnow, index=True)
 
 
-class AnalyticsEvent(SQLModel, table=True):
+class AnalyticsEvent(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: Optional[UUID] = Field(default=None, foreign_key="user.id", index=True)
     kind: str = Field(index=True)
@@ -104,9 +115,21 @@ class AnalyticsEvent(SQLModel, table=True):
     ts: datetime = Field(default_factory=_utcnow, index=True)
 
 
-class XPEvent(SQLModel, table=True):
+class XPEvent(AppSQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     amount: int = Field(default=0)
     reason: str = Field(index=True)
     ts: datetime = Field(default_factory=_utcnow, index=True)
+
+
+class LegacyUserMap(AppSQLModel, table=True):
+    __tablename__ = "legacy_user_map"
+    legacy_user_id: int = Field(primary_key=True)
+    user_id: UUID = Field(foreign_key="user.id", index=True)
+
+
+class LegacyTaskMap(AppSQLModel, table=True):
+    __tablename__ = "legacy_task_map"
+    legacy_task_id: str = Field(primary_key=True)
+    task_id: UUID = Field(foreign_key="task.id", index=True)
