@@ -8,14 +8,16 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import func
 from sqlmodel import Session, select
 
-from app.abtest import assign as assign_bucket
+from app.abtest import assign_and_persist
 from app.analytics import log as log_event
 from app.badges import check_nemesis
 from app.config import get_settings
 from app.db import get_session
 from app.detectors import classify_mistake
-from app.models import MemoryItem, Mistake, MistakeSubtype, ReviewLog, User
+from app.exercises import load_exercises
+from app.models import AnalyticsEvent, MemoryItem, Mistake, MistakeSubtype, ReviewLog, User
 from app.personas import get_persona_copy
+from app.timeutil import user_day_bounds
 from app.scheduler import enforce_daily_cap, get_next_reviews, review as review_memory, schedule_from_mistake
 from app.schemas import (
     AssignABIn,
@@ -88,7 +90,7 @@ def next_reviews(
     session: Session = Depends(get_session),
 ) -> NextReviewOut:
     user = _ensure_user(session, user_id)
-    items = get_next_reviews(session, user=user, count=limit)
+    items = get_next_reviews(session, user=user, limit=limit)
     payload = [NextReviewItem(memory_id=item.id, concept=item.concept, due_at=item.due_at) for item in items]
     remaining = _remaining_today(session, user)
     log_event("memory.review_fetch", {"count": len(payload)}, user, session=session)
@@ -144,7 +146,12 @@ def stats_endpoint(user_id: UUID, session: Session = Depends(get_session)) -> St
             MemoryItem.user_id == user.id,
             MemoryItem.due_at <= datetime.utcnow(),
         )
-    ).one()[0]
+    ).one()
+    if isinstance(due_count, tuple):
+        due_count = due_count[0]
+    due_count = int(due_count or 0)
+    ex_correct, ex_incorrect = _today_exercise_counts(session, user)
+    suggested = _suggested_exercises(user)
     settings = get_settings()
     return StatsOut(
         user_id=user.id,
@@ -152,24 +159,31 @@ def stats_endpoint(user_id: UUID, session: Session = Depends(get_session)) -> St
         daily_cap=settings.DAILY_REVIEW_CAP,
         streak_days=user.streak_days,
         due_count=due_count,
+        exercises_correct_today=ex_correct,
+        exercises_incorrect_today=ex_incorrect,
+        suggested_new_exercises=suggested,
     )
 
 
 @router.post("/ab/assign", dependencies=[Depends(_ensure_enabled)])
-def assign_ab(payload: AssignABIn) -> Dict[str, str]:
-    bucket = assign_bucket(payload.user_id, payload.experiment)
+def assign_ab(payload: AssignABIn, session: Session = Depends(get_session)) -> Dict[str, str]:
+    bucket = assign_and_persist(session, payload.user_id, payload.experiment)
+    session.commit()
     return {"bucket": bucket}
 
 
 def _today_review_count(session: Session, user: User) -> int:
-    today = datetime.utcnow().date()
+    start, end = user_day_bounds(user.timezone)
     result = session.exec(
         select(func.count()).select_from(ReviewLog).where(
             ReviewLog.user_id == user.id,
-            func.date(ReviewLog.reviewed_at) == today,
+            ReviewLog.reviewed_at >= start,
+            ReviewLog.reviewed_at < end,
         )
-    ).one()[0]
-    return result
+    ).one()
+    if isinstance(result, tuple):
+        result = result[0]
+    return int(result or 0)
 
 
 def _remaining_today(session: Session, user: User) -> int:
@@ -177,3 +191,35 @@ def _remaining_today(session: Session, user: User) -> int:
     reviewed = _today_review_count(session, user)
     remaining = max(0, settings.DAILY_REVIEW_CAP - reviewed)
     return remaining
+
+
+def _today_exercise_counts(session: Session, user: User) -> tuple[int, int]:
+    start, end = user_day_bounds(user.timezone)
+    correct = session.exec(
+        select(func.count()).where(
+            AnalyticsEvent.user_id == user.id,
+            AnalyticsEvent.kind == "exercise_correct",
+            AnalyticsEvent.ts >= start,
+            AnalyticsEvent.ts < end,
+        )
+    ).one()
+    incorrect = session.exec(
+        select(func.count()).where(
+            AnalyticsEvent.user_id == user.id,
+            AnalyticsEvent.kind == "exercise_incorrect",
+            AnalyticsEvent.ts >= start,
+            AnalyticsEvent.ts < end,
+        )
+    ).one()
+    if isinstance(correct, tuple):
+        correct = correct[0]
+    if isinstance(incorrect, tuple):
+        incorrect = incorrect[0]
+    return int(correct or 0), int(incorrect or 0)
+
+
+def _suggested_exercises(user: User) -> int:
+    exercises = load_exercises()
+    if user.display_name:  # placeholder for course preference later
+        return len(exercises)
+    return len(exercises)

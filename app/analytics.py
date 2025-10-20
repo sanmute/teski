@@ -4,6 +4,7 @@ import logging
 from contextlib import contextmanager
 from datetime import datetime
 from typing import Any, Dict, Optional
+from uuid import UUID
 
 from sqlmodel import Session
 
@@ -35,6 +36,11 @@ def _session_scope(session: Optional[Session] = None):
 
 def log_event(kind: str, payload: Dict[str, Any] | None = None, user_id: Optional[str] = None, *, session: Optional[Session] = None) -> None:
     payload = payload or {}
+    if user_id is not None and not isinstance(user_id, UUID):
+        try:
+            user_id = UUID(str(user_id))
+        except ValueError:
+            user_id = None
     with _session_scope(session) as sess:
         event = AnalyticsEvent(
             id=None,

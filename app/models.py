@@ -39,6 +39,7 @@ class User(AppSQLModel, table=True):
     timezone: str = Field(default="UTC")
     display_name: Optional[str] = Field(default=None)
     streak_days: int = Field(default=0, ge=0)
+    last_streak_at: Optional[datetime] = Field(default=None, index=True)
     persona: Optional[str] = Field(default=None, index=True)
 
 

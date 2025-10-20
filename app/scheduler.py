@@ -9,23 +9,22 @@ from sqlmodel import Session, select
 
 from app.config import get_settings
 from app.models import MemoryItem, ReviewLog, User
+from app.timeutil import user_day_bounds
 
 settings = get_settings()
+_STREAK_THRESHOLD = 5
 
 
 def _now() -> datetime:
     return datetime.utcnow()
 
 
-def _start_of_day(ts: Optional[datetime] = None) -> datetime:
-    ts = ts or _now()
-    return ts.replace(hour=0, minute=0, second=0, microsecond=0)
-
-
 def _reviews_today(session: Session, user: User) -> int:
+    start, end = user_day_bounds(user.timezone)
     stmt = select(func.count()).where(
         ReviewLog.user_id == user.id,
-        ReviewLog.reviewed_at >= _start_of_day(),
+        ReviewLog.reviewed_at >= start,
+        ReviewLog.reviewed_at < end,
     )
     value = session.exec(stmt).one()
     if isinstance(value, Sequence):
@@ -108,8 +107,22 @@ def review(session: Session, user: User, memory: MemoryItem, grade: int) -> Memo
 
 def _update_streak(session: Session, user: User) -> None:
     today_count = _reviews_today(session, user)
-    if today_count == 5:
-        user.streak_days += 1
+    if today_count < _STREAK_THRESHOLD:
+        return
+
+    start, _ = user_day_bounds(user.timezone)
+    last = user.last_streak_at
+    if last is not None:
+        last_start, _ = user_day_bounds(user.timezone, now=last)
+        if last_start >= start:
+            return
+        if start - last_start == timedelta(days=1):
+            user.streak_days += 1
+        else:
+            user.streak_days = 1
+    else:
+        user.streak_days = 1
+    user.last_streak_at = start
 
 
 def enforce_daily_cap(session: Session, user: User, requested: int) -> int:

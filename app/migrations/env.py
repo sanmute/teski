@@ -1,59 +1,53 @@
-from __future__ import annotations
-
 from logging.config import fileConfig
-from pathlib import Path
-from typing import Optional
-
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import create_engine, pool
+from sqlmodel import SQLModel
 
 from app.config import get_settings
-from app.db import db_url
-from app.models import app_metadata
+settings = get_settings()
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
+# ---- Alembic config/logging ----
 config = context.config
-
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
-if config.config_file_name is not None and Path(config.config_file_name).exists():
+if config.config_file_name:
     fileConfig(config.config_file_name)
 
-target_metadata = app_metadata
+# ---- Metadata for autogenerate ----
+target_metadata = SQLModel.metadata
 
+# ---- Build a SYNC URL for Alembic ----
+def sync_url(url: str) -> str:
+    # sqlite+aiosqlite:///./teski.db  -> sqlite:///./teski.db
+    return url.replace("+aiosqlite", "")
 
-def _run_migrations_offline() -> None:
-    url = db_url
+from app.config import get_settings
+SYNC_DB_URL = get_settings().DATABASE_URL.replace("+aiosqlite", "")
+
+def run_migrations_offline() -> None:
     context.configure(
-        url=url,
+        url=SYNC_DB_URL,
         target_metadata=target_metadata,
         literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
+        compare_type=True,
+        render_as_batch=True,  # SQLite-friendly
     )
-
     with context.begin_transaction():
         context.run_migrations()
 
-
-def _run_migrations_online() -> None:
-    configuration = config.get_section(config.config_ini_section, {})
-    configuration["sqlalchemy.url"] = db_url
-
-    connectable = engine_from_config(
-        configuration,
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
+def run_migrations_online() -> None:
+    connectable = create_engine(
+        SYNC_DB_URL, poolclass=pool.NullPool, future=True
     )
-
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
-
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            compare_type=True,
+            render_as_batch=True,
+        )
         with context.begin_transaction():
             context.run_migrations()
 
-
 if context.is_offline_mode():
-    _run_migrations_offline()
+    run_migrations_offline()
 else:
-    _run_migrations_online()
+    run_migrations_online()

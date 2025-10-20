@@ -56,6 +56,9 @@ class StatsOut(BaseModel):
     daily_cap: int
     streak_days: int
     due_count: int
+    exercises_correct_today: int
+    exercises_incorrect_today: int
+    suggested_new_exercises: int
 
 
 class AssignABIn(BaseModel):
