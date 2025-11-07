@@ -30,7 +30,7 @@ Makefile        Common setup/build/dev commands
 ## Initial Setup
 1. **Clone the repository**
    ```bash
-   git clone github.com/sanmute/teski.git
+   git clone https://github.com/sanmute/teski.git
    cd teski
    ```
 2. **Create and activate a virtual environment**
