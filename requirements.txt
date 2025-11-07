@@ -12,3 +12,6 @@ pyyaml==6.0.2
 # >>> DFE START
 Jinja2==3.1.4
 # <<< DFE END
+tiktoken>=0.7
+anthropic>=0.34.0
+openai>=1.54.0
