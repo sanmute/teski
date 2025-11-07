@@ -32,3 +32,6 @@ bun.lockb
 # IDE/editor
 .vscode/
 .idea/
+text.txt
+.gitignore
+.gitignore
