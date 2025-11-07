@@ -136,3 +136,15 @@ class LegacyTaskMap(AppSQLModel, table=True):
     __tablename__ = "legacy_task_map"
     legacy_task_id: str = Field(primary_key=True)
     task_id: UUID = Field(foreign_key="task.id", index=True)
+
+
+try:
+    import app.analytics.models  # noqa: F401  # ensures metadata registration
+except ImportError:
+    pass
+
+try:
+    import app.deep.models  # noqa: F401
+    import app.prefs.models  # noqa: F401
+except ImportError:
+    pass

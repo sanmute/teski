@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import os
+from calendar import monthrange
 from datetime import datetime, timedelta
 from hashlib import sha256
 from uuid import UUID
@@ -23,12 +25,33 @@ from .clients import (
 
 router = APIRouter(prefix="/feedback", tags=["feedback"])
 FEEDBACK_SETTINGS = get_feedback_settings()
+FEEDBACK_MONTHLY_CAP_EUR = float(os.getenv("FEEDBACK_MONTHLY_CAP_EUR", "50.0"))
+FEEDBACK_CAP_MODE = os.getenv("FEEDBACK_CAP_MODE", "mini-only")
 
 
 def _scalar(value):
     if isinstance(value, tuple):
         return value[0]
     return value
+
+
+def _month_bounds_utc(dt: datetime) -> tuple[datetime, datetime]:
+    start = datetime(dt.year, dt.month, 1)
+    last_day = monthrange(dt.year, dt.month)[1]
+    end = datetime(dt.year, dt.month, last_day, 23, 59, 59, 999999)
+    return start, end
+
+
+def get_monthly_spend(session: Session) -> float:
+    now = datetime.utcnow()
+    start, end = _month_bounds_utc(now)
+    total = session.exec(
+        select(func.sum(FeedbackEvent.cost_eur)).where(
+            FeedbackEvent.created_at >= start,
+            FeedbackEvent.created_at <= end,
+        )
+    ).one()
+    return float(total or 0.0)
 
 
 def choose_model(summary_json: dict, difficulty: int | None, language: str) -> str:
@@ -143,7 +166,14 @@ async def generate_feedback(payload: FeedbackGenerateIn, session: Session = Depe
             estimated_cost_eur=0.0,
         )
 
-    model = choose_model(payload.summary_json, payload.difficulty, payload.language)
+    month_spend = get_monthly_spend(session)
+    forced_mini: str | None = None
+    if month_spend >= FEEDBACK_MONTHLY_CAP_EUR:
+        if FEEDBACK_CAP_MODE == "block":
+            raise HTTPException(status_code=429, detail="Feedback temporarily unavailable: monthly cap reached")
+        forced_mini = "mini:haiku4_5"
+
+    model = forced_mini if forced_mini else choose_model(payload.summary_json, payload.difficulty, payload.language)
     prompt = build_prompt(payload.persona, payload.language, payload.max_sentences, payload.summary_json, payload.topic)
     est_in = estimate_tokens(prompt)
     est_out = 220

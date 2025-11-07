@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import AdminCostPanel from "./pages/AdminCostPanel";
+import DeepLearningLab from "./pages/DeepLearningLab";
 import { useEffect, useState } from "react";
 import { PetFrog, CompanionCharacter } from "@/components/PetFrog";
 // >>> PERSONA START
@@ -79,6 +81,8 @@ const App = () => {
                   />
                 }
               />
+              <Route path="/admin/costs" element={<AdminCostPanel />} />
+              <Route path="/deep" element={<DeepLearningLab />} />
               {personaRoutes}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

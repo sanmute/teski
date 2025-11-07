@@ -13,6 +13,22 @@ export default defineConfig(({ mode }) => ({
         target: "http://127.0.0.1:8000",
         changeOrigin: true,
       },
+      "/feedback": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
+      "/analytics": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
+      "/deep": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
+      "/prefs": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
     },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),

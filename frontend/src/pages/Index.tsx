@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Task } from "@/types/task";
 import { Calendar, Upload } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/api";
 import { Loader2, RefreshCcw } from "lucide-react";
@@ -13,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import clsx from "clsx";
 import { CompanionCharacter } from "@/components/PetFrog";
 import { AppLogo } from "@/components/AppLogo";
+import { DEMO_USER_ID } from "@/lib/constants";
 
 interface IndexProps {
   onTriggerFrog?: (urgency: 'calm' | 'snark' | 'disappointed' | 'intervention' | 'done', message: string) => void;
@@ -94,8 +96,8 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
 
       if (task.status === 'overdue') {
         const dueDate = new Date(task.due_iso);
-        const diffDays = (now.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24);
-        if (diffDays <= 7) {
+        const diffHours = (now.getTime() - dueDate.getTime()) / (1000 * 60 * 60);
+        if (diffHours <= 36) {
           overdue.push(task);
         }
       } else {
@@ -161,6 +163,7 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
             onDemoModeChange={setDemoMode}
             companion={companion}
             onCompanionChange={onCompanionChange}
+            userId={DEMO_USER_ID}
           />
         </div>
 
@@ -218,6 +221,14 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
                 <RefreshCcw className={clsx("w-4 h-4", isFetching && "animate-spin")} />
                 Refresh
               </Button>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <Link to="/deep" className="underline-offset-2 hover:underline">
+                  Deep learning lab
+                </Link>
+                <Link to="/admin/costs" className="underline-offset-2 hover:underline">
+                  Admin panel
+                </Link>
+              </div>
             </div>
           </div>
           

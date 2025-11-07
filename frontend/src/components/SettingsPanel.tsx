@@ -14,17 +14,21 @@ import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { CompanionCharacter } from "@/components/PetFrog";
+import { DeepPrefs } from "@/components/DeepPrefs";
+import { DEMO_USER_ID } from "@/lib/constants";
 
 interface SettingsPanelProps {
   demoMode: boolean;
   onDemoModeChange: (enabled: boolean) => void;
   companion: CompanionCharacter;
   onCompanionChange: (character: CompanionCharacter) => void;
+  userId?: string;
 }
 
-export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompanionChange }: SettingsPanelProps) {
+export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompanionChange, userId }: SettingsPanelProps) {
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
+  const resolvedUserId = userId ?? DEMO_USER_ID;
 
   const readLocalStorage = <T,>(key: string, fallback: T, transform?: (raw: string) => T): T => {
     if (typeof window === 'undefined') return fallback;
@@ -491,3 +495,6 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
     </Dialog>
   );
 }
+        <div className="mt-6">
+          <DeepPrefs userId={resolvedUserId} />
+        </div>
