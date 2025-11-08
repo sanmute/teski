@@ -65,7 +65,13 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        themes={["light", "dark"]}
+        storageKey="teski-theme"
+        enableSystem={false}
+      >
         <TooltipProvider>
           <Toaster />
           <Sonner />
