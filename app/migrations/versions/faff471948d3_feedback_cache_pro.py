@@ -20,6 +20,8 @@ def _table_exists(inspector: sa.engine.interfaces.Inspector, name: str) -> bool:
 
 
 def _column_exists(inspector: sa.engine.interfaces.Inspector, table: str, column: str) -> bool:
+    if not _table_exists(inspector, table):
+        return False
     return any(col["name"] == column for col in inspector.get_columns(table))
 
 

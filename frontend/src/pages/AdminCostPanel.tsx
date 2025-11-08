@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Bar,
   BarChart,
@@ -58,7 +59,15 @@ export default function AdminCostPanel() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-semibold">Admin — Costs & KPIs</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold">Admin — Costs & KPIs</h1>
+          <p className="text-sm text-muted-foreground">Monitor LLM usage, cache performance, and user health.</p>
+        </div>
+        <Link to="/" className="text-sm font-medium text-primary underline-offset-2 hover:underline">
+          ← Back to dashboard
+        </Link>
+      </div>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Cost (last 30d)" value={`€${(cost?.cost_last_30d_eur ?? 0).toFixed(2)}`} />

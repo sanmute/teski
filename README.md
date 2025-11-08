@@ -1,128 +1,121 @@
-# Teski – Deadline Shamer Dashboard
+# Teski – Deadline Shamer + Deep Learning Lab
 
-Teski is a study companion that keeps you accountable for upcoming deadlines. The project combines a FastAPI backend, a Vite + React frontend, and a lightweight service worker to deliver reminders, push notifications, and a playful dashboard featuring Teski the deadline frog.
+Teski keeps students honest about deadlines *and* nudges them toward deeper understanding. It now ships with:
 
-## Features
-- Import calendar data (ICS) and turn events into trackable tasks.
-- Surfaced study-pack insights, topic maps, and reminder scheduling.
-- Push notification support (VAPID) with a background scheduler that periodically sweeps for new reminders.
-- Responsive front end built with shadcn-ui, Tailwind CSS, and TanStack Query.
-- Progressive Web App hooks (manifest + service worker) so Teski can be installed or work offline for cached assets.
+- FastAPI + SQLModel backend (memory API, feedback service, deep-learning endpoints, prefs, analytics jobs)
+- Vite + React 18 frontend (shadcn-ui/Tailwind) with Admin Cost panel, Deep Learning Lab, push-ready PWA shell
+- LLM-powered feedback + elaboration + concept maps, gated by per-user opt-in preferences (GDPR friendly)
+
+## Highlights
+
+| Area | Capabilities |
+| ---- | ------------ |
+| Tasks & Planner | ICS import, reminders, APScheduler sweepers, push notifications |
+| Feedback | `/feedback/generate` routed through OpenAI/Anthropic/local models with monthly cap guard + caching |
+| Deep Learning Pack | Self-explanations (text/voice/Whisper), elaborative prompts, concept maps, confidence logs, interleaving toggle |
+| Preferences | `/prefs/get|set` stores user opt-ins for LLM/STT/storage features; core planner stays on |
+| Analytics | Raw events + daily aggregates + `/analytics/admin/kpis` for DAU/WAU, retention, paid users |
+| Admin UX | `/admin/costs` page with Recharts summary of cost/cache + KPIs |
 
 ## Tech Stack
-- **Backend:** FastAPI, SQLModel, APScheduler, SQLite, Python 3.12
-- **Frontend:** Vite, React 18, TypeScript, Tailwind CSS, shadcn-ui components
-- **Tooling:** npm, ESLint, Makefile helpers, service worker caching
+- **Backend:** FastAPI, SQLModel, Alembic, APScheduler, SQLite (default)
+- **LLM/AI:** Feedback router w/ OpenAI + Anthropic + local llama, optional Whisper (OpenAI or faster-whisper)
+- **Frontend:** Vite, React 18, TypeScript, Tailwind CSS, shadcn-ui components, TanStack Query, Recharts
+- **Tooling:** npm, ESLint, Makefile helpers, PWA service worker
 
-## Repository Layout
+## Repo Layout
 ```
-backend/        FastAPI application, database models, services, and routers
-frontend/       Vite + React client, UI components, assets, service worker
-requirements.txt  Python dependencies for the backend
-Makefile        Common setup/build/dev commands
+app/            Memory API + feedback/deep/prefs routers (FastAPI entrypoint)
+backend/        Legacy planner service (tasks, reminders, push, ICS)
+frontend/       React client (dashboard, admin panel, deep-learning lab)
+docs/           Specs & migration notes
+requirements.txt  Backend Python deps
+Makefile        Convenience commands (setup, dev, lint)
 ```
 
-## Prerequisites
-- Python 3.12+
-- Node.js 18+ and npm
-- SQLite (bundled with Python, used via `sqlite:///` URL)
-
-## Initial Setup
-1. **Clone the repository**
+## Setup
+1. Clone & enter repo
    ```bash
    git clone https://github.com/sanmute/teski.git
    cd teski
    ```
-2. **Create and activate a virtual environment**
+2. Python venv
    ```bash
-   python3 -m venv backend/.venv
-   source backend/.venv/bin/activate  # Windows: backend\.venv\Scripts\activate
+   python3 -m venv .venv
+   source .venv/bin/activate
    ```
-3. **Install dependencies**
+3. Install deps
    ```bash
    pip install -r requirements.txt
    cd frontend && npm install && cd ..
    ```
-   Or run `make setup` to perform the same steps.
-4. **Create environment files** (not tracked in Git):
-   - `.env` (shared defaults)
-     ```env
-     APP_NAME=Teski
-     API_PREFIX=/api
-     DB_FILE=app.db
-     ```
-   - `.env.backend`
-     ```env
-     DATABASE_URL=sqlite:///backend/app.db
-     SECRET_KEY=<random string>
-     ACCESS_TOKEN_EXPIRE_MINUTES=60
-     VAPID_PRIVATE_PEM="-----BEGIN EC PRIVATE KEY-----..."
-     VAPID_PUBLIC_KEY=<matching public key>
-     LOG_LEVEL=debug
-     ```
-   - `.env.frontend`
-     ```env
-     VITE_API_BASE=/api
-     VITE_APP_NAME=Teski
-     VITE_VAPID_PUBLIC=<same public key as above>
-     ```
-   Generate your own VAPID key pair for push notifications or remove push usage until you have keys.
-
-## Running the Project
-- **Backend (FastAPI + scheduler):**
-  ```bash
-  uvicorn backend.main:app --reload --env-file .env.backend --port 8000
-  ```
-  API docs live at http://localhost:8000/docs once the server is running.
-
-- **Frontend (Vite dev server):**
-  ```bash
-  cd frontend
-  npm run dev -- --host localhost --port 5173
-  ```
-  Visit http://localhost:5173 in the browser. The dev server proxies `/api` calls to the backend.
-
-- **Run both with one command:**
-  ```bash
-  make dev
-  ```
-  Uses a background process group to boot both servers (Ctrl+C stops both).
-
-### Demo Walkthrough
-
-1. **Start both services** with `make dev` (see above). Wait until Vite reports the dev URL and Uvicorn logs `Application startup complete`.
-2. **Visit the dashboard** at http://localhost:5173. The header should show Teski’s frog logo with the “Deadline Shamer Dashboard” title.
-3. **Load sample tasks**:
-   - If you want real data, click “Import ICS Calendar” and choose an `.ics` file.
-   - Otherwise, enable demo mode from the “Settings” side panel (or leave it on by default if you never imported data). You’ll see example tasks such as “Linear Algebra HW 2” and “Mechanical Engineering Lab Report”.
-4. **Trigger reminders** by clicking the ✅ action on a task; the toast confirms the update and the task moves to the completed section. Use the “Undo” button on any completed task to bring it back.
-5. **Show backend capability** (optional): run this curl command to seed mock data through the API while the server is running:
-   ```bash
-   curl -X POST http://localhost:8000/api/tasks/mock-load
+4. Env files (see `.env.example` for full list):
+   ```env
+   DATABASE_URL=sqlite:///./teski_v2.db
+   FEEDBACK_MONTHLY_CAP_EUR=50.0
+   FEEDBACK_CAP_MODE=mini-only      # or block
+   ENABLE_ANALYTICS_JOBS=true
+   ANALYTICS_CRON=0 2 * * *
+   ENABLE_WHISPER=false             # true enables OpenAI/faster-whisper
+   OPENAI_API_KEY=sk-...
+   VITE_API_BASE=/
    ```
-   The response reports how many tasks were inserted; refresh the dashboard to see them.
-6. **Highlight integrations** by navigating to the Moodle import card and pointing out the upload flow, or open DevTools → Application → Service Workers to show the registered `service-worker.js`.
+   Generate VAPID keys if you want push notifications (set in `.env.backend` + `.env.frontend`).
 
-These steps give a repeatable local storyline you can narrate while screensharing. Include them in your submission notes if hosts need instructions on how to reproduce the demo.
+## Run Locally
+```bash
+make dev      # runs uvicorn app.main + npm run dev simultaneously
+```
+- API docs: http://localhost:8000/docs
+- React app: http://localhost:5173 (dev server proxies `/api`, `/feedback`, `/analytics`, `/prefs`, `/deep`, etc.)
 
-## Building for Production
-- **Frontend bundle:** `cd frontend && npm run build`
-- **Compile backend bytecode (optional):** `python -m compileall backend`
-- **Static assets:** The service worker (`frontend/public/service-worker.js`) precaches key files and updates with a stale-while-revalidate strategy.
+To serve from FastAPI only (no dev server):
+```bash
+cd frontend && npm run build
+uvicorn app.main:app --env-file .env --port 8000
+```
+Static files under `frontend/dist` will be served by FastAPI’s StaticFiles mount (configure in deployment).
 
-## Data & Seeding
-- Default storage is `backend/app.db` (SQLite). Delete the file to reset the database.
-- Load mock data via the `/api/tasks/mock-load` POST endpoint; it seeds sample tasks from `backend/seed/tasks.json`.
+## Demo Flow (suggested)
+1. `make dev` → wait for Uvicorn + Vite ready logs.
+2. Open http://localhost:5173.
+3. Import an ICS file *or* toggle “Demo mode” via Settings to show mock tasks.
+4. Mark a task done → watch the “Tasks of Shame” UI update, show undo flow.
+5. Open “Admin panel” link → `/admin/costs` page with cost/cache charts + KPIs.
+6. In Settings (gear icon) scroll to **Deep-learning pack** toggles, turn on LLM feedback/voice/etc.
+7. Browse to `/deep` (“Deep learning lab” link) to show ExplainCard, ConceptMapWidget, CalibrationChip.
+8. (Optional) Hit `/feedback/admin/stats/*`, `/analytics/admin/kpis`, or `/prefs/*` via Thunder Client/Postman to highlight APIs.
 
-## Push Notifications
-- Teski exposes a VAPID-enabled push route (`backend/routes/push.py`).
-- Serve your generated `VAPID_PUBLIC_KEY` to the client (see `.env.frontend`).
-- Chromium may require HTTPS or `localhost` to allow push subscriptions.
+## Database & Migrations
+- Default DB: `teski_v2.db` (root FastAPI service); legacy planner uses `backend/app.db`.
+- Alembic configuration under `app/migrations/` targets SQLModel metadata (memory + feedback + deep + prefs tables).
+- Typical cycle:
+  ```bash
+  alembic -c alembic.ini revision --autogenerate -m "<message>"
+  alembic -c alembic.ini upgrade head
+  ```
 
-## Testing & Linting
-- Frontend linting: `cd frontend && npm run lint`
-- JavaScript/TypeScript formatting: use your editor or run `eslint` per the Makefile.
-- (No formal backend test suite yet; add one under `backend/tests/`).
+## Preferences & Privacy
+- `app/prefs` stores per-user opt-ins: `allow_llm_feedback`, `allow_voice_stt`, etc.
+- Deep-learning routes read these flags and return 403 when features are disabled.
+- Self-explanations and concept maps only store UUID + topic/item IDs; no names/emails.
+- Toggling off storage deletes access (GET returns empty data).
+
+## Analytics & Cost Controls
+- `/feedback/admin/stats/cache|costs` provide cost telemetry + cache hit rate.
+- `/analytics/admin/kpis` exposes DAU/WAU, retention (7/28), avg session mins, reviews/user, paid user count.
+- Nightly job (`ENABLE_ANALYTICS_JOBS=true`) runs `nightly_analytics_job` via APScheduler (cron configurable via `ANALYTICS_CRON`).
+- Feedback monthly cap ensures spend stays in budget (`FEEDBACK_MONTHLY_CAP_EUR`, `FEEDBACK_CAP_MODE=mini-only|block`).
+
+## Push Notifications (optional)
+- Planner backend exposes `/api/push/*` routes with Web Push (VAPID).
+- Service worker lives in `frontend/public/service-worker.js` (stale-while-revalidate strategy).
+- Use HTTPS or `localhost` for subscription in Chromium.
+
+## Testing / Linting
+- Frontend lint: `cd frontend && npm run lint`
+- Backend tests currently limited; add under `tests/` and run with `pytest` (not bundled yet).
+- Format/lint tasks reachable via Makefile or IDE scripts.
 
 ## Deployment Notes
 - Use a production ASGI server (e.g., `uvicorn --workers` behind nginx or `gunicorn -k uvicorn.workers.UvicornWorker`).

@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Settings, Sun, Moon, Trash2, Frown, Eye, Type, Palette, LayoutGrid } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useToast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { CompanionCharacter } from "@/components/PetFrog";
 import { DeepPrefs } from "@/components/DeepPrefs";
@@ -106,34 +106,38 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
     window.localStorage.setItem('color-blind-support', colorBlindSupport);
   }, [colorBlindSupport]);
 
-  const applySettings = () => {
+  const applyAppearance = useCallback(() => {
     const body = document.body;
-    
-    // Remove existing classes
+    const root = document.getElementById("root");
+
     body.classList.remove(
-      'font-size-small', 'font-size-normal', 'font-size-large', 'font-size-extra-large',
-      'high-contrast', 'reduced-motion', 
-      'color-blind-deuteranopia', 'color-blind-protanopia', 'color-blind-tritanopia'
+      "font-size-small",
+      "font-size-normal",
+      "font-size-large",
+      "font-size-extra-large",
+      "high-contrast",
+      "reduced-motion",
     );
-    
-    // Apply font size
-    const fontSizeClasses = ['font-size-small', 'font-size-normal', 'font-size-large', 'font-size-extra-large'];
+    if (root) {
+      root.classList.remove("color-blind-deuteranopia", "color-blind-protanopia", "color-blind-tritanopia");
+    }
+
+    const fontSizeClasses = ["font-size-small", "font-size-normal", "font-size-large", "font-size-extra-large"];
     body.classList.add(fontSizeClasses[fontSize - 1]);
-    
-    // Apply accessibility settings
+
     if (highContrast) {
-      body.classList.add('high-contrast');
+      body.classList.add("high-contrast");
     }
-    
     if (reducedMotion) {
-      body.classList.add('reduced-motion');
+      body.classList.add("reduced-motion");
     }
-    
-    // Apply color blind support
-    if (colorBlindSupport !== 'default') {
-      body.classList.add(`color-blind-${colorBlindSupport}`);
+    if (colorBlindSupport !== "default" && root) {
+      root.classList.add(`color-blind-${colorBlindSupport}`);
     }
-    
+  }, [fontSize, highContrast, reducedMotion, colorBlindSupport]);
+
+  const applySettings = () => {
+    applyAppearance();
     toast({
       title: "Settings applied successfully",
       description: "Your appearance preferences have been updated.",
@@ -142,34 +146,8 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
 
   // Apply saved settings on component mount
   useEffect(() => {
-    // Apply settings without showing toast on initial load
-    const body = document.body;
-    
-    // Remove existing classes
-    body.classList.remove(
-      'font-size-small', 'font-size-normal', 'font-size-large', 'font-size-extra-large',
-      'high-contrast', 'reduced-motion', 
-      'color-blind-deuteranopia', 'color-blind-protanopia', 'color-blind-tritanopia'
-    );
-    
-    // Apply font size
-    const fontSizeClasses = ['font-size-small', 'font-size-normal', 'font-size-large', 'font-size-extra-large'];
-    body.classList.add(fontSizeClasses[fontSize - 1]);
-    
-    // Apply accessibility settings
-    if (highContrast) {
-      body.classList.add('high-contrast');
-    }
-    
-    if (reducedMotion) {
-      body.classList.add('reduced-motion');
-    }
-    
-    // Apply color blind support
-    if (colorBlindSupport !== 'default') {
-      body.classList.add(`color-blind-${colorBlindSupport}`);
-    }
-  }, [fontSize, highContrast, reducedMotion, colorBlindSupport]);
+    applyAppearance();
+  }, [applyAppearance]);
 
   const handleDeleteAllData = () => {
     // Backend logic will be handled separately
@@ -198,7 +176,7 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
           <Settings className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-hidden">
+      <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
@@ -490,11 +468,11 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
               </div>
             </TabsContent>
           </div>
+          <div className="mt-6">
+            <DeepPrefs userId={resolvedUserId} />
+          </div>
         </Tabs>
       </DialogContent>
     </Dialog>
   );
 }
-        <div className="mt-6">
-          <DeepPrefs userId={resolvedUserId} />
-        </div>

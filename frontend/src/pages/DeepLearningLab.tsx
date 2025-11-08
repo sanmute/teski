@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ExplainCard } from "@/components/ExplainCard";
 import { ConceptMapWidget } from "@/components/ConceptMapWidget";
 import { CalibrationChip } from "@/components/CalibrationChip";
@@ -15,11 +16,16 @@ export default function DeepLearningLab() {
 
   return (
     <div className="space-y-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Deep Learning Lab</h1>
-        <p className="text-sm text-muted-foreground">
-          Optional tools for deeper learning. Toggle features in Settings.
-        </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold">Deep Learning Lab</h1>
+          <p className="text-sm text-muted-foreground">
+            Optional tools for deeper learning. Toggle features in Settings.
+          </p>
+        </div>
+        <Link to="/" className="text-sm font-medium text-primary underline-offset-2 hover:underline">
+          ← Back to dashboard
+        </Link>
       </div>
       {loading && <p className="text-sm text-muted-foreground">Loading preferences…</p>}
       <ExplainCard userId={DEMO_USER_ID} topicId={DEMO_TOPIC_ID} enabled={allowExplain} />

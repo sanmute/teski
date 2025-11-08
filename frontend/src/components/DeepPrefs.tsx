@@ -14,12 +14,13 @@ const defaults: UserPrefs = {
 };
 
 export function DeepPrefs({ userId }: { userId: string }) {
+  console.log("Rendering DeepPrefs", userId);
   const [prefs, setPrefs] = useState<UserPrefs | null>(null);
   const [saving, setSaving] = useState(false);
 
   const load = useCallback(async () => {
     if (!userId) return;
-    const res = await fetch(`${API_BASE}/prefs/get?user_id=${userId}`);
+    const res = await fetch(`/prefs/get?user_id=${userId}`);
     if (res.ok) setPrefs(await res.json());
   }, [userId]);
 
@@ -30,7 +31,7 @@ export function DeepPrefs({ userId }: { userId: string }) {
   async function save() {
     if (!prefs) return;
     setSaving(true);
-    await fetch(`${API_BASE}/prefs/set`, {
+    await fetch(`/prefs/set`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(prefs),

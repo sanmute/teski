@@ -163,12 +163,6 @@ export function TaskCard({ task, onTriggerFrog, onMarkDone, onUndo, disabled, co
             </p>
           )}
 
-          {task.signals && Object.keys(task.signals).length > 0 && (
-            <div className="rounded-md bg-secondary/10 p-3 text-xs text-muted-foreground space-y-1">
-              <div className="font-semibold text-foreground/80">Signals captured</div>
-              <pre className="whitespace-pre-wrap break-words">{JSON.stringify(task.signals, null, 2)}</pre>
-            </div>
-          )}
         </div>
 
         {(onMarkDone || onUndo) && (

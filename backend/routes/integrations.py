@@ -55,8 +55,16 @@ async def refresh_now(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Fetch failed: {e}")
 
-    tasks = parse_ics_text(text)
-    ins, upd, skp = upsert_tasks(session, tasks, owner_user_id=user_id)
+    try:
+        tasks = parse_ics_text(text)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to parse ICS: {e}")
+
+    try:
+        ins, upd, skp = upsert_tasks(session, tasks, owner_user_id=user_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to import tasks: {e}")
+
     feed.last_fetch_at = datetime.utcnow()
     session.commit()
     return {"imported": ins, "updated": upd, "skipped": skp}
