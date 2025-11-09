@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { API_BASE } from "@/api";
 import type { UserPrefs } from "@/types/prefs";
+
+const PREFS_BASE = import.meta.env.VITE_PREFS_BASE ?? "";
 
 export function useUserPrefs(userId?: string) {
   const [prefs, setPrefs] = useState<UserPrefs | null>(null);
@@ -10,7 +11,7 @@ export function useUserPrefs(userId?: string) {
     if (!userId) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/prefs/get?user_id=${userId}`);
+      const res = await fetch(`${PREFS_BASE}/prefs/get?user_id=${userId}`);
       if (res.ok) setPrefs(await res.json());
     } finally {
       setLoading(false);

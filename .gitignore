@@ -33,5 +33,6 @@ bun.lockb
 .vscode/
 .idea/
 text.txt
+ssh.txt
 .gitignore
 .gitignore

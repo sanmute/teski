@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+import os
 from typing import Dict, List, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlmodel import Session, select
+from openai import AsyncOpenAI
 
 from ..db import get_session
 from ..feedback.router import call_llm
@@ -26,6 +28,46 @@ from .schemas import (
 from .stt import transcribe_audio
 
 router = APIRouter(prefix="/deep", tags=["deep-learning"])
+FEYNMAN_MODEL = os.getenv("FEYNMAN_EVAL_MODEL", "mini:gpt4_1")
+FEYNMAN_PROMPT_ID = os.getenv("FEYNMAN_PROMPT_ID")
+FEYNMAN_PROMPT_VERSION = os.getenv("FEYNMAN_PROMPT_VERSION", "1")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+_prompt_client: AsyncOpenAI | None = None
+
+
+def _get_prompt_client() -> AsyncOpenAI:
+    if not OPENAI_API_KEY:
+        raise HTTPException(status_code=500, detail="OPENAI_API_KEY missing for Feynman prompts")
+    global _prompt_client
+    if _prompt_client is None:
+        _prompt_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+    return _prompt_client
+
+
+async def _call_openai_prompt(topic: str, text: str) -> str:
+    if not FEYNMAN_PROMPT_ID:
+        raise HTTPException(status_code=500, detail="FEYNMAN_PROMPT_ID not configured")
+    client = _get_prompt_client()
+    response = await client.responses.create(
+        prompt={"id": FEYNMAN_PROMPT_ID, "version": FEYNMAN_PROMPT_VERSION},
+        input={"topic": topic, "explanation": text},
+    )
+    output_text = getattr(response, "output_text", None)
+    if output_text:
+        return output_text
+    pieces: list[str] = []
+    for block in getattr(response, "output", []) or []:
+        content = getattr(block, "content", []) or []
+        for item in content:
+            if isinstance(item, dict):
+                value = item.get("text")
+            else:
+                value = getattr(item, "text", None)
+            if value:
+                pieces.append(value)
+    if pieces:
+        return "\n".join(pieces)
+    raise HTTPException(status_code=502, detail="Prompt response missing text")
 
 EVAL_PROMPT = """You are Teski, evaluating a student's self-explanation.
 Topic: {topic}
@@ -74,8 +116,11 @@ async def submit_explanation(payload: ExplainIn, session: Session = Depends(get_
         "store_self_explanations",
         "Storing self-explanations is disabled in your preferences.",
     )
-    prompt = EVAL_PROMPT.format(topic=payload.topic_id, text=payload.text)
-    raw = await call_llm("mini:haiku4_5", prompt, "en")
+    if FEYNMAN_PROMPT_ID:
+        raw = await _call_openai_prompt(str(payload.topic_id), payload.text)
+    else:
+        prompt = EVAL_PROMPT.format(topic=payload.topic_id, text=payload.text)
+        raw = await call_llm(FEYNMAN_MODEL, prompt, "en")
     try:
         rubric: Dict[str, object] = json.loads(raw)
     except Exception:

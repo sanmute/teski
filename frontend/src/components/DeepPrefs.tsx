@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { API_BASE } from "@/api";
 import type { UserPrefs } from "@/types/prefs";
+
+const PREFS_BASE = import.meta.env.VITE_PREFS_BASE ?? "";
 
 const defaults: UserPrefs = {
   user_id: "",
@@ -20,7 +21,7 @@ export function DeepPrefs({ userId }: { userId: string }) {
 
   const load = useCallback(async () => {
     if (!userId) return;
-    const res = await fetch(`/prefs/get?user_id=${userId}`);
+    const res = await fetch(`${PREFS_BASE}/prefs/get?user_id=${userId}`);
     if (res.ok) setPrefs(await res.json());
   }, [userId]);
 
@@ -31,7 +32,7 @@ export function DeepPrefs({ userId }: { userId: string }) {
   async function save() {
     if (!prefs) return;
     setSaving(true);
-    await fetch(`/prefs/set`, {
+    await fetch(`${PREFS_BASE}/prefs/set`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(prefs),
