@@ -148,3 +148,8 @@ try:
     import app.prefs.models  # noqa: F401
 except ImportError:
     pass
+
+try:
+    import app.pilot.models  # noqa: F401
+except ImportError:
+    pass

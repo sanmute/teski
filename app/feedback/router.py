@@ -13,7 +13,7 @@ from sqlmodel import Session, select, func
 from ..db import get_session
 from ..config_feedback import get_feedback_settings
 from ..models import User
-from .costs import estimate_cost_eur
+from .costs import estimate_cost_eur, get_cost_stats
 from .models import FeedbackCache, FeedbackEvent
 from .schemas import FeedbackGenerateIn, FeedbackGenerateOut, FeedbackSummaryIn, FeedbackSummaryOut
 from .clients import (
@@ -245,32 +245,7 @@ async def feedback_cache_stats(session: Session = Depends(get_session)):
 
 @router.get("/admin/stats/costs")
 async def feedback_cost_stats(session: Session = Depends(get_session)):
-    month_ago = datetime.utcnow() - timedelta(days=30)
-    total_cost = _scalar(session.exec(select(func.sum(FeedbackEvent.cost_eur))).one()) or 0.0
-    cost_30d = (
-        _scalar(
-            session.exec(
-                select(func.sum(FeedbackEvent.cost_eur)).where(FeedbackEvent.created_at >= month_ago)
-            ).one()
-        )
-        or 0.0
-    )
-    total_events = _scalar(session.exec(select(func.count(FeedbackEvent.id))).one()) or 0
-    total_hits = (
-        _scalar(
-            session.exec(
-                select(func.count(FeedbackEvent.id)).where(FeedbackEvent.cached_hit.is_(True))
-            ).one()
-        )
-        or 0
-    )
-    hit_rate = float(total_hits) / float(total_events) if total_events else 0.0
-    return {
-        "cost_total_eur": float(total_cost),
-        "cost_last_30d_eur": float(cost_30d),
-        "events_total": int(total_events),
-        "cache_hit_rate": hit_rate,
-    }
+    return get_cost_stats(session)
 
 
 @router.delete("/admin/cache/purge")

@@ -18,9 +18,11 @@ from app.db import init_db
 from app.feedback.router import router as feedback_router
 from app.analytics.admin import router as analytics_admin_router
 from app.analytics.kpis import router as analytics_kpis_router
+from app.analytics.investor_router import router as investor_analytics_router
 from app.analytics.jobs import nightly_analytics_job
 from app.deep.router import router as deep_router
 from app.prefs.router import router as prefs_router
+from app.pilot.router import router as pilot_router
 
 ENABLE_ANALYTICS_JOBS = os.getenv("ENABLE_ANALYTICS_JOBS", "false").lower() in {"1", "true", "yes"}
 ANALYTICS_CRON = os.getenv("ANALYTICS_CRON", "0 2 * * *")
@@ -77,6 +79,8 @@ def create_app() -> FastAPI:
     app.include_router(feedback_router)
     app.include_router(analytics_admin_router)
     app.include_router(analytics_kpis_router)
+    app.include_router(investor_analytics_router)
+    app.include_router(pilot_router)
     app.include_router(deep_router)
     app.include_router(prefs_router)
 
