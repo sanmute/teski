@@ -161,7 +161,12 @@ export async function refreshMoodleFeed(userId: string): Promise<{ imported: num
   return handleResponse<{ imported: number; updated: number; skipped: number }>(res);
 }
 
-export async function getMoodleFeedStatus(userId: string): Promise<{ hasFeed: boolean; lastFetchAt: string | null }> {
+export async function getMoodleFeedStatus(userId: string): Promise<{
+  hasFeed: boolean;
+  lastFetchAt: string | null;
+  expiresAt: string | null;
+  needsRenewal: boolean;
+}> {
   const endpoint = `${API_BASE}/integrations/moodle/has-feed`;
   const requestUrl = `${endpoint}?user_id=${encodeURIComponent(userId)}`;
   const res = await fetch(requestUrl);

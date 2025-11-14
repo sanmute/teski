@@ -153,3 +153,18 @@ try:
     import app.pilot.models  # noqa: F401
 except ImportError:
     pass
+
+try:
+    import app.learner.models  # noqa: F401
+except ImportError:
+    pass
+
+try:
+    import app.tasks.models  # noqa: F401
+except ImportError:
+    pass
+
+try:
+    import app.notifications.models  # noqa: F401
+except ImportError:
+    pass

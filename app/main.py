@@ -23,6 +23,10 @@ from app.analytics.jobs import nightly_analytics_job
 from app.deep.router import router as deep_router
 from app.prefs.router import router as prefs_router
 from app.pilot.router import router as pilot_router
+from app.learner.router import router as onboarding_router
+from app.tasks.router import router as tasks_router
+from app.notifications.router import router as notifications_router
+from app.explanations.router import router as explanations_router
 
 ENABLE_ANALYTICS_JOBS = os.getenv("ENABLE_ANALYTICS_JOBS", "false").lower() in {"1", "true", "yes"}
 ANALYTICS_CRON = os.getenv("ANALYTICS_CRON", "0 2 * * *")
@@ -83,6 +87,10 @@ def create_app() -> FastAPI:
     app.include_router(pilot_router)
     app.include_router(deep_router)
     app.include_router(prefs_router)
+    app.include_router(tasks_router)
+    app.include_router(notifications_router)
+    app.include_router(explanations_router)
+    app.include_router(onboarding_router)
 
     @app.on_event("startup")
     async def _startup() -> None:

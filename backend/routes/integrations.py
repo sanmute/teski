@@ -1,7 +1,7 @@
 # app/backend/routes/integrations.py
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session, select
-from datetime import datetime
+from datetime import datetime, timedelta
 import httpx
 from ..db import get_session
 from ..models_integrations import MoodleFeed
@@ -71,5 +71,16 @@ async def refresh_now(
 
 @router.get("/has-feed")
 def has_feed(user_id: str, session: Session = Depends(get_session)):
-    feed = session.exec(select(MoodleFeed).where(MoodleFeed.user_id == user_id, MoodleFeed.active==True)).first()
-    return {"hasFeed": bool(feed), "lastFetchAt": feed.last_fetch_at if feed else None}
+    feed = session.exec(
+        select(MoodleFeed).where(MoodleFeed.user_id == user_id, MoodleFeed.active == True)
+    ).first()
+    if not feed:
+        return {"hasFeed": False, "lastFetchAt": None, "expiresAt": None, "needsRenewal": True}
+    expires_at = feed.added_at + timedelta(days=60)
+    needs_renewal = datetime.utcnow() >= expires_at
+    return {
+        "hasFeed": True,
+        "lastFetchAt": feed.last_fetch_at,
+        "expiresAt": expires_at,
+        "needsRenewal": needs_renewal,
+    }

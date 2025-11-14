@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { TaskCard } from "@/components/TaskCard";
+import { LegacyTaskCard } from "@/components/LegacyTaskCard";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { MoodleIntegration } from "@/components/MoodleIntegration";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -165,6 +165,9 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
             onCompanionChange={onCompanionChange}
             userId={DEMO_USER_ID}
           />
+          <Link to="/tasks/upcoming">
+            <Button variant="secondary">Personalized tasks</Button>
+          </Link>
         </div>
 
         {/* Moodle Integration */}
@@ -260,7 +263,7 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
                     </div>
                     <div className="space-y-3">
                       {overdueTasks.map((task: Task) => (
-                        <TaskCard
+                        <LegacyTaskCard
                           key={task.id}
                           task={task}
                           companion={companion}
@@ -283,7 +286,7 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
                       <p className="text-sm text-muted-foreground">No active tasks right now. Enjoy the calm!</p>
                     ) : (
                       activeTasks.map((task: Task) => (
-                        <TaskCard
+                        <LegacyTaskCard
                           key={task.id}
                           task={task}
                           companion={companion}
@@ -307,7 +310,7 @@ export default function Index({ onTriggerFrog, companion, onCompanionChange }: I
                     </div>
                     <div className="space-y-3 opacity-80">
                       {completedTasks.map((task: Task) => (
-                        <TaskCard
+                        <LegacyTaskCard
                           key={task.id}
                           task={task}
                           companion={companion}

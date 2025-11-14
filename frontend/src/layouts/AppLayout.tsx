@@ -1,0 +1,71 @@
+import { PropsWithChildren } from "react";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { label: "Dashboard", to: "/" },
+  { label: "Tasks", to: "/tasks/upcoming" },
+  { label: "Study", to: "/study" },
+  { label: "Help", to: "/help" },
+  { label: "Profile", to: "/profile" },
+];
+
+const TITLE_MAP: Record<string, string> = {
+  "/": "Dashboard",
+  "/tasks/upcoming": "Upcoming tasks",
+  "/study": "Study",
+  "/help": "Help & explanations",
+  "/profile": "My study profile",
+};
+
+export function AppLayout({ children }: PropsWithChildren) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const title = TITLE_MAP[location.pathname] ?? "Teski";
+
+  return (
+    <div className="flex min-h-screen bg-background text-foreground">
+      <aside className="hidden md:flex w-60 flex-col border-r bg-card">
+        <div className="px-4 py-5">
+          <div className="text-lg font-semibold">Teski</div>
+          <p className="text-xs text-muted-foreground">Personalized study companion</p>
+        </div>
+        <nav className="mt-4 flex-1 space-y-1 px-3">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === "/"}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center rounded-md px-3 py-2 text-sm font-medium transition hover:bg-muted",
+                  isActive && "bg-muted text-primary"
+                )
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+      </aside>
+      <div className="flex flex-1 flex-col">
+        <header className="flex items-center justify-between border-b px-4 py-3">
+          <div>
+            <h1 className="text-xl font-semibold">{title}</h1>
+            <p className="text-xs text-muted-foreground">Teski adapts plans to your style.</p>
+          </div>
+          <Button size="sm" onClick={() => navigate("/tasks/upcoming")}>
+            <Plus className="mr-1 h-4 w-4" />
+            New task
+          </Button>
+        </header>
+        <main className="flex-1 px-4 py-4">
+          {children ?? <Outlet />}
+        </main>
+      </div>
+    </div>
+  );
+}

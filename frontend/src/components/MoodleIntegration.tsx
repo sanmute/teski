@@ -97,9 +97,10 @@ export function MoodleIntegration({ onImported }: MoodleIntegrationProps) {
     connectMutation.mutate(moodleUrl.trim());
   };
 
-  const lastFetch = statusQuery.data?.lastFetchAt
-    ? new Date(statusQuery.data.lastFetchAt)
-    : null;
+  const lastFetch = statusQuery.data?.lastFetchAt ? new Date(statusQuery.data.lastFetchAt) : null;
+  const expiresAt = statusQuery.data?.expiresAt ? new Date(statusQuery.data.expiresAt) : null;
+  const needsRenewal = statusQuery.data?.needsRenewal ?? true;
+  const shouldCollectLink = !statusQuery.data?.hasFeed || needsRenewal;
 
   const isBusy = connectMutation.isPending || refreshMutation.isPending;
 
@@ -112,59 +113,68 @@ export function MoodleIntegration({ onImported }: MoodleIntegrationProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="moodle-url">Moodle Course URL</Label>
-          <Input
-            id="moodle-url"
-            type="url"
-            placeholder="https://your-school.moodle.com/course/view.php?id=123"
-            value={moodleUrl}
-            onChange={(e) => setMoodleUrl(e.target.value)}
-            className="font-mono text-sm"
-          />
-          <p className="text-xs text-muted-foreground">
-            Enter the URL of your Moodle course to automatically import assignments
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Button
-            onClick={handleConnect}
-            disabled={isBusy}
-            className="w-full"
-          >
-            {connectMutation.isPending ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Checking feed…
-              </>
-            ) : (
-              <>
-                <LinkIcon className="w-4 h-4 mr-2" />
-                Connect Moodle calendar
-              </>
+        {shouldCollectLink ? (
+          <>
+            {statusQuery.data?.hasFeed && needsRenewal && (
+              <div className="rounded-md border border-amber-300 bg-amber-50 p-2 text-xs text-amber-900">
+                Your previous Moodle link expired. Please paste a fresh ICS link (valid for 60 days).
+              </div>
             )}
-          </Button>
+            <div className="space-y-2">
+              <Label htmlFor="moodle-url">Moodle Course URL</Label>
+              <Input
+                id="moodle-url"
+                type="url"
+                placeholder="https://your-school.moodle.com/course/view.php?id=123"
+                value={moodleUrl}
+                onChange={(e) => setMoodleUrl(e.target.value)}
+                className="font-mono text-sm"
+              />
+              <p className="text-xs text-muted-foreground">
+                Enter the URL of your Moodle course to automatically import assignments
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Button onClick={handleConnect} disabled={isBusy} className="w-full">
+                {connectMutation.isPending ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Checking feed…
+                  </>
+                ) : (
+                  <>
+                    <LinkIcon className="w-4 h-4 mr-2" />
+                    Connect Moodle calendar
+                  </>
+                )}
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="rounded-md border border-green-200 bg-green-50 p-3 text-sm text-green-900">
+            Your Moodle calendar is connected. The link stays valid until{" "}
+            {expiresAt ? expiresAt.toLocaleDateString() : "60 days after connection"}.
+          </div>
+        )}
 
-          <Button
-            variant="outline"
-            onClick={() => refreshMutation.mutate()}
-            disabled={!statusQuery.data?.hasFeed || isBusy}
-            className="w-full"
-          >
-            {refreshMutation.isPending ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Refreshing tasks…
-              </>
-            ) : (
-              <>
-                <RefreshCcw className="w-4 h-4 mr-2" />
-                Refresh Moodle tasks
-              </>
-            )}
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          onClick={() => refreshMutation.mutate()}
+          disabled={!statusQuery.data?.hasFeed || isBusy}
+          className="w-full"
+        >
+          {refreshMutation.isPending ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Refreshing tasks…
+            </>
+          ) : (
+            <>
+              <RefreshCcw className="w-4 h-4 mr-2" />
+              Refresh Moodle tasks
+            </>
+          )}
+        </Button>
 
         <div className="rounded-md border border-border/50 bg-background/60 p-3 text-xs text-muted-foreground space-y-1">
           <div className="flex items-center justify-between">
@@ -172,13 +182,15 @@ export function MoodleIntegration({ onImported }: MoodleIntegrationProps) {
             <span
               className={clsx(
                 "font-medium",
-                statusQuery.data?.hasFeed ? "text-success" : "text-destructive"
+                statusQuery.data?.hasFeed && !needsRenewal ? "text-success" : "text-destructive"
               )}
             >
               {statusQuery.isLoading
                 ? "Checking…"
                 : statusQuery.data?.hasFeed
-                ? "Connected"
+                ? needsRenewal
+                  ? "Needs new link"
+                  : "Connected"
                 : "Not connected"}
             </span>
           </div>
@@ -194,6 +206,12 @@ export function MoodleIntegration({ onImported }: MoodleIntegrationProps) {
                 : lastFetch
                 ? lastFetch.toLocaleString()
                 : "never"}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span>Link expires:</span>
+            <span>
+              {expiresAt ? expiresAt.toLocaleDateString() : "—"}
             </span>
           </div>
         </div>
