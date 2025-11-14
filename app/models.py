@@ -168,3 +168,13 @@ try:
     import app.notifications.models  # noqa: F401
 except ImportError:
     pass
+
+try:
+    import app.study.models  # noqa: F401
+except ImportError:
+    pass
+
+try:
+    import app.integrations.models  # noqa: F401
+except ImportError:
+    pass

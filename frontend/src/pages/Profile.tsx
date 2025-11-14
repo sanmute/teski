@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_BASE } from "@/api";
+import { getClientUserId } from "@/lib/user";
 
 interface LearnerProfile {
   explanation_style?: string | null;
@@ -19,7 +19,9 @@ export default function Profile() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/onboarding/profile`);
+        const res = await fetch(`/onboarding/profile`, {
+          headers: { "X-User-Id": getClientUserId() },
+        });
         if (!res.ok) {
           throw new Error("Failed to load profile");
         }

@@ -1,8 +1,12 @@
-import { API_BASE } from "@/api";
 import { Task } from "@/types/tasks";
+import { getClientUserId } from "@/lib/user";
 
 export async function fetchUpcomingTasks(): Promise<Task[]> {
-  const res = await fetch(`${API_BASE}/tasks/upcoming`);
+  const res = await fetch(`/tasks/upcoming`, {
+    headers: {
+      "X-User-Id": getClientUserId(),
+    },
+  });
   if (!res.ok) {
     throw new Error("Failed to fetch upcoming tasks");
   }
@@ -10,9 +14,12 @@ export async function fetchUpcomingTasks(): Promise<Task[]> {
 }
 
 export async function markTaskDone(taskId: number): Promise<void> {
-  const res = await fetch(`${API_BASE}/tasks/${taskId}/status`, {
+  const res = await fetch(`/tasks/${taskId}/status`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-User-Id": getClientUserId(),
+    },
     body: JSON.stringify({ status: "done" }),
   });
   if (!res.ok) {
@@ -29,9 +36,12 @@ export interface TaskCreatePayload {
 }
 
 export async function createTask(payload: TaskCreatePayload): Promise<Task> {
-  const res = await fetch(`${API_BASE}/tasks`, {
+  const res = await fetch(`/tasks`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-User-Id": getClientUserId(),
+    },
     body: JSON.stringify(payload),
   });
 

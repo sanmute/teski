@@ -10,9 +10,10 @@ import { cn } from "@/lib/utils";
 interface TaskCardProps {
   task: Task;
   onStatusChange?: (taskId: number, status: TaskStatus) => void;
+  onStartSession?: (taskId: number, taskBlockId: number) => void;
 }
 
-export function TaskCard({ task, onStatusChange }: TaskCardProps) {
+export function TaskCard({ task, onStatusChange, onStartSession }: TaskCardProps) {
   const dueLabel = task.due_at ? format(new Date(task.due_at), "EEE dd.MM, HH:mm") : null;
   const isDone = task.status === "done";
 
@@ -62,13 +63,24 @@ export function TaskCard({ task, onStatusChange }: TaskCardProps) {
               <div
                 key={block.id}
                 className={cn(
-                  "rounded-full border px-3 py-1 text-xs shadow-sm",
+                  "flex items-center gap-2 rounded-full border px-3 py-1 text-xs shadow-sm",
                   block.label.toLowerCase().includes("starter") && "bg-amber-50 border-amber-200",
                   block.label.toLowerCase().includes("focus") && "bg-sky-50 border-sky-200",
                   block.label.toLowerCase().includes("review") && "bg-emerald-50 border-emerald-200"
                 )}
               >
-                {block.label} · {block.duration_minutes} min
+                <span>
+                  {block.label} · {block.duration_minutes} min
+                </span>
+                {onStartSession && (
+                  <button
+                    type="button"
+                    className="text-[11px] font-medium text-primary underline-offset-2 hover:underline"
+                    onClick={() => onStartSession(task.id, block.id)}
+                  >
+                    Start
+                  </button>
+                )}
               </div>
             ))}
             {task.blocks.length === 0 && (

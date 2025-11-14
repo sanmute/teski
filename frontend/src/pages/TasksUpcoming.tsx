@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Loader2, AlertCircle, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { Task } from "@/types/tasks";
 import { fetchUpcomingTasks, markTaskDone } from "@/api/tasks";
+import { startStudySession } from "@/api/study";
 import { TaskCard } from "@/components/TaskCard";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +15,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { NewTaskForm } from "@/components/NewTaskForm";
+import { useToast } from "@/hooks/use-toast";
+import { MoodleIntegration } from "@/components/MoodleIntegration";
 
 export default function TasksUpcoming() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -20,6 +24,8 @@ export default function TasksUpcoming() {
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [showNewTask, setShowNewTask] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const loadTasks = async () => {
     setLoading(true);
@@ -51,6 +57,23 @@ export default function TasksUpcoming() {
     setRefreshing(true);
     await loadTasks();
     setRefreshing(false);
+  };
+
+  const handleStartSession = async (_taskId: number, blockId: number) => {
+    try {
+      const session = await startStudySession(blockId);
+      toast({
+        title: "Session ready",
+        description: "Follow the adaptive plan to finish this block.",
+      });
+      navigate(`/study/session/${session.session_id}`);
+    } catch (err) {
+      toast({
+        title: "Could not start session",
+        description: err instanceof Error ? err.message : "Unknown error",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -88,6 +111,13 @@ export default function TasksUpcoming() {
           </div>
         )}
 
+        <MoodleIntegration
+          onImported={() => {
+            setRefreshing(true);
+            loadTasks().finally(() => setRefreshing(false));
+          }}
+        />
+
         {error && !loading && (
           <div className="flex items-center gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
             <AlertCircle className="h-4 w-4" />
@@ -103,7 +133,12 @@ export default function TasksUpcoming() {
 
         <div className="space-y-4">
           {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} onStatusChange={handleMarkDone} />
+            <TaskCard
+              key={task.id}
+              task={task}
+              onStatusChange={handleMarkDone}
+              onStartSession={handleStartSession}
+            />
           ))}
         </div>
       </div>

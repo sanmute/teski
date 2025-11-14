@@ -23,6 +23,7 @@ import Study from "./pages/Study";
 import Help from "./pages/Help";
 import Profile from "./pages/Profile";
 import { AppLayout } from "./layouts/AppLayout";
+import StudySessionPage from "./pages/StudySessionPage";
 
 const queryClient = new QueryClient();
 
@@ -92,6 +93,7 @@ const App = () => {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/tasks/upcoming" element={<TasksUpcoming />} />
                 <Route path="/study" element={<Study />} />
+                <Route path="/study/session/:sessionId" element={<StudySessionPage />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/profile" element={<Profile />} />
               </Route>
@@ -110,7 +112,6 @@ const App = () => {
               <Route path="/pilot/signup" element={<PilotSignup />} />
               <Route path="/pilot/admin" element={<PilotAdmin />} />
               <Route path="/deep" element={<DeepLearningLab />} />
-              <Route path="/tasks/upcoming" element={<TasksUpcoming />} />
               {personaRoutes}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

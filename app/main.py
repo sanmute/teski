@@ -27,6 +27,8 @@ from app.learner.router import router as onboarding_router
 from app.tasks.router import router as tasks_router
 from app.notifications.router import router as notifications_router
 from app.explanations.router import router as explanations_router
+from app.study.router import router as study_router
+from app.integrations.moodle import router as moodle_router
 
 ENABLE_ANALYTICS_JOBS = os.getenv("ENABLE_ANALYTICS_JOBS", "false").lower() in {"1", "true", "yes"}
 ANALYTICS_CRON = os.getenv("ANALYTICS_CRON", "0 2 * * *")
@@ -91,6 +93,8 @@ def create_app() -> FastAPI:
     app.include_router(notifications_router)
     app.include_router(explanations_router)
     app.include_router(onboarding_router)
+    app.include_router(study_router)
+    app.include_router(moodle_router)
 
     @app.on_event("startup")
     async def _startup() -> None:

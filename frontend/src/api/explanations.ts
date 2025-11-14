@@ -1,10 +1,13 @@
-import { API_BASE } from "@/api";
 import { ExplanationResponse } from "@/types/explanations";
+import { getClientUserId } from "@/lib/user";
 
 export async function generateExplanation(text: string, mode: string = "auto"): Promise<ExplanationResponse> {
-  const res = await fetch(`${API_BASE}/explanations/generate`, {
+  const res = await fetch(`/explanations/generate`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-User-Id": getClientUserId(),
+    },
     body: JSON.stringify({ text, mode }),
   });
 

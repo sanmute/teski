@@ -69,6 +69,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        ts: {
+          primary: "var(--ts-primary)",
+          secondary: "var(--ts-secondary)",
+          accent: "var(--ts-accent)",
+          glow: "var(--ts-glow)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

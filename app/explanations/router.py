@@ -14,7 +14,7 @@ router = APIRouter(prefix="/explanations", tags=["explanations"])
 
 
 @router.post("/generate", response_model=ExplanationResponse)
-def generate_explanation(
+async def generate_explanation(
     payload: ExplanationRequest,
     session: Session = Depends(get_session),
     user=Depends(get_current_user),
@@ -23,4 +23,4 @@ def generate_explanation(
     if not text:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="text_required")
     profile = get_or_default_profile(session, user.id)
-    return generate_personalized_explanation(text, profile, payload.mode)
+    return await generate_personalized_explanation(text, profile, payload.mode)

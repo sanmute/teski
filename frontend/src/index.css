@@ -6,6 +6,12 @@
 
 @layer base {
   :root {
+    /* Character theming defaults */
+    --ts-primary: #2563eb;
+    --ts-secondary: #e5e7eb;
+    --ts-accent: #f9fafb;
+    --ts-glow: #e5e7eb;
+
     /* Airy daylight palette */
     --background: 42 52% 98%;
     --foreground: 222 47% 12%;
@@ -66,6 +72,41 @@
     --sidebar-accent-foreground: 222 47% 15%;
     --sidebar-border: 210 33% 88%;
     --sidebar-ring: 267 77% 55%;
+  }
+
+  :root[data-character="character1"] {
+    --ts-primary: #88b8c9;
+    --ts-secondary: #dce7ee;
+    --ts-accent: #f2f7fa;
+    --ts-glow: #a7c4d2;
+  }
+
+  :root[data-character="character2"] {
+    --ts-primary: #c45aec;
+    --ts-secondary: #692da8;
+    --ts-accent: #ff8cf4;
+    --ts-glow: #ae4fd4;
+  }
+
+  :root[data-character="character3"] {
+    --ts-primary: #4a6fa5;
+    --ts-secondary: #e5ecf5;
+    --ts-accent: #608bc1;
+    --ts-glow: #3a5c8a;
+  }
+
+  :root[data-character="character4"] {
+    --ts-primary: #e9afaf;
+    --ts-secondary: #ffecec;
+    --ts-accent: #ffb7b7;
+    --ts-glow: #e48d8d;
+  }
+
+  :root[data-character="character5"] {
+    --ts-primary: #1f1f1f;
+    --ts-secondary: #2c2c2c;
+    --ts-accent: #8fbf26;
+    --ts-glow: #00000033;
   }
 
   .dark {

@@ -1,15 +1,20 @@
 from __future__ import annotations
 
 import re
+import logging
+import os
 from typing import Callable, List
 
 from app.learner.models import LearnerProfile
+from app.feedback.router import call_llm
 
 from .schemas import ExplanationBlock, ExplanationResponse
 
 ALLOWED_STYLES = {"step_by_step", "big_picture", "analogy", "visual", "problems"}
 LOW_COMFORT_PREFIX = "Let's go slowly through this:"
 HIGH_COMFORT_PREFIX = "Here’s the core idea in a compact form:"
+EXPLANATIONS_MODEL = os.getenv("EXPLANATIONS_MODEL", "mini:haiku4_5")
+logger = logging.getLogger(__name__)
 
 
 def choose_style(profile: LearnerProfile, requested_mode: str | None) -> str:
@@ -31,15 +36,73 @@ def generate_explanation_blocks(text: str, style: str, analytical_comfort: int |
     return blocks
 
 
-def generate_personalized_explanation(
+async def generate_personalized_explanation(
     text: str,
     profile: LearnerProfile,
     requested_mode: str | None,
 ) -> ExplanationResponse:
     """Tie all personalization rules together for a single request."""
     style = choose_style(profile, requested_mode)
-    blocks = generate_explanation_blocks(text, style, profile.analytical_comfort)
+
+    try:
+        llm_text = await _generate_with_llm(text, style, profile)
+        blocks = _blocks_from_llm(style, llm_text)
+        if not blocks:
+            raise ValueError("empty_llm_response")
+    except Exception as exc:  # pragma: no cover - graceful fallback when LLM unavailable
+        logger.warning("Falling back to deterministic explanation blocks: %s", exc)
+        blocks = generate_explanation_blocks(text, style, profile.analytical_comfort)
+
     return ExplanationResponse(chosen_style=style, blocks=blocks)
+
+
+async def _generate_with_llm(text: str, style: str, profile: LearnerProfile) -> str:
+    tone = (profile.communication_style or "supportive").replace("_", " ")
+    comfort = profile.analytical_comfort or 3
+    comfort_hint = (
+        "Keep the language friendly and concrete." if comfort <= 2 else "You can be concise and assume background knowledge."
+    )
+    persona = profile.long_assignment_reaction or "balanced"
+    prompt = (
+        "You are Teski, a study companion."
+        f" The student asked: "
+        f"{text}\n"
+        f"Produce a {style.replace('_', ' ')} explanation with 2-3 short paragraphs."
+        f" Tone: {tone}. {comfort_hint}"
+        f" Focus on actionable understanding and, when useful, include a quick example tied to the prompt."
+        f" The user tends to react to long tasks as '{persona}', so keep motivation in mind."
+    )
+    return await call_llm(EXPLANATIONS_MODEL, prompt, "en")
+
+
+def _blocks_from_llm(style: str, text: str) -> List[ExplanationBlock]:
+    cleaned = [chunk.strip() for chunk in text.split("\n\n") if chunk.strip()]
+    if not cleaned and text.strip():
+        cleaned = [text.strip()]
+
+    titles = {
+        "step_by_step": ["Guided steps"],
+        "big_picture": ["Big picture", "Details"],
+        "analogy": ["Analogy", "Formal view"],
+        "visual": ["Visual outline"],
+        "problems": ["Example", "How to reason"],
+    }
+
+    desired_blocks = titles.get(style, ["Explanation"])
+    blocks: List[ExplanationBlock] = []
+
+    if len(cleaned) == 1 or len(desired_blocks) == 1:
+        content = "\n\n".join(cleaned) if cleaned else text
+        blocks.append(ExplanationBlock(style=style, title=desired_blocks[0], content=content.strip()))
+        return blocks
+
+    # Map each cleaned paragraph to expected block titles
+    for idx, title in enumerate(desired_blocks):
+        paragraph = cleaned[idx] if idx < len(cleaned) else ""
+        if not paragraph and cleaned:
+            paragraph = cleaned[-1]
+        blocks.append(ExplanationBlock(style=style, title=title, content=paragraph.strip()))
+    return blocks
 
 
 def _build_step_by_step(text: str, analytical_comfort: int | None) -> List[ExplanationBlock]:

@@ -9,21 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/api";
 import clsx from "clsx";
 
-const USER_ID_STORAGE_KEY = "teski-user-id";
-
-function ensureUserId(): string {
-  if (typeof window === "undefined") {
-    return "anonymous";
-  }
-  const existing = window.localStorage.getItem(USER_ID_STORAGE_KEY);
-  if (existing) return existing;
-  const randomFragment = typeof crypto !== "undefined" && "randomUUID" in crypto
-    ? crypto.randomUUID()
-    : Math.random().toString(36).slice(2, 10);
-  const generated = `demo-user-${randomFragment}`;
-  window.localStorage.setItem(USER_ID_STORAGE_KEY, generated);
-  return generated;
-}
+import { getClientUserId } from "@/lib/user";
 
 interface MoodleIntegrationProps {
   onImported?: () => void;
@@ -34,7 +20,7 @@ export function MoodleIntegration({ onImported }: MoodleIntegrationProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const userId = useMemo(() => ensureUserId(), []);
+  const userId = useMemo(() => getClientUserId(), []);
 
   const statusQuery = useQuery({
     queryKey: ["moodle-feed", userId],

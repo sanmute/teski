@@ -13,6 +13,22 @@ export default defineConfig(({ mode }) => ({
         target: "http://127.0.0.1:8100",
         changeOrigin: true,
       },
+      "/tasks": {
+        target: "http://127.0.0.1:8100",
+        changeOrigin: true,
+      },
+      "/study": {
+        target: "http://127.0.0.1:8100",
+        changeOrigin: true,
+      },
+      "/explanations": {
+        target: "http://127.0.0.1:8100",
+        changeOrigin: true,
+      },
+      "/onboarding": {
+        target: "http://127.0.0.1:8100",
+        changeOrigin: true,
+      },
       "/feedback": {
         target: "http://127.0.0.1:8000",
         changeOrigin: true,

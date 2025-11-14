@@ -24,7 +24,11 @@ const TITLE_MAP: Record<string, string> = {
 export function AppLayout({ children }: PropsWithChildren) {
   const location = useLocation();
   const navigate = useNavigate();
-  const title = TITLE_MAP[location.pathname] ?? "Teski";
+  const pathname = location.pathname;
+  const title =
+    pathname.startsWith("/study/session")
+      ? "Study session"
+      : TITLE_MAP[pathname] ?? "Teski";
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
