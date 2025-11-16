@@ -8,6 +8,7 @@ from sqlmodel import Session
 from app.config import get_settings
 from app.db import get_session
 from app.models import User
+from app.institutions.service import assign_user_institution_from_email
 
 
 settings = get_settings()
@@ -26,5 +27,7 @@ async def get_current_user(
         session.add(user)
         session.commit()
         session.refresh(user)
+
+    assign_user_institution_from_email(session, user)
 
     return user

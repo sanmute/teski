@@ -1,23 +1,42 @@
 import { PropsWithChildren } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Plus } from "lucide-react";
+import {
+  BarChart3,
+  CalendarDays,
+  HelpCircle,
+  LayoutDashboard,
+  ListCheck,
+  NotebookPen,
+  Plus,
+  RotateCcw,
+  Timer,
+  User,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Dashboard", to: "/" },
-  { label: "Tasks", to: "/tasks/upcoming" },
-  { label: "Study", to: "/study" },
-  { label: "Help", to: "/help" },
-  { label: "Profile", to: "/profile" },
+  { label: "Today", to: "/today", icon: CalendarDays },
+  { label: "Dashboard", to: "/", icon: LayoutDashboard },
+  { label: "Tasks", to: "/tasks/upcoming", icon: ListCheck },
+  { label: "Study", to: "/study", icon: Timer },
+  { label: "Exercises", to: "/exercises", icon: NotebookPen },
+  { label: "Reviews", to: "/reviews", icon: RotateCcw },
+  { label: "My Stats", to: "/stats", icon: BarChart3 },
+  { label: "Help", to: "/help", icon: HelpCircle },
+  { label: "Profile", to: "/profile", icon: User },
 ];
 
 const TITLE_MAP: Record<string, string> = {
+  "/today": "Today",
   "/": "Dashboard",
   "/tasks/upcoming": "Upcoming tasks",
   "/study": "Study",
+  "/exercises": "Exercises",
   "/help": "Help & explanations",
+  "/reviews": "Reviews",
+  "/stats": "My stats",
   "/profile": "My study profile",
 };
 
@@ -38,21 +57,25 @@ export function AppLayout({ children }: PropsWithChildren) {
           <p className="text-xs text-muted-foreground">Personalized study companion</p>
         </div>
         <nav className="mt-4 flex-1 space-y-1 px-3">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.to === "/"}
-              className={({ isActive }) =>
-                cn(
-                  "flex items-center rounded-md px-3 py-2 text-sm font-medium transition hover:bg-muted",
-                  isActive && "bg-muted text-primary"
-                )
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === "/"}
+                className={({ isActive }) =>
+                  cn(
+                    "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition hover:bg-muted",
+                    isActive && "bg-muted text-primary"
+                  )
+                }
+              >
+                {Icon && <Icon className="h-4 w-4" />}
+                {item.label}
+              </NavLink>
+            );
+          })}
         </nav>
       </aside>
       <div className="flex flex-1 flex-col">

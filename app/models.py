@@ -38,11 +38,15 @@ class User(AppSQLModel, table=True):
     created_at: datetime = Field(default_factory=_utcnow, index=True)
     timezone: str = Field(default="UTC")
     display_name: Optional[str] = Field(default=None)
+    email: Optional[str] = Field(default=None, index=True)
     streak_days: int = Field(default=0, ge=0)
     last_streak_at: Optional[datetime] = Field(default=None, index=True)
     persona: Optional[str] = Field(default=None, index=True)
     is_pro: bool = Field(default=False, index=True)
     pro_until: Optional[datetime] = Field(default=None, index=True)
+    institution_id: Optional[UUID] = Field(default=None, foreign_key="institution.id", index=True)
+    analytics_consent: bool = Field(default=True)
+    is_institution_admin: bool = Field(default=False, index=True)
 
 
 class Task(AppSQLModel, table=True):
@@ -176,5 +180,10 @@ except ImportError:
 
 try:
     import app.integrations.models  # noqa: F401
+except ImportError:
+    pass
+
+try:
+    import app.institutions.models  # noqa: F401
 except ImportError:
     pass

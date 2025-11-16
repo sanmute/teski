@@ -13,8 +13,23 @@ from .schemas import ExplanationBlock, ExplanationResponse
 ALLOWED_STYLES = {"step_by_step", "big_picture", "analogy", "visual", "problems"}
 LOW_COMFORT_PREFIX = "Let's go slowly through this:"
 HIGH_COMFORT_PREFIX = "Here’s the core idea in a compact form:"
-EXPLANATIONS_MODEL = os.getenv("EXPLANATIONS_MODEL", "mini:haiku4_5")
 logger = logging.getLogger(__name__)
+
+
+def _detect_explanations_model() -> str:
+    """Pick a sensible default model based on available provider keys."""
+    explicit = os.getenv("EXPLANATIONS_MODEL")
+    if explicit:
+        return explicit
+    if os.getenv("OPENAI_API_KEY"):
+        return "mini:gpt4_1"
+    if os.getenv("ANTHROPIC_API_KEY"):
+        return "mini:haiku4_5"
+    # Fall back to local inference hook so installations without hosted keys can still work.
+    return "local:llama70b"
+
+
+EXPLANATIONS_MODEL = _detect_explanations_model()
 
 
 def choose_style(profile: LearnerProfile, requested_mode: str | None) -> str:
@@ -71,6 +86,7 @@ async def _generate_with_llm(text: str, style: str, profile: LearnerProfile) -> 
         f" Tone: {tone}. {comfort_hint}"
         f" Focus on actionable understanding and, when useful, include a quick example tied to the prompt."
         f" The user tends to react to long tasks as '{persona}', so keep motivation in mind."
+        " Do NOT use LaTeX or math markup—write plain text descriptions only."
     )
     return await call_llm(EXPLANATIONS_MODEL, prompt, "en")
 

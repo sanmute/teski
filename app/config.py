@@ -44,6 +44,12 @@ class Settings:
     INTERLEAVE_RATIO: float = field(default_factory=lambda: float(_get_env("INTERLEAVE_RATIO", "0.5")))
     DEV_MODE: bool = field(default_factory=lambda: _parse_bool(_get_env("DEV_MODE", "true")))
     EX_AGENDA_REVIEW_FIRST: bool = field(default_factory=lambda: _parse_bool(_get_env("EX_AGENDA_REVIEW_FIRST", "true")))
+    SMTP_HOST: str = field(default_factory=lambda: _get_env("SMTP_HOST", "localhost"))
+    SMTP_PORT: int = field(default_factory=lambda: int(_get_env("SMTP_PORT", "587")))
+    SMTP_USERNAME: str = field(default_factory=lambda: _get_env("SMTP_USERNAME", ""))
+    SMTP_PASSWORD: str = field(default_factory=lambda: _get_env("SMTP_PASSWORD", ""))
+    SMTP_FROM: str = field(default_factory=lambda: _get_env("SMTP_FROM", "no-reply@teski.local"))
+    SMTP_USE_TLS: bool = field(default_factory=lambda: _parse_bool(_get_env("SMTP_USE_TLS", "true")))
 
     def __post_init__(self) -> None:
         if self.EX_FLOW_DEFAULT not in {"review_first", "interleave"}:

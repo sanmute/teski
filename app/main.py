@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
@@ -19,6 +19,8 @@ from app.feedback.router import router as feedback_router
 from app.analytics.admin import router as analytics_admin_router
 from app.analytics.kpis import router as analytics_kpis_router
 from app.analytics.investor_router import router as investor_analytics_router
+from app.analytics.router import institution_router as analytics_institution_router
+from app.analytics.router import router as analytics_me_router
 from app.analytics.jobs import nightly_analytics_job
 from app.deep.router import router as deep_router
 from app.prefs.router import router as prefs_router
@@ -29,6 +31,8 @@ from app.notifications.router import router as notifications_router
 from app.explanations.router import router as explanations_router
 from app.study.router import router as study_router
 from app.integrations.moodle import router as moodle_router
+from app.users.router import router as users_router
+from app.reports.router import router as reports_router
 
 ENABLE_ANALYTICS_JOBS = os.getenv("ENABLE_ANALYTICS_JOBS", "false").lower() in {"1", "true", "yes"}
 ANALYTICS_CRON = os.getenv("ANALYTICS_CRON", "0 2 * * *")
@@ -74,27 +78,33 @@ def _stop_scheduler() -> None:
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Teski Memory API", version="2.0")
+    api_router = APIRouter(prefix="/api")
 
     @app.get("/health", tags=["system"])
     async def health() -> dict[str, str]:
         return {"status": "ok"}
 
-    app.include_router(memory_router)
-    app.include_router(ex_router)
-    app.include_router(exam_router)
-    app.include_router(feedback_router)
-    app.include_router(analytics_admin_router)
-    app.include_router(analytics_kpis_router)
-    app.include_router(investor_analytics_router)
-    app.include_router(pilot_router)
-    app.include_router(deep_router)
-    app.include_router(prefs_router)
-    app.include_router(tasks_router)
-    app.include_router(notifications_router)
-    app.include_router(explanations_router)
-    app.include_router(onboarding_router)
-    app.include_router(study_router)
-    app.include_router(moodle_router)
+    api_router.include_router(memory_router)
+    api_router.include_router(ex_router)
+    api_router.include_router(exam_router)
+    api_router.include_router(feedback_router)
+    api_router.include_router(analytics_admin_router)
+    api_router.include_router(analytics_kpis_router)
+    api_router.include_router(investor_analytics_router)
+    api_router.include_router(analytics_institution_router)
+    api_router.include_router(analytics_me_router)
+    api_router.include_router(pilot_router)
+    api_router.include_router(deep_router)
+    api_router.include_router(prefs_router)
+    api_router.include_router(tasks_router)
+    api_router.include_router(notifications_router)
+    api_router.include_router(explanations_router)
+    api_router.include_router(onboarding_router)
+    api_router.include_router(study_router)
+    api_router.include_router(moodle_router)
+    api_router.include_router(users_router)
+    api_router.include_router(reports_router)
+    app.include_router(api_router)
 
     @app.on_event("startup")
     async def _startup() -> None:

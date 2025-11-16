@@ -24,6 +24,7 @@ from app.personas import get_persona_copy
 from app.scheduler import get_next_reviews, schedule_from_mistake
 from app.timeutil import user_day_bounds
 from app.xp import award as award_xp
+from app.data.mock_exercises import MOCK_EXERCISES
 
 
 class ExerciseListItem(BaseModel):
@@ -50,6 +51,10 @@ class ExerciseGetOut(BaseModel):
     course: Optional[str] = None
     choices: Optional[List[str]] = None
     unit_hint: Optional[str] = None
+    prompt: Optional[str] = None
+    max_xp: Optional[int] = None
+    hint: Optional[str] = None
+    tags: Optional[List[str]] = None
 
 
 class ExerciseSubmitOut(BaseModel):
@@ -170,7 +175,8 @@ def list_exercises(
     if concept:
         exercises = [ex for ex in exercises if ex.concept == concept]
     if type:
-        exercises = [ex for ex in exercises if ex.type == type]
+        normalized_type = type.lower()
+        exercises = [ex for ex in exercises if ex.type.lower() == normalized_type]
 
     total = len(exercises)
     start = (page - 1) * page_size
@@ -180,11 +186,29 @@ def list_exercises(
             id=ex.id,
             concept=ex.concept,
             course=ex.course,
-            type=ex.type,
+            type=ex.type.upper(),
             difficulty=ex.difficulty,
         )
         for ex in exercises[start:end]
     ]
+    mock_filtered = [
+        mock
+        for mock in MOCK_EXERCISES
+        if (not type or mock["type"].lower() == type.lower()) and (not concept or mock["concept"] == concept)
+    ]
+    total += len(mock_filtered)
+    items.extend(
+        [
+            ExerciseListItem(
+                id=mock["id"],
+                concept=mock["concept"],
+                course=None,
+                type=mock["type"],
+                difficulty=mock["difficulty"],
+            )
+            for mock in mock_filtered
+        ]
+    )
     return ExerciseListResponse(items=items, page=page, page_size=page_size, total=total)
 
 
@@ -194,15 +218,35 @@ def get_exercise(
     session: Session = Depends(get_session),
     user_id: Optional[UUID] = Query(default=None),
 ) -> ExerciseGetOut:
+    mock = next((item for item in MOCK_EXERCISES if item["id"] == exercise_id), None)
+    if mock:
+        return ExerciseGetOut(
+            id=mock["id"],
+            type=mock["type"],
+            concept=mock["concept"],
+            question=mock["prompt"],
+            difficulty=mock["difficulty"],
+            choices=[choice["text"] for choice in mock.get("choices", [])] if mock.get("choices") else None,
+            unit_hint=mock.get("unit_hint"),
+            prompt=mock["prompt"],
+            max_xp=mock["max_xp"],
+            hint=mock.get("hint"),
+            tags=mock.get("tags"),
+        )
+
     exercise = _get_exercise(exercise_id)
 
     response = ExerciseGetOut(
         id=exercise.id,
-        type=exercise.type,
+        type=exercise.type.upper(),
         concept=exercise.concept,
         question=exercise.question,
         difficulty=exercise.difficulty,
         course=exercise.course,
+        prompt=exercise.meta.get("prompt") or exercise.question,
+        max_xp=int(exercise.meta.get("max_xp", 10)),
+        hint=exercise.meta.get("hint"),
+        tags=exercise.keywords or None,
     )
 
     if exercise.type == "mcq":

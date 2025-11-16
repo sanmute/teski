@@ -24,6 +24,12 @@ import Help from "./pages/Help";
 import Profile from "./pages/Profile";
 import { AppLayout } from "./layouts/AppLayout";
 import StudySessionPage from "./pages/StudySessionPage";
+import MyStatsPage from "./pages/MyStatsPage";
+import ReviewsPage from "./pages/ReviewsPage";
+import ExercisesPage from "./pages/ExercisesPage";
+import TodayPage from "./pages/TodayPage";
+import ExamPage from "./pages/ExamPage";
+import MicroQuestPage from "./pages/MicroQuestPage";
 
 const queryClient = new QueryClient();
 
@@ -90,12 +96,18 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
+                <Route path="/today" element={<TodayPage />} />
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/tasks/upcoming" element={<TasksUpcoming />} />
                 <Route path="/study" element={<Study />} />
                 <Route path="/study/session/:sessionId" element={<StudySessionPage />} />
+                <Route path="/reviews" element={<ReviewsPage />} />
+                <Route path="/exercises" element={<ExercisesPage />} />
+                <Route path="/micro-quest" element={<MicroQuestPage />} />
+                <Route path="/stats" element={<MyStatsPage />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/exam/:id" element={<ExamPage />} />
               </Route>
               <Route
                 path="/legacy"

@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from datetime import timedelta
 from typing import Dict, List
 
 from fastapi import APIRouter, Depends, HTTPException, Path
+from sqlalchemy import or_
 from sqlmodel import Session, select
 
 from app.db import get_session
@@ -34,9 +36,14 @@ def list_upcoming_tasks(
     user=Depends(get_current_user),
 ) -> List[TaskRead]:
     profile = get_or_default_profile(session, user.id)
+    cutoff = _utcnow() - timedelta(hours=48)
     stmt = (
         select(Task)
-        .where(Task.user_id == user.id, Task.status == "pending")
+        .where(
+            Task.user_id == user.id,
+            Task.status == "pending",
+            or_(Task.due_at.is_(None), Task.due_at >= cutoff),
+        )
         .order_by(Task.due_at.is_(None), Task.due_at, Task.created_at)
     )
     tasks = session.exec(stmt).all()

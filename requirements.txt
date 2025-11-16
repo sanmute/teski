@@ -18,3 +18,4 @@ openai>=1.54.0
 faster-whisper>=1.0
 pydub>=0.25
 python-multipart>=0.0.9
+WeasyPrint==62.3
