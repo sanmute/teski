@@ -30,6 +30,7 @@ import ExercisesPage from "./pages/ExercisesPage";
 import TodayPage from "./pages/TodayPage";
 import ExamPage from "./pages/ExamPage";
 import MicroQuestPage from "./pages/MicroQuestPage";
+import SkillTreePage from "./pages/SkillTreePage";
 
 const queryClient = new QueryClient();
 
@@ -104,6 +105,7 @@ const App = () => {
                 <Route path="/reviews" element={<ReviewsPage />} />
                 <Route path="/exercises" element={<ExercisesPage />} />
                 <Route path="/micro-quest" element={<MicroQuestPage />} />
+                <Route path="/skills" element={<SkillTreePage />} />
                 <Route path="/stats" element={<MyStatsPage />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/profile" element={<Profile />} />

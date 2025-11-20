@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { CompanionCharacter } from "@/components/PetFrog";
 import { DeepPrefs } from "@/components/DeepPrefs";
 import { DEMO_USER_ID } from "@/lib/constants";
+import { getPersonaProfile, updatePersonaProfile, type PersonaProfile } from "@/api";
 
 interface SettingsPanelProps {
   demoMode: boolean;
@@ -29,6 +30,13 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
   const resolvedUserId = userId ?? DEMO_USER_ID;
+  const isDemoUser = resolvedUserId === DEMO_USER_ID;
+  const personaDescriptions: Record<string, string> = {
+    calm: "Gentle encouragement and steady pacing.",
+    snark: "Playful jabs that keep you accountable without cruelty.",
+    hype: "High-energy coach cheering for every rep.",
+    professor: "Analytical, precise, and focused on rigor.",
+  };
 
   const readLocalStorage = <T,>(key: string, fallback: T, transform?: (raw: string) => T): T => {
     if (typeof window === 'undefined') return fallback;
@@ -69,6 +77,9 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
   const [colorBlindSupport, setColorBlindSupport] = useState<string>(() =>
     readLocalStorage('color-blind-support', 'default')
   );
+  const [personaProfile, setPersonaProfile] = useState<PersonaProfile | null>(null);
+  const [personaLoading, setPersonaLoading] = useState(false);
+  const [personaError, setPersonaError] = useState<string | null>(null);
 
   // Save to localStorage on changes
   useEffect(() => {
@@ -106,6 +117,21 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
     window.localStorage.setItem('color-blind-support', colorBlindSupport);
   }, [colorBlindSupport]);
 
+  useEffect(() => {
+    if (!resolvedUserId || isDemoUser) return;
+    setPersonaLoading(true);
+    getPersonaProfile(resolvedUserId)
+      .then((profile) => {
+        setPersonaProfile(profile);
+        setPersonaError(null);
+      })
+      .catch((err) => {
+        console.error(err);
+        setPersonaError("Could not load persona.");
+      })
+      .finally(() => setPersonaLoading(false));
+  }, [resolvedUserId, isDemoUser]);
+
   const applyAppearance = useCallback(() => {
     const body = document.body;
     const root = document.getElementById("root");
@@ -142,6 +168,30 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
       title: "Settings applied successfully",
       description: "Your appearance preferences have been updated.",
     });
+  };
+
+  const handlePersonaChange = async (value: string) => {
+    if (!resolvedUserId || isDemoUser) return;
+    try {
+      setPersonaLoading(true);
+      const profile = await updatePersonaProfile({ user_id: resolvedUserId, persona: value });
+      setPersonaProfile(profile);
+      setPersonaError(null);
+      toast({
+        title: "Persona updated",
+        description: `${value.charAt(0).toUpperCase()}${value.slice(1)} persona activated.`,
+      });
+    } catch (err) {
+      console.error(err);
+      setPersonaError("Could not update persona.");
+      toast({
+        title: "Could not update persona",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setPersonaLoading(false);
+    }
   };
 
   // Apply saved settings on component mount
@@ -208,6 +258,36 @@ export function SettingsPanel({ demoMode, onDemoModeChange, companion, onCompani
           <div className="mt-4 overflow-y-auto max-h-[60vh]">
             <TabsContent value="frog" className="space-y-4 mt-0">
               <div className="space-y-4">
+                <div className="space-y-3 rounded-xl border border-border bg-muted/30 p-4">
+                  <div className="flex items-center justify-between">
+                    <Label>Persona reaction voice</Label>
+                    {personaLoading && <span className="text-xs text-muted-foreground">Updating…</span>}
+                  </div>
+                  <Select
+                    value={personaProfile?.persona ?? "calm"}
+                    onValueChange={handlePersonaChange}
+                    disabled={personaLoading || isDemoUser}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a persona" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {(personaProfile?.available_personas ?? ["calm", "snark", "hype", "professor"]).map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option.charAt(0).toUpperCase() + option.slice(1)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {personaError && <p className="text-xs text-destructive">{personaError}</p>}
+                  {isDemoUser ? (
+                    <p className="text-xs text-muted-foreground">Sign in to change personas.</p>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      {personaDescriptions[personaProfile?.persona ?? "calm"]}
+                    </p>
+                  )}
+                </div>
                 <div className="space-y-2">
                   <Label>Companion Sass Level: {getIntensityLabel(frogIntensity)}</Label>
                   <Slider

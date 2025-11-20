@@ -15,12 +15,20 @@ from sqlalchemy import func
 from sqlmodel import Session, select
 
 from app.analytics import log as log_event
+from app.behavioral.model import get_behavior_profile, recommend_session_length
+from app.challenge.engine import (
+    derive_skill_name_for_exercise,
+    plan_to_response_items,
+    select_exercises_for_session,
+)
 from app.config import get_settings
 from app.db import get_session
 from app.detectors import classify_mistake
 from app.exercises import Exercise, grade, load_exercises
+from app.mastery.models import Skill
+from app.mastery.service import get_or_create_skill, update_mastery
 from app.models import AnalyticsEvent, Mistake, MistakeSubtype, User
-from app.personas import get_persona_copy
+from app.persona_reactions import PersonaReaction, generate_persona_reaction
 from app.scheduler import get_next_reviews, schedule_from_mistake
 from app.timeutil import user_day_bounds
 from app.xp import award as award_xp
@@ -62,6 +70,41 @@ class ExerciseSubmitOut(BaseModel):
     info: Dict[str, Any] = Field(default_factory=dict)
     next_hint: Optional[str] = None
     persona_msg: Optional[str] = None
+    xp_awarded: Optional[int] = None
+    mastery_changes: Optional[List[Dict[str, Any]]] = None
+    persona_reaction: Optional[PersonaReaction] = None
+
+
+class PlannedExerciseOut(BaseModel):
+    order: int
+    exercise_id: str
+    concept: str
+    difficulty: int
+    difficulty_label: str
+    is_review: bool
+    skill_id: UUID
+    skill_name: str
+    source: str
+
+
+class MicroQuestPlanResponse(BaseModel):
+    user_id: UUID
+    skill_id: UUID
+    skill_name: str
+    mastery: float
+    correct_rate: float
+    target_difficulty_low: int
+    target_difficulty_high: int
+    review_count: int
+    challenge_count: int
+    suggested_length: int
+    items: List[PlannedExerciseOut]
+
+
+class MicroQuestPlanRequest(BaseModel):
+    user_id: UUID
+    skill_id: Optional[UUID] = None
+    length: Optional[int] = Field(default=None, ge=1, le=10)
 
 
 class NextMixedItem(BaseModel):
@@ -108,6 +151,16 @@ def _ensure_user(session: Session, user_id: UUID) -> User:
     session.add(user)
     session.flush()
     return user
+
+
+def _mastery_payload(skill: Skill, old_value: float, new_value: float) -> Dict[str, Any]:
+    return {
+        "skill_id": str(skill.id),
+        "skill_name": skill.name,
+        "old": old_value,
+        "new": new_value,
+        "delta": new_value - old_value,
+    }
 
 
 def _reset_rate_limit() -> None:
@@ -273,15 +326,47 @@ def submit_exercise(
     _validate_payload(exercise, payload)
     user = _ensure_user(session, user_id)
     correct_today, incorrect_today = _today_exercise_counts(session, user)
+    streak_before = _exercise_correct_streak(session, user)
 
     correct, info = grade(payload, exercise)
 
+    skill_name = derive_skill_name_for_exercise(exercise)
+    skill = get_or_create_skill(session, skill_name)
+    mastery_changes: List[Dict[str, Any]] = []
+
     if correct:
-        award_xp(user, reason="exercise_correct", session=session)
+        xp_awarded = award_xp(user, reason="exercise_correct", session=session)
+        old_mastery, new_mastery = update_mastery(
+            session,
+            user_id=user.id,
+            skill_id=skill.id,
+            is_correct=True,
+            difficulty=exercise.difficulty,
+        )
+        mastery_changes.append(_mastery_payload(skill, old_mastery, new_mastery))
         log_event("exercise_correct", {"exercise_id": exercise.id}, user_id)
-        persona_msg = _persona_line(user, session, warm=correct_today == 0 and incorrect_today == 0)
+        streak_after = streak_before + 1
+        reaction = generate_persona_reaction(
+            persona=user.persona,
+            is_correct=True,
+            mastery_before=old_mastery,
+            mastery_after=new_mastery,
+            streak_before=streak_before,
+            streak_after=streak_after,
+            difficulty=exercise.difficulty,
+            mistake_type=None,
+            is_review=False,
+        )
+        persona_msg = reaction.message
         session.commit()
-        return ExerciseSubmitOut(correct=True, info=info, persona_msg=persona_msg)
+        return ExerciseSubmitOut(
+            correct=True,
+            info=info,
+            persona_msg=persona_msg,
+            xp_awarded=xp_awarded,
+            mastery_changes=mastery_changes,
+            persona_reaction=reaction,
+        )
 
     # Incorrect path
     log_event("exercise_incorrect", {"exercise_id": exercise.id}, user_id)
@@ -318,9 +403,76 @@ def submit_exercise(
     if explanation:
         next_hint = str(explanation).split(".", 1)[0].strip()
 
-    persona_msg = _persona_line(user, session, warm=correct_today == 0 and incorrect_today == 0)
+    old_mastery, new_mastery = update_mastery(
+        session,
+        user_id=user.id,
+        skill_id=skill.id,
+        is_correct=False,
+        difficulty=exercise.difficulty,
+        mistake_type=classified,
+    )
+    mastery_changes.append(_mastery_payload(skill, old_mastery, new_mastery))
+
+    streak_after = 0
+    reaction = generate_persona_reaction(
+        persona=user.persona,
+        is_correct=False,
+        mastery_before=old_mastery,
+        mastery_after=new_mastery,
+        streak_before=streak_before,
+        streak_after=streak_after,
+        difficulty=exercise.difficulty,
+        mistake_type=classified,
+        is_review=False,
+    )
+    persona_msg = reaction.message
     session.commit()
-    return ExerciseSubmitOut(correct=False, info=info, next_hint=next_hint, persona_msg=persona_msg)
+    return ExerciseSubmitOut(
+        correct=False,
+        info=info,
+        next_hint=next_hint,
+        persona_msg=persona_msg,
+        xp_awarded=0,
+        mastery_changes=mastery_changes,
+        persona_reaction=reaction,
+    )
+
+
+@router.post("/micro-quest/plan", response_model=MicroQuestPlanResponse)
+def plan_micro_quest(
+    payload: MicroQuestPlanRequest,
+    session: Session = Depends(get_session),
+) -> MicroQuestPlanResponse:
+    user = _ensure_user(session, payload.user_id)
+    behavior = get_behavior_profile(session, user.id)
+    suggested_length = payload.length or recommend_session_length(behavior)
+    try:
+        plan = select_exercises_for_session(
+            session,
+            user.id,
+            skill_id=payload.skill_id,
+            length=suggested_length,
+            behavior_profile=behavior,
+        )
+    except ValueError as exc:  # surface friendly error
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    raw_items = plan_to_response_items(plan)
+    items = [PlannedExerciseOut(**entry) for entry in raw_items]
+    review_count = sum(1 for entry in items if entry.is_review)
+    challenge_count = len(items) - review_count
+    return MicroQuestPlanResponse(
+        user_id=user.id,
+        skill_id=plan.skill.id,
+        skill_name=plan.skill.name,
+        mastery=plan.mastery,
+        correct_rate=plan.performance.correct_rate,
+        target_difficulty_low=plan.target_band[0],
+        target_difficulty_high=plan.target_band[1],
+        review_count=review_count,
+        challenge_count=challenge_count,
+        suggested_length=suggested_length,
+        items=items,
+    )
 
 
 @router.get("/next", response_model=NextMixedResponse)
@@ -430,10 +582,23 @@ def _today_exercise_counts(session: Session, user: User) -> Tuple[int, int]:
     return int(correct or 0), int(incorrect or 0)
 
 
-def _persona_line(user: User, session: Session, warm: bool) -> str:
-    persona = user.persona or get_settings().PERSONA_DEFAULT
-    line = get_persona_copy(persona, {"warmup": warm, "user_id": str(user.id)})
-    return f"{persona} {line}"
+def _exercise_correct_streak(session: Session, user: User, limit: int = 25) -> int:
+    stmt = (
+        select(AnalyticsEvent.kind)
+        .where(
+            AnalyticsEvent.user_id == user.id,
+            AnalyticsEvent.kind.in_(("exercise_correct", "exercise_incorrect")),
+        )
+        .order_by(AnalyticsEvent.ts.desc())
+        .limit(limit)
+    )
+    streak = 0
+    for row in session.exec(stmt):
+        kind = row[0] if isinstance(row, tuple) else row
+        if kind != "exercise_correct":
+            break
+        streak += 1
+    return streak
 
 
 def _relative_error(delta: Any, expected: Any) -> Optional[float]:

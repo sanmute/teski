@@ -265,6 +265,14 @@ export type ExerciseSubmitIn = {
   answer: Record<string, unknown>;
 };
 
+export type MasteryChange = {
+  skill_id: string;
+  skill_name: string;
+  old: number;
+  new: number;
+  delta: number;
+};
+
 export type ExerciseSubmitOut = {
   correct: boolean;
   xp_awarded: number;
@@ -272,6 +280,8 @@ export type ExerciseSubmitOut = {
   explanation?: string;
   related_exercise_id?: string;
   persona_msg?: string;
+  mastery_changes?: MasteryChange[];
+  persona_reaction?: PersonaReaction;
 };
 
 export async function getExercise(user_id: string, id: string): Promise<ExerciseGetOut> {
@@ -294,6 +304,152 @@ export async function submitExercise(payload: ExerciseSubmitIn): Promise<Exercis
     body: JSON.stringify(payload.answer),
   });
   return handleResponse<ExerciseSubmitOut>(res);
+}
+
+export type PersonaReaction = {
+  persona: string;
+  intensity: string;
+  mood: string;
+  message: string;
+  tags?: string[];
+};
+
+export type PersonaProfile = {
+  user_id: string;
+  persona: string;
+  available_personas: string[];
+};
+
+export async function getPersonaProfile(user_id: string): Promise<PersonaProfile> {
+  const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:5173";
+  const url = new URL(`${API_BASE}/users/persona`, origin);
+  url.searchParams.set("user_id", user_id);
+  const res = await fetch(url.toString());
+  return handleResponse<PersonaProfile>(res);
+}
+
+export async function updatePersonaProfile(params: { user_id: string; persona: string }): Promise<PersonaProfile> {
+  const res = await fetch(`${API_BASE}/users/persona`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: params.user_id, persona: params.persona }),
+  });
+  return handleResponse<PersonaProfile>(res);
+}
+
+export type BehaviorProfile = {
+  engagement_level: number;
+  consistency_score: number;
+  challenge_preference: number;
+  review_vs_new_bias: number;
+  session_length_preference: number;
+  fatigue_risk: number;
+  suggested_length: number;
+};
+
+export async function getBehaviorProfile(user_id: string): Promise<BehaviorProfile> {
+  const res = await fetch(`${API_BASE}/behavior/profile`, {
+    headers: { "X-User-Id": user_id },
+  });
+  return handleResponse<BehaviorProfile>(res);
+}
+
+export type PracticeSessionPayload = {
+  user_id: string;
+  skill_id?: string | null;
+  length: number;
+  correct_count: number;
+  incorrect_count: number;
+  avg_difficulty: number;
+  fraction_review: number;
+  started_at?: string;
+  finished_at?: string;
+  abandoned?: boolean;
+};
+
+export async function logPracticeSession(payload: PracticeSessionPayload): Promise<void> {
+  const res = await fetch(`${API_BASE}/behavior/session`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  await handleResponse<{ status: string; suggested_length: string }>(res);
+}
+
+export type SkillMastery = {
+  skill_id: string;
+  skill_name: string;
+  mastery: number;
+  updated_at?: string | null;
+};
+
+export async function listUserMastery(user_id: string): Promise<SkillMastery[]> {
+  const res = await fetch(`${API_BASE}/mastery`, {
+    headers: { "X-User-Id": user_id },
+  });
+  return handleResponse<SkillMastery[]>(res);
+}
+
+export type MemoryStats = {
+  user_id: string;
+  today_reviewed: number;
+  daily_cap: number;
+  streak_days: number;
+  due_count: number;
+  exercises_correct_today: number;
+  exercises_incorrect_today: number;
+  suggested_new_exercises: number;
+};
+
+export async function getMemoryStats(user_id: string): Promise<MemoryStats> {
+  const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:5173";
+  const url = new URL(`${API_BASE}/memory/stats`, origin);
+  url.searchParams.set("user_id", user_id);
+  const res = await fetch(url.toString());
+  return handleResponse<MemoryStats>(res);
+}
+
+export type MicroQuestPlanItem = {
+  order: number;
+  exercise_id: string;
+  concept: string;
+  difficulty: number;
+  difficulty_label: string;
+  is_review: boolean;
+  skill_id: string;
+  skill_name: string;
+  source: "review" | "challenge";
+};
+
+export type MicroQuestPlanResponse = {
+  user_id: string;
+  skill_id: string;
+  skill_name: string;
+  mastery: number;
+  correct_rate: number;
+  target_difficulty_low: number;
+  target_difficulty_high: number;
+  review_count: number;
+  challenge_count: number;
+  suggested_length: number;
+  items: MicroQuestPlanItem[];
+};
+
+export async function planMicroQuest(params: {
+  user_id: string;
+  length?: number;
+  skill_id?: string | null;
+}): Promise<MicroQuestPlanResponse> {
+  const res = await fetch(`${API_BASE}/ex/micro-quest/plan`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      user_id: params.user_id,
+      length: params.length ?? null,
+      skill_id: params.skill_id ?? null,
+    }),
+  });
+  return handleResponse<MicroQuestPlanResponse>(res);
 }
 
 export type TodayItem =

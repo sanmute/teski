@@ -16,6 +16,7 @@ import {
 import { getClientUserId } from "@/lib/user";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/sonner";
+import { DailyPracticeCard } from "@/components/DailyPracticeCard";
 
 export default function TodayPage() {
   const userId = useMemo(() => getClientUserId(), []);
@@ -174,7 +175,15 @@ export default function TodayPage() {
       <div>
         <h1 className="text-2xl font-semibold text-slate-900">Today</h1>
         {personaLine && <p className="mt-1 text-sm text-slate-500">Teski says: {personaLine}</p>}
+        <button
+          type="button"
+          onClick={() => navigate("/skills")}
+          className="mt-2 text-sm font-semibold text-slate-700 underline-offset-2 hover:underline"
+        >
+          View your skill map
+        </button>
       </div>
+      <DailyPracticeCard userId={userId} />
       {isLoading && renderSkeletons()}
       {!isLoading && error && renderError()}
       {!isLoading && !error && !examId && renderNoExam()}

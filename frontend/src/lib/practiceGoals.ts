@@ -1,0 +1,2 @@
+export const DAILY_MICROQUEST_GOAL = 3;
+export const WEEKLY_MICROQUEST_GOAL = 10;

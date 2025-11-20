@@ -184,6 +184,37 @@ except ImportError:
     pass
 
 try:
+    import app.mastery.models  # noqa: F401
+except ImportError:
+    pass
+
+try:
     import app.institutions.models  # noqa: F401
 except ImportError:
     pass
+
+
+class PracticeSession(AppSQLModel, table=True):
+    id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
+    user_id: UUID = Field(foreign_key="user.id", index=True)
+    skill_id: Optional[UUID] = Field(default=None, foreign_key="skill.id", index=True)
+    length: int = Field(default=0, ge=0)
+    correct_count: int = Field(default=0, ge=0)
+    incorrect_count: int = Field(default=0, ge=0)
+    avg_difficulty: float = Field(default=0.0)
+    fraction_review: float = Field(default=0.0)
+    started_at: datetime = Field(default_factory=_utcnow, index=True)
+    finished_at: datetime = Field(default_factory=_utcnow, index=True)
+    abandoned: bool = Field(default=False, index=True)
+
+
+class BehavioralProfile(AppSQLModel, table=True):
+    id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
+    user_id: UUID = Field(foreign_key="user.id", unique=True, index=True)
+    engagement_level: float = Field(default=0.0)
+    consistency_score: float = Field(default=0.0)
+    challenge_preference: float = Field(default=50.0)
+    review_vs_new_bias: float = Field(default=50.0)
+    session_length_preference: float = Field(default=50.0)
+    fatigue_risk: float = Field(default=10.0)
+    updated_at: datetime = Field(default_factory=_utcnow, index=True)

@@ -7,6 +7,11 @@ from zoneinfo import ZoneInfo
 DEFAULT_TZ = "Europe/Helsinki"
 
 
+def _utcnow() -> datetime:
+    """Return current UTC timestamp (naive) for DB records."""
+    return datetime.utcnow()
+
+
 def _ensure_utc(dt: datetime | None = None) -> datetime:
     """Return an aware UTC datetime for calculations."""
     dt = dt or datetime.utcnow()

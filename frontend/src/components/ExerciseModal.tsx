@@ -9,15 +9,20 @@ import {
   submitExercise,
   type ExerciseGetOut,
   type ExerciseSubmitOut,
+  type PersonaReaction,
+  type MasteryChange,
 } from "@/api";
 import { getClientUserId } from "@/lib/user";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/sonner";
+import { PersonaReactionBubble } from "@/components/PersonaReactionBubble";
 
 export type ExerciseResult = {
   exerciseId: string;
   correct: boolean;
   xpAwarded: number;
+  personaReaction?: PersonaReaction | null;
+  masteryChanges?: MasteryChange[];
 };
 
 interface ExerciseModalProps {
@@ -43,6 +48,7 @@ export function ExerciseModal({
   const [hintShown, setHintShown] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<ExerciseSubmitOut | null>(null);
+  const [personaReaction, setPersonaReaction] = useState<PersonaReaction | null>(null);
 
   const closeAndReset = useCallback(() => {
     setExercise(null);
@@ -51,6 +57,7 @@ export function ExerciseModal({
     setSubmitting(false);
     setResult(null);
     setError(null);
+    setPersonaReaction(null);
     onClose();
   }, [onClose]);
 
@@ -62,6 +69,7 @@ export function ExerciseModal({
     setHintShown(false);
     setResult(null);
     setError(null);
+    setPersonaReaction(null);
     getExercise(userId, exerciseId)
       .then((data) => setExercise(data))
       .catch((err) => {
@@ -91,6 +99,12 @@ export function ExerciseModal({
       return () => clearTimeout(timer);
     }
   }, [closeAndReset, result]);
+
+  useEffect(() => {
+    if (!personaReaction) return;
+    const timer = setTimeout(() => setPersonaReaction(null), 4000);
+    return () => clearTimeout(timer);
+  }, [personaReaction]);
 
   const buildAnswerPayload = () => {
     if (!exercise) {
@@ -129,6 +143,7 @@ export function ExerciseModal({
         answer: answerPayload,
       });
       setResult(data);
+      setPersonaReaction(data.persona_reaction ?? null);
       if (data.correct) {
         toast.success(`${data.persona_msg ?? "Nice work!"} (+${data.xp_awarded} XP)`);
       } else {
@@ -139,6 +154,8 @@ export function ExerciseModal({
           exerciseId: exercise.id,
           correct: data.correct,
           xpAwarded: data.xp_awarded ?? 0,
+          personaReaction: data.persona_reaction ?? null,
+          masteryChanges: data.mastery_changes ?? [],
         });
       }
     } catch (err) {
@@ -244,6 +261,8 @@ export function ExerciseModal({
             )}
           </div>
         )}
+
+        <PersonaReactionBubble reaction={personaReaction} />
 
         <div className="mt-6 flex items-center justify-end gap-2">
           <Button variant="ghost" onClick={closeAndReset}>

@@ -33,6 +33,8 @@ from app.study.router import router as study_router
 from app.integrations.moodle import router as moodle_router
 from app.users.router import router as users_router
 from app.reports.router import router as reports_router
+from app.mastery.router import router as mastery_router
+from app.behavioral.router import router as behavioral_router
 
 ENABLE_ANALYTICS_JOBS = os.getenv("ENABLE_ANALYTICS_JOBS", "false").lower() in {"1", "true", "yes"}
 ANALYTICS_CRON = os.getenv("ANALYTICS_CRON", "0 2 * * *")
@@ -104,6 +106,8 @@ def create_app() -> FastAPI:
     api_router.include_router(moodle_router)
     api_router.include_router(users_router)
     api_router.include_router(reports_router)
+    api_router.include_router(mastery_router)
+    api_router.include_router(behavioral_router)
     app.include_router(api_router)
 
     @app.on_event("startup")
