@@ -242,7 +242,7 @@ const renderSkeletons = () => (
       <p className="mt-1 text-sm text-slate-600">
         A quick trio tailored to your current level. Earn bonus XP and keep your streak alive.
       </p>
-      <Button className="mt-4" onClick={() => navigate("/micro-quest")}>
+      <Button className="mt-4" onClick={() => navigate("/practice/micro-quest")}>
         Start micro-quest
       </Button>
     </div>

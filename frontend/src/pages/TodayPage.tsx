@@ -62,6 +62,14 @@ export default function TodayPage() {
       .catch((err) => console.error(err));
   }, [userId]);
 
+  useEffect(() => {
+    const handleRunUpdate = () => {
+      fetchAgenda();
+    };
+    window.addEventListener("teski-microquest-run", handleRunUpdate);
+    return () => window.removeEventListener("teski-microquest-run", handleRunUpdate);
+  }, [fetchAgenda]);
+
   const handleStart = (item: TodayItem) => {
     if (item.kind === "review_due") {
       navigate("/reviews");

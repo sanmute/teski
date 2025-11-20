@@ -8,9 +8,10 @@ type SkillDetailPanelProps = {
   node: SkillNodeView | null;
   onClose: () => void;
   onStart: (node: SkillNodeView) => void;
+  isStarting?: boolean;
 };
 
-export function SkillDetailPanel({ open, node, onClose, onStart }: SkillDetailPanelProps) {
+export function SkillDetailPanel({ open, node, onClose, onStart, isStarting }: SkillDetailPanelProps) {
   return (
     <Dialog open={open} onOpenChange={(value) => (!value ? onClose() : null)}>
       <DialogContent className="max-w-lg">
@@ -42,8 +43,8 @@ export function SkillDetailPanel({ open, node, onClose, onStart }: SkillDetailPa
                   <p>Great work! Keep it fresh with a quick mastery check or explore advanced neighbors.</p>
                 )}
               </div>
-              <Button className="w-full" onClick={() => node && onStart(node)}>
-                Start 5-question micro-quest
+              <Button className="w-full" onClick={() => node && onStart(node)} disabled={isStarting}>
+                {isStarting ? "Starting..." : "Start 5-question micro-quest"}
               </Button>
             </div>
           </>

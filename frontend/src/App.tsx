@@ -105,6 +105,9 @@ const App = () => {
                 <Route path="/reviews" element={<ReviewsPage />} />
                 <Route path="/exercises" element={<ExercisesPage />} />
                 <Route path="/micro-quest" element={<MicroQuestPage />} />
+                <Route path="/micro-quest/:microQuestId" element={<MicroQuestPage />} />
+                <Route path="/practice/micro-quest" element={<MicroQuestPage />} />
+                <Route path="/practice/micro-quest/:microQuestId" element={<MicroQuestPage />} />
                 <Route path="/skills" element={<SkillTreePage />} />
                 <Route path="/stats" element={<MyStatsPage />} />
                 <Route path="/help" element={<Help />} />

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { listUserMastery, type SkillMastery } from "@/api";
+import { listUserMastery, type SkillMastery, createMicroQuest } from "@/api";
 import { getClientUserId } from "@/lib/user";
 import { SKILL_DEFINITIONS, type SkillDefinition } from "@/data/skillTree";
 import type { SkillNodeView, SkillStatus } from "./SkillNodeCard";
@@ -9,6 +9,7 @@ import { SkillNodeCard } from "./SkillNodeCard";
 import { SkillDetailPanel } from "./SkillDetailPanel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/sonner";
 
 const computeDepth = (definition: SkillDefinition, lookup: Record<string, SkillDefinition>, memo: Record<string, number>): number => {
   if (memo[definition.id] !== undefined) return memo[definition.id];
@@ -45,6 +46,7 @@ export function SkillTreeView() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<SkillNodeView | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [startingSkillId, setStartingSkillId] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -127,9 +129,18 @@ export function SkillTreeView() {
     setDetailOpen(true);
   };
 
-  const handleStart = (node: SkillNodeView) => {
+  const handleStart = async (node: SkillNodeView) => {
     setDetailOpen(false);
-    navigate(`/micro-quest?skill_id=${node.id}&len=5`);
+    setStartingSkillId(node.id);
+    try {
+      const run = await createMicroQuest({ user_id: userId, skill_id: node.id, length: 5 });
+      navigate(`/practice/micro-quest/${run.id}`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Couldn't start a micro-quest. Please try again.");
+    } finally {
+      setStartingSkillId(null);
+    }
   };
 
   if (loading) {
@@ -190,7 +201,13 @@ export function SkillTreeView() {
         ))}
       </div>
 
-      <SkillDetailPanel open={detailOpen} node={selected} onClose={() => setDetailOpen(false)} onStart={handleStart} />
+      <SkillDetailPanel
+        open={detailOpen}
+        node={selected}
+        onClose={() => setDetailOpen(false)}
+        onStart={handleStart}
+        isStarting={startingSkillId === selected?.id}
+      />
     </div>
   );
 }

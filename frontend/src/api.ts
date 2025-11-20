@@ -452,6 +452,116 @@ export async function planMicroQuest(params: {
   return handleResponse<MicroQuestPlanResponse>(res);
 }
 
+export type MicroQuestExercise = {
+  exercise_id: string;
+  prompt: string;
+  concept?: string;
+  type: "MCQ" | "NUMERIC" | "SHORT";
+  choices?: { id: string | number; text: string }[];
+  unit_hint?: string | null;
+  difficulty?: number;
+  difficulty_label?: string | null;
+  is_review?: boolean;
+  metadata?: Record<string, unknown>;
+};
+
+export type MicroQuestState = {
+  id: string;
+  skill_id: string;
+  skill_name?: string | null;
+  length?: number;
+  current_index: number;
+  total_exercises: number;
+  current_exercise: MicroQuestExercise | null;
+};
+
+export type MicroQuestCreateResponse = {
+  id: string;
+  skill_id?: string;
+  skill_name?: string;
+  length?: number;
+};
+
+export async function createMicroQuest(params: {
+  user_id: string;
+  skill_id?: string | null;
+  length: number;
+  difficulty_tilt?: "review" | "challenge" | "balanced";
+}): Promise<MicroQuestCreateResponse> {
+  const res = await fetch(`${API_BASE}/micro-quests`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-User-Id": params.user_id },
+    body: JSON.stringify({
+      user_id: params.user_id,
+      skill_id: params.skill_id ?? null,
+      length: params.length,
+      difficulty_tilt: params.difficulty_tilt,
+    }),
+  });
+  return handleResponse<MicroQuestCreateResponse>(res);
+}
+
+export async function getMicroQuestState(id: string, user_id?: string): Promise<MicroQuestState> {
+  const url = new URL(`${API_BASE}/micro-quests/${id}`, typeof window !== "undefined" ? window.location.origin : "http://localhost:5173");
+  if (user_id) url.searchParams.set("user_id", user_id);
+  const res = await fetch(url.toString(), {
+    headers: user_id ? { "X-User-Id": user_id } : undefined,
+  });
+  return handleResponse<MicroQuestState>(res);
+}
+
+export type MicroQuestAnswerResponse = {
+  correct: boolean;
+  persona_reaction?: PersonaReaction | null;
+  mastery_changes?: MasteryChange[];
+  xp_delta?: number;
+  mastery_after?: number;
+  streak_after?: number;
+  finished?: boolean;
+  next_exercise?: MicroQuestExercise | null;
+  next_index?: number;
+  total_exercises?: number;
+};
+
+export async function submitMicroQuestAnswer(params: {
+  micro_quest_id: string;
+  exercise_id: string;
+  answer: Record<string, unknown>;
+  user_id: string;
+}): Promise<MicroQuestAnswerResponse> {
+  const res = await fetch(`${API_BASE}/micro-quests/${params.micro_quest_id}/answer`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-User-Id": params.user_id },
+    body: JSON.stringify({
+      exercise_id: params.exercise_id,
+      answer: params.answer,
+    }),
+  });
+  return handleResponse<MicroQuestAnswerResponse>(res);
+}
+
+export type MicroQuestSummaryOut = {
+  total_exercises: number;
+  correct_count: number;
+  incorrect_count: number;
+  xp_gained: number;
+  streak_before?: number;
+  streak_after?: number;
+  mastery_changes: MasteryChange[];
+  skill_id?: string;
+  skill_name?: string;
+  length?: number;
+};
+
+export async function getMicroQuestSummary(id: string, user_id?: string): Promise<MicroQuestSummaryOut> {
+  const url = new URL(`${API_BASE}/micro-quests/${id}/summary`, typeof window !== "undefined" ? window.location.origin : "http://localhost:5173");
+  if (user_id) url.searchParams.set("user_id", user_id);
+  const res = await fetch(url.toString(), {
+    headers: user_id ? { "X-User-Id": user_id } : undefined,
+  });
+  return handleResponse<MicroQuestSummaryOut>(res);
+}
+
 export type TodayItem =
   | {
       kind: "review_due";

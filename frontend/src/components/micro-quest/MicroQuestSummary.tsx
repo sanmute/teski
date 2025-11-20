@@ -13,6 +13,7 @@ type MasteryDelta = {
 };
 
 type MicroQuestSummaryProps = {
+  skillId?: string;
   skillName?: string;
   totalQuestions: number;
   correctCount: number;
@@ -21,11 +22,16 @@ type MicroQuestSummaryProps = {
   todayRuns: number;
   weekRuns: number;
   summaryMessage: string;
+  runReaction?: string;
+  streakAfter?: number | null;
+  ctaLabel?: string;
   onRepeat: () => void;
   onBack: () => void;
+  onOpenSkillMap?: () => void;
 };
 
 export function MicroQuestSummary({
+  skillId,
   skillName,
   totalQuestions,
   correctCount,
@@ -34,8 +40,12 @@ export function MicroQuestSummary({
   todayRuns,
   weekRuns,
   summaryMessage,
+  runReaction,
+  streakAfter,
+  ctaLabel,
   onRepeat,
   onBack,
+  onOpenSkillMap,
 }: MicroQuestSummaryProps) {
   const accuracy = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
 
@@ -52,15 +62,22 @@ export function MicroQuestSummary({
           <h2 className="text-2xl font-semibold text-slate-900">
             {skillName ? `Progress in ${skillName}` : "Session finished"}
           </h2>
-        </div>
       </div>
+    </div>
       <p className="mt-3 text-sm text-slate-600">{summaryMessage}</p>
+      {runReaction && <p className="mt-2 text-sm font-medium text-slate-800">{runReaction}</p>}
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <SummaryStat label="Accuracy" value={`${accuracy}%`} />
         <SummaryStat label="XP earned" value={`+${xpTotal}`} />
         <SummaryStat label="Correct" value={`${correctCount}/${totalQuestions}`} />
       </div>
+
+      {typeof streakAfter === "number" && (
+        <div className="mt-4 rounded-2xl bg-slate-50 p-3 text-sm text-slate-700">
+          Streak now at {streakAfter} day{streakAfter === 1 ? "" : "s"}. Keep it going!
+        </div>
+      )}
 
       {masteryDeltas.length > 0 && (
         <div className="mt-6 rounded-2xl bg-slate-50 p-4">
@@ -73,7 +90,7 @@ export function MicroQuestSummary({
                 <div className="flex items-center justify-between text-sm font-medium text-slate-700">
                   <span>{delta.skill_name}</span>
                   <span>
-                    {Math.round(delta.old)}% → {Math.round(delta.new)}%
+                    {Math.round(delta.old)}% {"->"} {Math.round(delta.new)}%
                   </span>
                 </div>
                 <MasteryBar value={delta.new} className="mt-1" />
@@ -91,12 +108,17 @@ export function MicroQuestSummary({
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <Button className="flex-1" onClick={onRepeat}>
           <Repeat className="mr-2 h-4 w-4" />
-          Do another run
+          {ctaLabel ?? "Do another run"}
         </Button>
         <Button className="flex-1" variant="outline" onClick={onBack}>
           <Home className="mr-2 h-4 w-4" />
           Back to Today
         </Button>
+        {onOpenSkillMap && (
+          <Button className="flex-1" variant="ghost" onClick={onOpenSkillMap}>
+            {skillId ? `Skill map: ${skillName ?? "skill"}` : "Open skill map"}
+          </Button>
+        )}
       </div>
     </div>
   );
