@@ -1,19 +1,23 @@
-# Teski – Deadline Shamer + Deep Learning Lab
+# Teski – Practice, Diagnosis, and Learning Trajectories
 
-Teski keeps students honest about deadlines *and* nudges them toward deeper understanding. It now ships with:
+Teski is a learning & task platform for students. It now ships with:
 
-- FastAPI + SQLModel backend (memory API, feedback service, deep-learning endpoints, prefs, analytics jobs)
-- Vite + React 18 frontend (shadcn-ui/Tailwind) with Admin Cost panel, Deep Learning Lab, push-ready PWA shell
-- LLM-powered feedback + elaboration + concept maps, gated by per-user opt-in preferences (GDPR friendly)
+- FastAPI + SQLModel backend (micro-quests, memory, mastery, challenge engine v2, diagnostic engine, learning trajectories, prefs, analytics jobs)
+- Vite + React 18 frontend (Today → Micro-quest → Summary loop, Skill Map, Admin Cost panel, Deep Learning Lab, push-ready PWA)
+- Domain-aware diagnostic engine for Python/Math/Generic + numeric/units detector; challenge engine v2 for balanced comfort/challenge/stretch runs
+- LLM-backed feedback/elaboration/concept maps (opt-in, privacy-aware)
 
 ## Highlights
 
 | Area | Capabilities |
 | ---- | ------------ |
 | Tasks & Planner | ICS import, reminders, APScheduler sweepers, push notifications |
-| Feedback | `/feedback/generate` routed through OpenAI/Anthropic/local models with monthly cap guard + caching |
-| Deep Learning Pack | Self-explanations (text/voice/Whisper), elaborative prompts, concept maps, confidence logs, interleaving toggle |
-| Preferences | `/prefs/get|set` stores user opt-ins for LLM/STT/storage features; core planner stays on |
+| Practice Loop | Today → personalized micro-quest → persona feedback → summary; Skill Map entry point |
+| Challenge Engine v2 | Balanced comfort/challenge/stretch, new vs review mix, behavior-aware ratios |
+| Diagnostic Engine | Domain-aware (math/python/generic + numeric/units) → mistake_type `family:subtype` for mastery/review/persona |
+| Learning Trajectories | Mastery snapshots, session summaries, skill trajectories/trends via `/analytics/me/*` |
+| Feedback | `/feedback/generate` via OpenAI/Anthropic/local models with cap + cache |
+| Preferences | `/prefs/get|set` stores per-user opt-ins for LLM/STT/storage; planner stays on |
 | Analytics | Raw events + daily aggregates + `/analytics/admin/kpis` for DAU/WAU, retention, paid users |
 | Admin UX | `/admin/costs` page with Recharts summary of cost/cache + KPIs |
 
@@ -34,33 +38,42 @@ Makefile        Convenience commands (setup, dev, lint)
 ```
 
 ## Setup
-1. Clone & enter repo
-   ```bash
-   git clone https://github.com/sanmute/teski.git
-   cd teski
-   ```
-2. Python venv
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-3. Install deps
-   ```bash
-   pip install -r requirements.txt
-   cd frontend && npm install && cd ..
-   ```
-4. Env files (see `.env.example` for full list):
-   ```env
-   DATABASE_URL=sqlite:///./teski_v2.db
-   FEEDBACK_MONTHLY_CAP_EUR=50.0
-   FEEDBACK_CAP_MODE=mini-only      # or block
-   ENABLE_ANALYTICS_JOBS=true
-   ANALYTICS_CRON=0 2 * * *
-   ENABLE_WHISPER=false             # true enables OpenAI/faster-whisper
-   OPENAI_API_KEY=sk-...
-   VITE_API_BASE=/
-   ```
-   Generate VAPID keys if you want push notifications (set in `.env.backend` + `.env.frontend`).
+1) Clone & enter repo
+```bash
+git clone https://github.com/sanmute/teski.git
+cd teski
+```
+
+2) Python venv
+- macOS/Linux:
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  ```
+- Windows (PowerShell):
+  ```powershell
+  python -m venv .venv
+  .\.venv\Scripts\Activate.ps1
+  ```
+
+3) Install deps
+```bash
+pip install -r requirements.txt
+cd frontend && npm install && cd ..
+```
+
+4) Env files (see `.env.example` for full list):
+```env
+DATABASE_URL=sqlite:///./teski_v2.db
+FEEDBACK_MONTHLY_CAP_EUR=50.0
+FEEDBACK_CAP_MODE=mini-only      # or block
+ENABLE_ANALYTICS_JOBS=true
+ANALYTICS_CRON=0 2 * * *
+ENABLE_WHISPER=false             # true enables OpenAI/faster-whisper
+OPENAI_API_KEY=sk-...
+VITE_API_BASE=/
+```
+Generate VAPID keys if you want push notifications (set in `.env.backend` + `.env.frontend`).
 
 ## Run Locally
 ```bash
@@ -69,22 +82,27 @@ make dev      # runs uvicorn app.main + npm run dev simultaneously
 - API docs: http://localhost:8000/docs
 - React app: http://localhost:5173 (dev server proxies `/api`, `/feedback`, `/analytics`, `/prefs`, `/deep`, etc.)
 
+Windows alternative (no Make):
+```powershell
+uvicorn app.main:app --env-file .env --port 8000
+cd frontend; npm run dev
+```
+
 To serve from FastAPI only (no dev server):
 ```bash
 cd frontend && npm run build
 uvicorn app.main:app --env-file .env --port 8000
 ```
-Static files under `frontend/dist` will be served by FastAPI’s StaticFiles mount (configure in deployment).
+Static assets under `frontend/dist` can be served via FastAPI StaticFiles or your web server.
 
 ## Demo Flow (suggested)
 1. `make dev` → wait for Uvicorn + Vite ready logs.
 2. Open http://localhost:5173.
-3. Import an ICS file *or* toggle “Demo mode” via Settings to show mock tasks.
-4. Mark a task done → watch the “Tasks of Shame” UI update, show undo flow.
-5. Open “Admin panel” link → `/admin/costs` page with cost/cache charts + KPIs.
-6. In Settings (gear icon) scroll to **Deep-learning pack** toggles, turn on LLM feedback/voice/etc.
-7. Browse to `/deep` (“Deep learning lab” link) to show ExplainCard, ConceptMapWidget, CalibrationChip.
-8. (Optional) Hit `/feedback/admin/stats/*`, `/analytics/admin/kpis`, or `/prefs/*` via Thunder Client/Postman to highlight APIs.
+3. Start from **Today** → Daily Practice card → Micro-quest run → Summary → back to Today (watch streak/mastery progress).
+4. Open **Skill Map** → start micro-quest from a node.
+5. Visit `/admin/costs` for cost/cache charts + KPIs.
+6. In Settings, toggle Deep-learning pack (LLM feedback/voice) and try `/deep` lab components.
+7. Optional API pokes: `/feedback/admin/stats/*`, `/analytics/admin/kpis`, `/analytics/me/recent-trends`, `/analytics/me/skill-trajectory`.
 
 ## Database & Migrations
 - Default DB: `teski_v2.db` (root FastAPI service); legacy planner uses `backend/app.db`.
