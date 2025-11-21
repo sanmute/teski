@@ -57,12 +57,16 @@ def update_mastery(
 ) -> Tuple[float, float]:
     record = get_mastery_record(session, user_id, skill_id)
     old_value = record.mastery
+    subtype = (mistake_type or "other").split(":", 1)[-1]
+    family = (mistake_type or "other").split(":", 1)[0]
     if is_correct:
         delta = 2 + (0.5 * difficulty)
     else:
         penalty = 1 + (0.3 * difficulty)
-        if mistake_type == "near_miss":
+        if subtype in {"near_miss", "rounding", "rounding_or_precision_error", "rounding_error", "small_precision_error"}:
             penalty *= 0.5
+        elif family == "units" and subtype in {"wrong_unit", "missing_unit", "conversion_error"}:
+            penalty *= 0.7
         delta = -penalty
 
     new_value = max(0.0, min(100.0, old_value + delta))

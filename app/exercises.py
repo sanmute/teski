@@ -22,7 +22,10 @@ class Exercise:
     type: str
     question: str
     course: Optional[str] = None
+    domain: Optional[str] = None
+    subdomain: Optional[str] = None
     difficulty: int = 1
+    skill_ids: List[str] = field(default_factory=list)
     keywords: List[str] = field(default_factory=list)
     meta: Dict[str, Any] = field(default_factory=dict)
 
@@ -123,12 +126,17 @@ def _exercise_from_metadata(meta: Dict[str, Any], path: Path) -> Exercise:
             raise ValueError(f"Exercise {path} missing required key '{key}'")
 
     course = meta.get("course")
+    domain = meta.get("domain") or meta.get("Domain") or None
+    subdomain = meta.get("subdomain") or meta.get("Subdomain") or None
     difficulty = int(meta.get("difficulty", 1))
+    skill_ids = meta.get("skill_ids", []) or []
+    if isinstance(skill_ids, str):
+        skill_ids = [sid.strip() for sid in skill_ids.split(",") if sid.strip()]
     keywords = meta.get("keywords", [])
     if isinstance(keywords, str):
         keywords = [kw.strip() for kw in keywords.split(",") if kw.strip()]
 
-    used_keys = set(required + ["course", "difficulty", "keywords"])
+    used_keys = set(required + ["course", "difficulty", "keywords", "domain", "subdomain", "skill_ids"])
     remaining = {k: v for k, v in meta.items() if k not in used_keys}
     return Exercise(
         id=str(meta["id"]),
@@ -136,7 +144,10 @@ def _exercise_from_metadata(meta: Dict[str, Any], path: Path) -> Exercise:
         type=str(meta["type"]),
         question=str(meta["question"]).strip(),
         course=str(course) if course else None,
+        domain=str(domain) if domain else None,
+        subdomain=str(subdomain) if subdomain else None,
         difficulty=difficulty,
+        skill_ids=list(skill_ids),
         keywords=list(keywords),
         meta=remaining,
     )

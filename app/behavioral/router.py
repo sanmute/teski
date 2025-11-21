@@ -42,6 +42,7 @@ class BehavioralProfileOut(BaseModel):
     session_length_preference: float
     fatigue_risk: float
     suggested_length: int
+    learning_trends: Optional[dict] = None
 
 
 @router.post("/session", status_code=status.HTTP_201_CREATED)
@@ -72,6 +73,9 @@ def log_practice_session(payload: PracticeSessionIn, db: Session = Depends(get_s
 @router.get("/profile", response_model=BehavioralProfileOut)
 def get_profile(db: Session = Depends(get_session), current_user: User = Depends(get_current_user)) -> BehavioralProfileOut:
     profile = update_behavioral_profile(db, current_user.id)
+    from app.learning_trajectory_service import summarize_recent_trends
+
+    trends = summarize_recent_trends(db, current_user.id, days_back=7)
     db.commit()
     return BehavioralProfileOut(
         engagement_level=profile.engagement_level,
@@ -81,4 +85,5 @@ def get_profile(db: Session = Depends(get_session), current_user: User = Depends
         session_length_preference=profile.session_length_preference,
         fatigue_risk=profile.fatigue_risk,
         suggested_length=recommend_session_length(profile),
+        learning_trends=trends,
     )

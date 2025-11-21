@@ -25,7 +25,6 @@ from app.models import (
     LegacyUserMap,
     MemoryItem,
     Mistake,
-    MistakeSubtype,
     Task as NewTask,
     User as NewUser,
     XPEvent,
@@ -157,10 +156,7 @@ def migrate_mistakes(app_session: Session, legacy_session: Session, user_map: Di
             app_session.add(memory)
         subtype_value = row.get("error_subtype") if has_subtype else None
         subtype = subtype_value or row.get("error_type") or "other"
-        try:
-            subtype_enum = MistakeSubtype(subtype)
-        except ValueError:
-            subtype_enum = MistakeSubtype.OTHER
+        label = subtype if ":" in subtype else f"legacy:{subtype}"
         detail = row.get("detail") or {}
         if not isinstance(detail, dict):
             try:
@@ -172,7 +168,7 @@ def migrate_mistakes(app_session: Session, legacy_session: Session, user_map: Di
             user_id=user.id,
             task_id=getattr(task, "id", None),
             concept=concept,
-            subtype=subtype_enum,
+            subtype=label,
             raw=json.dumps(detail, default=str),
             created_at=_coerce_datetime(row.get("occurred_at")),
         )

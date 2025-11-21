@@ -90,7 +90,8 @@ def _pick_reaction_type(
             return "correct_after_mistake"
         return "correct_normal"
 
-    if mistake_type == "near_miss":
+    subtype = (mistake_type or "").split(":", 1)[-1] if mistake_type else None
+    if subtype == "near_miss":
         return "incorrect_near_miss"
     if is_review:
         return "incorrect_review_regression"
@@ -154,7 +155,8 @@ def generate_persona_reaction(
     if streak_before >= 3 and streak_after == 0 and not is_correct:
         tags.append("streak_reset")
     if mistake_type:
-        tags.append(f"mistake_{mistake_type}")
+        subtype = mistake_type.split(":", 1)[-1]
+        tags.append(f"mistake_{subtype}")
     if is_review:
         tags.append("review_mode")
 

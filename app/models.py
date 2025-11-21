@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Optional, List, Dict
 from uuid import UUID, uuid4
 
 from sqlalchemy import MetaData
@@ -25,11 +25,26 @@ class AppSQLModel(SQLModel, table=False):
 
 
 class MistakeSubtype(str, Enum):
+    """Legacy mistake subtype enum (kept for backward compatibility)."""
+
     NEAR_MISS = "near_miss"
     SIGN = "sign"
     UNIT = "unit"
     ROUNDING = "rounding"
     CONCEPTUAL = "conceptual"
+    DISTRIBUTION_ERROR = "distribution_error"
+    COMBINING_LIKE_TERMS_ERROR = "combining_like_terms_error"
+    FRACTION_MANIPULATION_ERROR = "fraction_manipulation_error"
+    EQUATION_BALANCE_ERROR = "equation_balance_error"
+    ISOLATION_ERROR = "isolation_error"
+    ORDER_OF_OPERATIONS_ERROR = "order_of_operations_error"
+    FUNCTION_EVALUATION_ERROR = "function_evaluation_error"
+    LIMIT_EVALUATION_ERROR = "limit_evaluation_error"
+    DERIVATIVE_RULE_ERROR = "derivative_rule_error"
+    ALGEBRAIC_SIMPLIFICATION_ERROR = "algebraic_simplification_error"
+    UNIT_HANDLING_ERROR = "unit_handling_error"
+    ROUNDING_OR_PRECISION_ERROR = "rounding_or_precision_error"
+    PURE_GUESS = "pure_guess"
     OTHER = "other"
 
 
@@ -76,9 +91,58 @@ class Mistake(AppSQLModel, table=True):
     user_id: UUID = Field(foreign_key="user.id", index=True)
     task_id: Optional[UUID] = Field(default=None, foreign_key="task.id", index=True)
     concept: str = Field(index=True)
-    subtype: MistakeSubtype = Field(default=MistakeSubtype.OTHER, index=True)
+    subtype: str = Field(default="other", index=True)
     raw: str
     created_at: datetime = Field(default_factory=_utcnow, index=True)
+
+
+class UserSkillMasterySnapshot(AppSQLModel, table=True):
+    """Day-level snapshot of mastery trajectory."""
+
+    id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
+    user_id: UUID = Field(foreign_key="user.id", index=True)
+    skill_id: UUID = Field(foreign_key="skill.id", index=True)
+    date: datetime = Field(default_factory=_utcnow, index=True)
+    mastery_level: float = Field(default=0.0)
+    delta_since_prev: float = Field(default=0.0)
+    num_correct: int = Field(default=0)
+    num_attempts: int = Field(default=0)
+    dominant_mistake_subtypes: List[str] = Field(default_factory=list, sa_type=JSON)
+
+
+class SessionSummary(AppSQLModel, table=True):
+    """Aggregated micro-quest/session summary."""
+
+    id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
+    user_id: UUID = Field(foreign_key="user.id", index=True)
+    micro_quest_id: Optional[str] = Field(default=None, index=True)
+    created_at: datetime = Field(default_factory=_utcnow, index=True)
+    skill_ids: List[str] = Field(default_factory=list, sa_type=JSON)
+    num_exercises: int = Field(default=0)
+    num_correct: int = Field(default=0)
+    avg_difficulty: float = Field(default=0.0)
+    xp_gained: int = Field(default=0)
+    duration_seconds: Optional[int] = Field(default=None)
+    review_count: int = Field(default=0)
+    new_count: int = Field(default=0)
+    mistake_type_counts: Dict[str, int] = Field(default_factory=dict, sa_type=JSON)
+    streak_at_start: Optional[int] = Field(default=None)
+    streak_at_end: Optional[int] = Field(default=None)
+
+
+class UserWeeklySummary(AppSQLModel, table=True):
+    """Optional weekly aggregation for analytics."""
+
+    id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
+    user_id: UUID = Field(foreign_key="user.id", index=True)
+    week_start_date: datetime = Field(default_factory=_utcnow, index=True)
+    total_sessions: int = Field(default=0)
+    total_exercises: int = Field(default=0)
+    total_xp: int = Field(default=0)
+    avg_mastery_delta: float = Field(default=0.0)
+    top_improving_skills: List[str] = Field(default_factory=list, sa_type=JSON)
+    top_stagnant_skills: List[str] = Field(default_factory=list, sa_type=JSON)
+    dominant_mistake_subtypes: List[str] = Field(default_factory=list, sa_type=JSON)
 
 
 class ReviewLog(AppSQLModel, table=True):

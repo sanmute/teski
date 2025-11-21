@@ -21,13 +21,15 @@ from app.challenge.engine import (
     plan_to_response_items,
     select_exercises_for_session,
 )
+from app.diagnostic_engine import diagnose_mistake
+from app.mistake_types import MistakeInfo
 from app.config import get_settings
 from app.db import get_session
 from app.detectors import classify_mistake
 from app.exercises import Exercise, grade, load_exercises
 from app.mastery.models import Skill
 from app.mastery.service import get_or_create_skill, update_mastery
-from app.models import AnalyticsEvent, Mistake, MistakeSubtype, User
+from app.models import AnalyticsEvent, Mistake, User
 from app.persona_reactions import PersonaReaction, generate_persona_reaction
 from app.scheduler import get_next_reviews, schedule_from_mistake
 from app.timeutil import user_day_bounds
@@ -214,6 +216,40 @@ def _validate_payload(exercise: Exercise, payload: Dict[str, Any]) -> None:
         raise HTTPException(status_code=400, detail="unsupported_exercise_type")
 
 
+def _stringify_answer(exercise: Exercise, payload: Dict[str, Any]) -> str:
+    if exercise.type == "numeric":
+        value = payload.get("value")
+        unit = payload.get("unit")
+        return f"{value} {unit}" if unit else str(value)
+    if exercise.type == "mcq":
+        choice_index = payload.get("choice")
+        choices = exercise.meta.get("choices") or []
+        if isinstance(choice_index, int) and 0 <= choice_index < len(choices):
+            choice = choices[choice_index]
+            return str(choice.get("text") or choice.get("label") or choice_index)
+        return str(choice_index)
+    if exercise.type == "short_answer":
+        text = payload.get("text")
+        return str(text or "")
+    return str(payload)
+
+
+def _normalize_mistake_label(classified: Optional[str], info: Optional[MistakeInfo]) -> str:
+    if info:
+        return info.label
+    if not classified:
+        return "behavioral:pure_guess"
+    if ":" in classified:
+        return classified
+    return f"legacy:{classified}"
+
+
+def _mistake_subtype_only(label: Optional[str]) -> str:
+    if not label:
+        return "other"
+    return label.split(":", 1)[-1]
+
+
 @router.get("/list", response_model=ExerciseListResponse)
 def list_exercises(
     course: Optional[str] = Query(default=None),
@@ -371,32 +407,36 @@ def submit_exercise(
     # Incorrect path
     log_event("exercise_incorrect", {"exercise_id": exercise.id}, user_id)
 
+    expected = exercise.meta.get("answer") or {}
+    relative_error = _relative_error(info.get("delta"), info.get("expected"))
+    diagnosed = diagnose_mistake(exercise, _stringify_answer(exercise, payload), expected or info)
+    classified = None
+    if not diagnosed:
+        classified = classify_mistake(
+            exercise.question,
+            json.dumps(payload, default=str),
+            json.dumps(expected, default=str),
+            {
+                "keywords": exercise.keywords,
+                "unit_expected": info.get("unit_expected"),
+                "unit_received": info.get("unit_received"),
+                "unit_mismatch": info.get("unit_mismatch"),
+                "relative_error": relative_error,
+                "expected_value": info.get("expected"),
+            },
+        )
+    mistake_label = _normalize_mistake_label(classified, diagnosed)
     mistake = Mistake(
         user_id=user.id,
         concept=exercise.concept,
         raw=json.dumps(payload, default=str),
-        subtype=MistakeSubtype.CONCEPTUAL,
+        subtype=mistake_label,
     )
     session.add(mistake)
 
     schedule_from_mistake(session, user=user, concept=exercise.concept)
 
-    expected = exercise.meta.get("answer") or {}
-    relative_error = _relative_error(info.get("delta"), info.get("expected"))
-    classified = classify_mistake(
-        exercise.question,
-        json.dumps(payload, default=str),
-        json.dumps(expected, default=str),
-        {
-            "keywords": exercise.keywords,
-            "unit_expected": info.get("unit_expected"),
-            "unit_received": info.get("unit_received"),
-            "unit_mismatch": info.get("unit_mismatch"),
-            "relative_error": relative_error,
-            "expected_value": info.get("expected"),
-        },
-    )
-    info.setdefault("classified_as", classified)
+    info.setdefault("classified_as", mistake_label)
 
     next_hint = None
     explanation = exercise.meta.get("explanation")
@@ -409,7 +449,7 @@ def submit_exercise(
         skill_id=skill.id,
         is_correct=False,
         difficulty=exercise.difficulty,
-        mistake_type=classified,
+        mistake_type=mistake_label,
     )
     mastery_changes.append(_mastery_payload(skill, old_mastery, new_mastery))
 
@@ -422,7 +462,7 @@ def submit_exercise(
         streak_before=streak_before,
         streak_after=streak_after,
         difficulty=exercise.difficulty,
-        mistake_type=classified,
+        mistake_type=mistake_label,
         is_review=False,
     )
     persona_msg = reaction.message

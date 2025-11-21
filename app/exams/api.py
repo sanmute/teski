@@ -34,7 +34,7 @@ from app.exams.schemas import (
     TopicIn,
     TopicOut,
 )
-from app.models import Mistake, MistakeSubtype, User
+from app.models import Mistake, User
 from app.scheduler import get_next_reviews, schedule_from_mistake
 from app.timeutil import DEFAULT_TZ, user_day_bounds
 from app.xp import award as award_xp
@@ -315,7 +315,7 @@ def update_block_progress(
                     user_id=user.id,
                     concept=block.topic,
                     raw=f"study_block:{block.id}",
-                    subtype=MistakeSubtype.CONCEPTUAL,
+                    subtype="behavioral:incomplete_block",
                 )
                 session.add(mistake)
                 schedule_from_mistake(session, user=user, concept=block.topic)

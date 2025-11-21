@@ -15,7 +15,7 @@ from app.config import get_settings
 from app.db import get_session
 from app.detectors import classify_mistake
 from app.exercises import load_exercises
-from app.models import AnalyticsEvent, MemoryItem, Mistake, MistakeSubtype, ReviewLog, User
+from app.models import AnalyticsEvent, MemoryItem, Mistake, ReviewLog, User
 from app.personas import get_persona_copy
 from app.timeutil import user_day_bounds
 from app.scheduler import enforce_daily_cap, get_next_reviews, review as review_memory, schedule_from_mistake
@@ -62,18 +62,13 @@ def log_mistake(payload: MistakeIn, session: Session = Depends(get_session)) -> 
         correct_answer=str(context.get("correct", "")),
         context=context,
     )
+    label = f"legacy:{subtype}" if ":" not in subtype else subtype
     memory = schedule_from_mistake(session, user=user, concept=concept, task_id=payload.task_id)
-    try:
-        subtype_enum = MistakeSubtype(subtype)
-        subtype = subtype_enum.value
-    except ValueError:
-        subtype_enum = MistakeSubtype.OTHER
-        subtype = subtype_enum.value
     mistake = Mistake(
         user_id=user.id,
         task_id=payload.task_id,
         concept=concept,
-        subtype=subtype_enum,
+        subtype=label,
         raw=payload.raw or "",
     )
     session.add(mistake)
