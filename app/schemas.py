@@ -48,6 +48,7 @@ class PersonaOut(BaseModel):
     warmup: bool
     copy: str
     warmup_ts: Optional[datetime] = None
+    model_config = {"protected_namespaces": ()}
 
 
 class StatsOut(BaseModel):

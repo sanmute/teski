@@ -8,6 +8,13 @@ from enum import Enum
 from .settings import DEFAULT_TIMEZONE
 
 
+class UserRole(str, Enum):
+    STUDENT = "student"
+    EDUCATOR = "educator"
+    INSTITUTION_ADMIN = "institution_admin"
+    TESKI_ADMIN = "teski_admin"
+
+
 # >>> LEADERBOARD START USER MODEL
 class User(SQLModel, table=True):
     """Minimal user model used for leaderboard membership."""
@@ -15,6 +22,8 @@ class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     email: str = Field(index=True, sa_column_kwargs={"unique": True})
     display_name: Optional[str] = None
+    hashed_password: str = Field(default="")
+    role: UserRole = Field(default=UserRole.STUDENT, index=True)
     created_at: datetime = Field(default_factory=lambda: datetime.now(DEFAULT_TIMEZONE))
 
 

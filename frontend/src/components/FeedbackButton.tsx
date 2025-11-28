@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { submitFeedback } from "../api/feedback";
 
 type FeedbackButtonProps = {
   userId?: string;
@@ -9,26 +10,29 @@ export function FeedbackButton({ userId }: FeedbackButtonProps) {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function send() {
     if (!message.trim()) return;
     setSending(true);
-    await fetch("/pilot/feedback", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message,
-        user_id: userId ?? null,
-        context_json: { path: window.location.pathname },
-      }),
-    });
-    setSending(false);
-    setSent(true);
-    setTimeout(() => {
-      setOpen(false);
-      setMessage("");
-      setSent(false);
-    }, 1200);
+    setError(null);
+    try {
+      await submitFeedback({
+        message: message.trim(),
+        context: "floating_feedback",
+        page: window.location.pathname,
+      });
+      setSent(true);
+      setTimeout(() => {
+        setOpen(false);
+        setMessage("");
+        setSent(false);
+      }, 1200);
+    } catch (err: any) {
+      setError(err?.message || "Could not send feedback");
+    } finally {
+      setSending(false);
+    }
   }
 
   if (!open) {
@@ -54,6 +58,7 @@ export function FeedbackButton({ userId }: FeedbackButtonProps) {
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
+      {error && <div className="mt-1 text-xs text-red-600">{error}</div>}
       <div className="mt-2 flex gap-2">
         <button
           type="button"

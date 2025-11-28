@@ -22,6 +22,7 @@ class AppSQLModel(SQLModel, table=False):
 
     __abstract__ = True
     metadata = app_metadata
+    model_config = {"protected_namespaces": ()}
 
 
 class MistakeSubtype(str, Enum):

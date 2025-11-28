@@ -50,6 +50,27 @@ def _ensure_task_columns(conn: sqlite3.Connection) -> None:
         conn.commit()
 
 
+def _ensure_user_role_column(conn: sqlite3.Connection) -> None:
+    cur = conn.cursor()
+    cur.execute("PRAGMA table_info(user);")
+    cols = {row[1] for row in cur.fetchall()}
+    if "role" not in cols:
+        cur.execute("ALTER TABLE user ADD COLUMN role TEXT DEFAULT 'student'")
+        cur.execute("UPDATE user SET role = 'student' WHERE role IS NULL")
+    cur.execute("CREATE INDEX IF NOT EXISTS ix_user_role ON user(role)")
+    conn.commit()
+
+
+def _ensure_user_auth_columns(conn: sqlite3.Connection) -> None:
+    cur = conn.cursor()
+    cur.execute("PRAGMA table_info(user);")
+    cols = {row[1] for row in cur.fetchall()}
+    if "hashed_password" not in cols:
+        cur.execute("ALTER TABLE user ADD COLUMN hashed_password TEXT DEFAULT ''")
+        cur.execute("UPDATE user SET hashed_password = '' WHERE hashed_password IS NULL OR hashed_password = 'None'")
+        conn.commit()
+
+
 def _ensure_help_library_tables(conn: sqlite3.Connection) -> str:
     """Create FTS-backed or fallback tables. Returns 'fts5' or 'fallback'."""
     cur = conn.cursor()
@@ -133,6 +154,11 @@ def init_db():
         from .models_dfe import SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate
         _ = (SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate)
         # <<< DFE END
+        from .models_institution import Course, Institution, Module, UserInstitutionRole, UserCourseRole
+        from .models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
+        from .models_exercise import Exercise
+
+        _ = (Course, Institution, Module, UserInstitutionRole, UserCourseRole, MicroQuest, MicroQuestAnswer, MicroQuestExercise, Exercise)
         SQLModel.metadata.create_all(engine)
         print("[DB] ORM tables ensured (Task, Reminder, StudyPack)", file=sys.stderr)
     except Exception as e:
@@ -146,6 +172,8 @@ def init_db():
         cur.execute("select sqlite_version();")
         print(f"[DB] sqlite_version: {cur.fetchone()[0]}", file=sys.stderr)
         _ensure_task_columns(conn)
+        _ensure_user_role_column(conn)
+        _ensure_user_auth_columns(conn)
 
         mode = _ensure_help_library_tables(conn)
         print(f"[DB] Help Library tables ensured (mode={mode})", file=sys.stderr)

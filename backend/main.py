@@ -39,6 +39,9 @@ app.include_router(health_route.router)
 app.include_router(tasks_route.router)
 app.include_router(reminders_route.router)
 app.include_router(studypack_route.router)
+from .routes import auth as auth_route
+
+app.include_router(auth_route.router)
 
 from .routes import integrations as integrations_route
 app.include_router(integrations_route.router)
@@ -72,6 +75,13 @@ from .routes import dfe_tasks as dfe_tasks_route
 
 app.include_router(dfe_tasks_route.router)
 # <<< DFE END
+# >>> INSTITUTIONS START
+from .routes import institutions_admin as institutions_admin_route
+from .routes import educator as educator_route
+
+app.include_router(institutions_admin_route.router)
+app.include_router(educator_route.router)
+# <<< INSTITUTIONS END
 
 # >>> MEMORY START
 from .routes import memory as memory_route
@@ -84,6 +94,12 @@ from .routes import memory_v1 as memory_v1_route
 
 app.include_router(memory_v1_route.router)
 # <<< MEMORY V1 END
+
+# >>> MICROQUEST START
+from .routes import microquest as microquest_route
+
+app.include_router(microquest_route.router)
+# <<< MICROQUEST END
 
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
@@ -107,3 +123,12 @@ def job():
         run_sweep(s, persona="teacher")
 scheduler.add_job(job, "interval", minutes=15)
 scheduler.start()
+
+# >>> SEED EXERCISES START
+from .seed.exercises_intro_python import seed_intro_python_exercises
+
+@app.on_event("startup")
+def seed_intro_python():
+    with Session(engine) as session:
+        seed_intro_python_exercises(session)
+# <<< SEED EXERCISES END

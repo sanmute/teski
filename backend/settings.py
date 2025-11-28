@@ -34,3 +34,9 @@ class MemoryV1Settings:
 
 memory_v1_settings = MemoryV1Settings()
 # <<< MEMORY V1 END
+
+# >>> AUTH START
+SECRET_KEY = getenv("TESKI_SECRET_KEY", "change-me-in-prod")
+ALGORITHM = getenv("TESKI_JWT_ALG", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(getenv("TESKI_ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
+# <<< AUTH END

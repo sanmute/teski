@@ -24,6 +24,7 @@ class FeedbackGenerateOut(BaseModel):
     estimated_tokens_in: int
     estimated_tokens_out: int
     estimated_cost_eur: float
+    model_config = {"protected_namespaces": ()}
 
 
 class FeedbackSummaryIn(BaseModel):

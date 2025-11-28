@@ -22,15 +22,19 @@ import Dashboard from "./pages/Dashboard";
 import Study from "./pages/Study";
 import Help from "./pages/Help";
 import Profile from "./pages/Profile";
+import LoginPage from "./pages/LoginPage";
 import { AppLayout } from "./layouts/AppLayout";
 import StudySessionPage from "./pages/StudySessionPage";
 import MyStatsPage from "./pages/MyStatsPage";
 import ReviewsPage from "./pages/ReviewsPage";
 import ExercisesPage from "./pages/ExercisesPage";
-import TodayPage from "./pages/TodayPage";
+import StudentTodayPage from "./pages/StudentTodayPage";
 import ExamPage from "./pages/ExamPage";
-import MicroQuestPage from "./pages/MicroQuestPage";
+import MicroQuestLitePage from "./pages/MicroQuestLitePage";
+import MicroQuestSummaryLitePage from "./pages/MicroQuestSummaryLitePage";
 import SkillTreePage from "./pages/SkillTreePage";
+import FeedbackViewerPage from "./pages/FeedbackViewerPage";
+import { RequireAuth } from "./components/RequireAuth";
 
 const queryClient = new QueryClient();
 
@@ -96,18 +100,46 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <Routes>
+              <Route path="/login" element={<LoginPage />} />
               <Route element={<AppLayout />}>
-                <Route path="/today" element={<TodayPage />} />
+                <Route
+                  path="/today"
+                  element={
+                    <RequireAuth>
+                      <StudentTodayPage />
+                    </RequireAuth>
+                  }
+                />
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/tasks/upcoming" element={<TasksUpcoming />} />
                 <Route path="/study" element={<Study />} />
                 <Route path="/study/session/:sessionId" element={<StudySessionPage />} />
                 <Route path="/reviews" element={<ReviewsPage />} />
                 <Route path="/exercises" element={<ExercisesPage />} />
-                <Route path="/micro-quest" element={<MicroQuestPage />} />
-                <Route path="/micro-quest/:microQuestId" element={<MicroQuestPage />} />
-                <Route path="/practice/micro-quest" element={<MicroQuestPage />} />
-                <Route path="/practice/micro-quest/:microQuestId" element={<MicroQuestPage />} />
+                <Route
+                  path="/practice/micro-quest/:microquestId"
+                  element={
+                    <RequireAuth>
+                      <MicroQuestLitePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/practice/micro-quest/:microquestId/summary"
+                  element={
+                    <RequireAuth>
+                      <MicroQuestSummaryLitePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/admin/feedback"
+                  element={
+                    <RequireAuth>
+                      <FeedbackViewerPage />
+                    </RequireAuth>
+                  }
+                />
                 <Route path="/skills" element={<SkillTreePage />} />
                 <Route path="/stats" element={<MyStatsPage />} />
                 <Route path="/help" element={<Help />} />

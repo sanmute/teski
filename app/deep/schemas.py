@@ -28,6 +28,7 @@ class ElaborateIn(BaseModel):
 class ElaborateOut(BaseModel):
     question: str
     model_answer: str
+    model_config = {"protected_namespaces": ()}
 
 
 class ConfidenceIn(BaseModel):

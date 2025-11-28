@@ -34,5 +34,7 @@ bun.lockb
 .idea/
 text.txt
 ssh.txt
+ssh.txt.pub
+
 .gitignore
 .gitignore
