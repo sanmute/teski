@@ -1,0 +1,151 @@
+{
+  "id": "temp-STEM-101",
+  "question_text": "Evaluate the limit: lim (x→0) (sin(3x))/x.",
+  "type": "numeric",
+  "correct_answer": 3,
+  "difficulty": 2,
+  "skill_ids": ["limits_1", "trig_limits_1"],
+  "solution_explanation": "Rewrite sin(3x)/x as 3 * (sin(3x)/(3x)). As x→0, sin(3x)/(3x) → 1. Therefore the limit equals 3.",
+  "hint": "Use the standard limit sin(u)/u → 1.",
+  "metadata": {
+    "topic": "Calculus",
+    "estimated_time_seconds": 40
+  }
+}
+
+{
+  "id": "temp-STEM-102",
+  "question_text": "Solve for x: 7x − 4 = 3x + 12.",
+  "type": "numeric",
+  "correct_answer": 4,
+  "difficulty": 1,
+  "skill_ids": ["algebra_1"],
+  "solution_explanation": "Subtract 3x from both sides: 4x − 4 = 12. Add 4: 4x = 16. Divide by 4 to get x = 4.",
+  "hint": "Collect like terms first.",
+  "metadata": {
+    "topic": "Algebra",
+    "estimated_time_seconds": 25
+  }
+}
+
+{
+  "id": "temp-STEM-103",
+  "question_text": "Compute the derivative: f(x) = e^{2x} + x^2.",
+  "type": "short_answer",
+  "correct_answer": "f'(x) = 2e^{2x} + 2x",
+  "difficulty": 2,
+  "skill_ids": ["derivatives_1"],
+  "solution_explanation": "Differentiate term-by-term: derivative of e^{2x} is 2e^{2x}, derivative of x^2 is 2x.",
+  "hint": "Use the chain rule on the exponential term.",
+  "metadata": {
+    "topic": "Calculus",
+    "estimated_time_seconds": 40
+  }
+}
+
+{
+  "id": "temp-STEM-104",
+  "question_text": "A 5-kg mass is subjected to a net force of 18 N. What is its acceleration?",
+  "type": "numeric",
+  "correct_answer": 3.6,
+  "difficulty": 1,
+  "skill_ids": ["newton2_1", "kinematics_1"],
+  "solution_explanation": "Use Newton's Second Law: a = F/m = 18/5 = 3.6 m/s².",
+  "hint": "Apply F = ma.",
+  "metadata": {
+    "topic": "Physics",
+    "estimated_time_seconds": 30
+  }
+}
+
+{
+  "id": "temp-STEM-105",
+  "question_text": "Which of the following is the derivative of ln(x^2 + 1)?",
+  "type": "multiple_choice",
+  "choices": ["2x", "2x/(x^2 + 1)", "(x^2 + 1)/2x", "1/(x^2 + 1)"],
+  "correct_answer": "2x/(x^2 + 1)",
+  "difficulty": 2,
+  "skill_ids": ["derivatives_2", "chain_rule"],
+  "solution_explanation": "Use chain rule: d/dx ln(u) = u'/u. Here u = x^2 + 1, so u' = 2x. Thus derivative = 2x/(x^2 + 1).",
+  "hint": "Differentiate the inside function first.",
+  "metadata": {
+    "topic": "Calculus",
+    "estimated_time_seconds": 45
+  }
+}
+
+{
+  "id": "temp-STEM-106",
+  "question_text": "Find the magnitude of the vector v = <3, 4, 12>.",
+  "type": "numeric",
+  "correct_answer": 13,
+  "difficulty": 2,
+  "skill_ids": ["vectors_1"],
+  "solution_explanation": "Magnitude = √(3² + 4² + 12²) = √(9 + 16 + 144) = √169 = 13.",
+  "hint": "Use the 3D magnitude formula.",
+  "metadata": {
+    "topic": "Linear Algebra",
+    "estimated_time_seconds": 40
+  }
+}
+
+{
+  "id": "temp-STEM-107",
+  "question_text": "A solution has hydrogen ion concentration [H+] = 1×10⁻⁶ M. What is its pH?",
+  "type": "numeric",
+  "correct_answer": 6,
+  "difficulty": 2,
+  "skill_ids": ["chemistry_acids_bases"],
+  "solution_explanation": "pH = −log10([H+]) = −log10(1×10⁻⁶) = 6.",
+  "hint": "Use the definition pH = −log10(H+).",
+  "metadata": {
+    "topic": "Chemistry",
+    "estimated_time_seconds": 35
+  }
+}
+
+{
+  "id": "temp-STEM-108",
+  "question_text": "Compute the definite integral: ∫₁³ (2x + 1) dx.",
+  "type": "numeric",
+  "correct_answer": 12,
+  "difficulty": 2,
+  "skill_ids": ["integrals_1"],
+  "solution_explanation": "Antiderivative: x² + x. Evaluate from 1 to 3: (9 + 3) − (1 + 1) = 12.",
+  "hint": "Integrate term-by-term.",
+  "metadata": {
+    "topic": "Calculus",
+    "estimated_time_seconds": 40
+  }
+}
+
+{
+  "id": "temp-STEM-109",
+  "question_text": "In Big-O notation, what is the time complexity of binary search?",
+  "type": "multiple_choice",
+  "choices": ["O(1)", "O(n)", "O(log n)", "O(n log n)"],
+  "correct_answer": "O(log n)",
+  "difficulty": 1,
+  "skill_ids": ["cs_bigO_1", "searching_algorithms_1"],
+  "solution_explanation": "Binary search halves the remaining search space at each step, leading to logarithmic complexity O(log n).",
+  "hint": "Each step reduces the problem size by half.",
+  "metadata": {
+    "topic": "Computer Science",
+    "estimated_time_seconds": 20
+  }
+}
+
+{
+  "id": "temp-STEM-110",
+  "question_text": "A 4-µF capacitor is charged to 12 V. How much energy (in joules) is stored in it?",
+  "type": "numeric",
+  "correct_answer": 0.000288,
+  "difficulty": 3,
+  "skill_ids": ["circuits_2", "electromagnetism_1"],
+  "solution_explanation": "Energy stored: E = 1/2 C V². Convert capacitance: 4 µF = 4×10⁻⁶ F. Then E = 0.5 × (4×10⁻⁶) × 12² = 0.5 × 4×10⁻⁶ × 144 = 2×10⁻⁶ × 144 = 2.88×10⁻⁴ J.",
+  "hint": "Use E = 1/2 C V².",
+  "metadata": {
+    "topic": "Electrical Engineering",
+    "estimated_time_seconds": 60
+  }
+}

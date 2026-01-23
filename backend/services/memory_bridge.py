@@ -155,7 +155,7 @@ def _upsert_memory_and_mistake(
     raw: str,
     task: Optional[NewTask],
 ) -> None:
-        subtype_enum = subtype or "other"
+    subtype_enum = subtype or "other"
 
     result = session.exec(
         select(MemoryItem).where(
@@ -185,7 +185,7 @@ def _upsert_memory_and_mistake(
             user_id=user.id,
             task_id=getattr(task, "id", None),
             concept=concept,
-                subtype=subtype_enum,
+            subtype=subtype_enum,
             raw=raw,
         )
     )

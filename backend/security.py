@@ -5,19 +5,23 @@ from typing import Optional
 
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from passlib.hash import bcrypt_sha256, pbkdf2_sha256
 
 from backend import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
+pwd_context = CryptContext(schemes=["pbkdf2_sha256", "bcrypt_sha256"], deprecated="auto")
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    # Use PBKDF2-SHA256 to avoid bcrypt's 72-byte input limit
+    return pbkdf2_sha256.hash(password)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     try:
-        return pwd_context.verify(plain_password, hashed_password)
+        # Try PBKDF2 first, then fall back to legacy bcrypt_sha256 hashes if any exist
+        if pbkdf2_sha256.verify(plain_password, hashed_password):
+            return True
+        return bcrypt_sha256.verify(plain_password, hashed_password)
     except Exception:
         return False
 

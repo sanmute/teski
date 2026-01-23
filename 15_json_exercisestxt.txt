@@ -1,0 +1,181 @@
+{
+  "id": "temp-STEM-111",
+  "question_text": "Compute the limit: lim (x→2) (x^3 − 8)/(x − 2).",
+  "type": "numeric",
+  "correct_answer": 12,
+  "difficulty": 2,
+  "skill_ids": ["limits_1", "algebra_2"],
+  "solution_explanation": "Factor using the difference of cubes: x^3−8 = (x−2)(x^2 + 2x + 4). Cancel (x−2). Evaluate at x=2: 4 + 4 + 4 = 12.",
+  "hint": "Recognize a difference of cubes.",
+  "metadata": { "topic": "Calculus", "estimated_time_seconds": 45 }
+}
+
+{
+  "id": "temp-STEM-112",
+  "question_text": "Solve for t: 3e^{0.5t} = 18.",
+  "type": "numeric",
+  "correct_answer": 3.583518938,
+  "difficulty": 3,
+  "skill_ids": ["logs_1", "algebra_4"],
+  "solution_explanation": "Divide by 3: e^{0.5t} = 6. Take natural log: 0.5t = ln(6). So t = 2 ln(6) ≈ 3.5835.",
+  "hint": "Use natural logarithms.",
+  "metadata": { "topic": "Precalculus", "estimated_time_seconds": 55 }
+}
+
+{
+  "id": "temp-STEM-113",
+  "question_text": "Find the derivative: f(x) = x^2 sin(x).",
+  "type": "short_answer",
+  "correct_answer": "f'(x) = 2x sin(x) + x^2 cos(x)",
+  "difficulty": 3,
+  "skill_ids": ["derivatives_3", "product_rule"],
+  "solution_explanation": "Apply product rule: (x^2)' sin x + x^2 (sin x)' = 2x sin x + x^2 cos x.",
+  "hint": "Use product rule.",
+  "metadata": { "topic": "Calculus", "estimated_time_seconds": 60 }
+}
+
+{
+  "id": "temp-STEM-114",
+  "question_text": "A car accelerates uniformly from rest at 2.5 m/s². How far does it travel in 8 seconds?",
+  "type": "numeric",
+  "correct_answer": 80,
+  "difficulty": 2,
+  "skill_ids": ["kinematics_1"],
+  "solution_explanation": "Use d = 1/2 a t² = 0.5 × 2.5 × 64 = 80 m.",
+  "hint": "Use constant-acceleration formula.",
+  "metadata": { "topic": "Physics", "estimated_time_seconds": 40 }
+}
+
+{
+  "id": "temp-STEM-115",
+  "question_text": "Which of the following matrices has determinant 0?",
+  "type": "multiple_choice",
+  "choices": ["[[1,2],[3,4]]", "[[2,4],[1,2]]", "[[3,1],[5,2]]", "[[0,1],[2,3]]"],
+  "correct_answer": "[[2,4],[1,2]]",
+  "difficulty": 2,
+  "skill_ids": ["linear_algebra_1"],
+  "solution_explanation": "det([[2,4],[1,2]]) = 2·2 − 4·1 = 0, so it is singular.",
+  "hint": "Compute determinants quickly: ad − bc.",
+  "metadata": { "topic": "Linear Algebra", "estimated_time_seconds": 45 }
+}
+
+{
+  "id": "temp-STEM-116",
+  "question_text": "Evaluate the definite integral ∫₀^4 (3x − 2) dx.",
+  "type": "numeric",
+  "correct_answer": 16,
+  "difficulty": 2,
+  "skill_ids": ["integrals_1"],
+  "solution_explanation": "Antiderivative is (3/2)x² − 2x. Evaluate at 4 and 0: (3/2)(16) − 8 = 24 − 8 = 16.",
+  "hint": "Integrate term-by-term.",
+  "metadata": { "topic": "Calculus", "estimated_time_seconds": 45 }
+}
+
+{
+  "id": "temp-STEM-117",
+  "question_text": "A 12-Ω resistor and a 6-Ω resistor are in series. What is the equivalent resistance?",
+  "type": "numeric",
+  "correct_answer": 18,
+  "difficulty": 1,
+  "skill_ids": ["circuits_1"],
+  "solution_explanation": "Series resistances add directly: 12 + 6 = 18 Ω.",
+  "hint": "R_series = R1 + R2.",
+  "metadata": { "topic": "Electrical Engineering", "estimated_time_seconds": 25 }
+}
+
+{
+  "id": "temp-STEM-118",
+  "question_text": "Simplify the Boolean expression: (A + B)(A' + B).",
+  "type": "short_answer",
+  "correct_answer": "B",
+  "difficulty": 3,
+  "skill_ids": ["logic_1"],
+  "solution_explanation": "Expand: AA' + AB + A'B + BB = 0 + AB + A'B + B = B(A + A' + 1) = B.",
+  "hint": "Expand and simplify.",
+  "metadata": { "topic": "Computer Science (Logic)", "estimated_time_seconds": 60 }
+}
+
+{
+  "id": "temp-STEM-119",
+  "question_text": "A radioactive material has a half-life of 5 hours. What fraction remains after 20 hours?",
+  "type": "numeric",
+  "correct_answer": 0.0625,
+  "difficulty": 3,
+  "skill_ids": ["chem_decay_1"],
+  "solution_explanation": "20 hours is 4 half-lives. Remaining fraction = (1/2)^4 = 1/16 = 0.0625.",
+  "hint": "Count the number of half-lives.",
+  "metadata": { "topic": "Chemistry", "estimated_time_seconds": 40 }
+}
+
+{
+  "id": "temp-STEM-120",
+  "question_text": "Find the magnitude of the cross product of vectors a = <2,−1,4> and b = <1,3,0>.",
+  "type": "numeric",
+  "correct_answer": 14,
+  "difficulty": 4,
+  "skill_ids": ["vectors_2"],
+  "solution_explanation": "a×b = <−12,4,7>. Magnitude = √(144 + 16 + 49) = √209 ≈ 14.46 (rounded to 14 if integers expected).",
+  "hint": "Compute determinant for cross product.",
+  "metadata": { "topic": "Linear Algebra", "estimated_time_seconds": 80 }
+}
+
+{
+  "id": "temp-STEM-121",
+  "question_text": "If f(x) = 1/x, compute f'(3).",
+  "type": "numeric",
+  "correct_answer": -0.1111111111,
+  "difficulty": 1,
+  "skill_ids": ["derivatives_1"],
+  "solution_explanation": "f'(x) = −1/x². So f'(3) = −1/9 ≈ −0.1111.",
+  "hint": "Rewrite x⁻¹ first.",
+  "metadata": { "topic": "Calculus", "estimated_time_seconds": 25 }
+}
+
+{
+  "id": "temp-STEM-122",
+  "question_text": "Which time complexity best describes inserting an element into a queue implemented using a linked list?",
+  "type": "multiple_choice",
+  "choices": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+  "correct_answer": "O(1)",
+  "difficulty": 1,
+  "skill_ids": ["cs_bigO_1", "queue_ops_1"],
+  "solution_explanation": "Enqueue places a new node at the tail pointer, a constant-time operation.",
+  "hint": "Linked list queues track the tail.",
+  "metadata": { "topic": "Computer Science", "estimated_time_seconds": 20 }
+}
+
+{
+  "id": "temp-STEM-123",
+  "question_text": "Compute the derivative: g(x) = (x^2 + 1)/(x + 3).",
+  "type": "short_answer",
+  "correct_answer": "g'(x) = [(2x)(x+3) − (x^2+1)]/(x+3)^2",
+  "difficulty": 4,
+  "skill_ids": ["derivatives_4", "quotient_rule"],
+  "solution_explanation": "Use quotient rule: g' = (u'v − uv')/v² = [(2x)(x+3) − (x²+1)]/(x+3)².",
+  "hint": "Apply the quotient rule carefully.",
+  "metadata": { "topic": "Calculus", "estimated_time_seconds": 80 }
+}
+
+{
+  "id": "temp-STEM-124",
+  "question_text": "A cylinder has radius 3 cm and height 10 cm. What is its volume?",
+  "type": "numeric",
+  "correct_answer": 282.7433388,
+  "difficulty": 1,
+  "skill_ids": ["geometry_1"],
+  "solution_explanation": "Volume = πr²h = π·9·10 = 90π ≈ 282.74 cm³.",
+  "hint": "Use V = πr²h.",
+  "metadata": { "topic": "Geometry", "estimated_time_seconds": 25 }
+}
+
+{
+  "id": "temp-STEM-125",
+  "question_text": "Compute the limit: lim (x→∞) (5x² − x)/(2x² + 7).",
+  "type": "numeric",
+  "correct_answer": 5/2,
+  "difficulty": 2,
+  "skill_ids": ["limits_2", "rational_functions"],
+  "solution_explanation": "Divide numerator and denominator by x²: (5 − 1/x)/(2 + 7/x²). As x→∞, the lower-order terms vanish: limit = 5/2.",
+  "hint": "Compare highest powers of x.",
+  "metadata": { "topic": "Calculus", "estimated_time_seconds": 50 }
+}

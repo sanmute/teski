@@ -1,8 +1,6 @@
-from __future__ import annotations
-
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional
+from typing import Optional
 
 from sqlmodel import Field, Relationship, SQLModel
 
@@ -13,14 +11,15 @@ class InstitutionType(str, Enum):
     OTHER = "other"
 
 
-class Institution(SQLModel, table=True):
+class InstitutionDB(SQLModel, table=True):
+    __tablename__ = "institution"
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(index=True)
     slug: str = Field(index=True, sa_column_kwargs={"unique": True})
     type: InstitutionType = Field(default=InstitutionType.UNIVERSITY)
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
-    courses: List["Course"] = Relationship(back_populates="institution")
+    courses: list["Course"] = Relationship(back_populates="institution")
 
 
 class Course(SQLModel, table=True):
@@ -31,8 +30,8 @@ class Course(SQLModel, table=True):
     description: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
-    institution: Institution = Relationship(back_populates="courses")
-    modules: List["Module"] = Relationship(back_populates="course")
+    institution: Optional["InstitutionDB"] = Relationship(back_populates="courses")
+    modules: list["Module"] = Relationship(back_populates="course")
 
 
 class Module(SQLModel, table=True):
@@ -41,7 +40,7 @@ class Module(SQLModel, table=True):
     title: str
     order_index: int = Field(default=0, index=True)
 
-    course: Course = Relationship(back_populates="modules")
+    course: Optional["Course"] = Relationship(back_populates="modules")
 
 
 class InstitutionRole(str, Enum):
@@ -69,3 +68,7 @@ class UserCourseRole(SQLModel, table=True):
     course_id: int = Field(foreign_key="course.id", index=True)
     role: CourseRole = Field(index=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+# Alias to avoid name clash with other Institution models while keeping imports stable
+Institution = InstitutionDB
