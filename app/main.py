@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 
 from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
@@ -81,6 +82,21 @@ def _stop_scheduler() -> None:
 def create_app() -> FastAPI:
     app = FastAPI(title="Teski Memory API", version="2.0")
     api_router = APIRouter(prefix="/api")
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            "https://teski.app",
+            "https://www.teski.app",
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:4173",
+            "http://127.0.0.1:4173",
+        ],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     @app.get("/health", tags=["system"])
     async def health() -> dict[str, str]:

@@ -149,9 +149,13 @@ export async function buildStudyPack(taskId: string): Promise<StudyPackResponse>
 }
 
 export async function saveMoodleUrl(params: { userId: string; url: string }): Promise<{ ok: boolean }> {
-  const endpoint = `${API_BASE}/integrations/moodle/save-url`;
-  const requestUrl = `${endpoint}?user_id=${encodeURIComponent(params.userId)}&url=${encodeURIComponent(params.url)}`;
-  const res = await fetch(requestUrl, { method: "POST" });
+  const url = new URL(`${API_BASE}/integrations/moodle/save-url`);
+  const search = new URLSearchParams({
+    user_id: params.userId,
+    url: params.url,
+  });
+  url.search = search.toString();
+  const res = await fetch(url.toString(), { method: "POST" });
   return handleResponse<{ ok: boolean }>(res);
 }
 
