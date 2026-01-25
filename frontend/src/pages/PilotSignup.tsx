@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { apiFetch } from "@/api";
 
 function ConsentScreen({ userId }: { userId: string }) {
   async function accept() {
-    await fetch("/pilot/consent/accept", {
+    await apiFetch("/pilot/consent/accept", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: userId, text_version: "v1" }),
@@ -38,19 +39,19 @@ export default function PilotSignup() {
   async function submit() {
     setError(null);
     setLoading(true);
-    const response = await fetch("/pilot/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, code }),
-    });
-    setLoading(false);
-    if (!response.ok) {
-      const detail = (await response.json()).detail || "Signup failed";
+    try {
+      const payload = await apiFetch<{ user_id: string }>("/pilot/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code }),
+      });
+      setUserId(payload.user_id);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : "Signup failed";
       setError(detail);
-      return;
+    } finally {
+      setLoading(false);
     }
-    const payload = await response.json();
-    setUserId(payload.user_id);
   }
 
   return (

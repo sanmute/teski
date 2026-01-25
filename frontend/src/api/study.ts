@@ -4,12 +4,13 @@ import {
   StudySessionStartResponse,
 } from "@/types/study";
 import { getClientUserId } from "@/lib/user";
+import { apiFetch } from "./client";
 
 export async function startStudySession(
   taskBlockId: number,
   goalText?: string
 ): Promise<StudySessionStartResponse> {
-  const res = await fetch(`/study/sessions/start`, {
+  return apiFetch<StudySessionStartResponse>("/study/sessions/start", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,27 +18,19 @@ export async function startStudySession(
     },
     body: JSON.stringify({ task_block_id: taskBlockId, goal_text: goalText ?? null }),
   });
-  if (!res.ok) {
-    throw new Error("Failed to start study session");
-  }
-  return res.json();
 }
 
 export async function fetchStudySession(sessionId: number): Promise<StudySessionDetailResponse> {
-  const res = await fetch(`/study/sessions/${sessionId}`, {
+  return apiFetch<StudySessionDetailResponse>(`/study/sessions/${sessionId}`, {
     headers: { "X-User-Id": getClientUserId() },
   });
-  if (!res.ok) {
-    throw new Error("Failed to fetch study session");
-  }
-  return res.json();
 }
 
 export async function completeStudySession(
   sessionId: number,
   payload: StudySessionCompleteRequest
 ) {
-  const res = await fetch(`/study/sessions/${sessionId}/complete`, {
+  return apiFetch(`/study/sessions/${sessionId}/complete`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,8 +38,4 @@ export async function completeStudySession(
     },
     body: JSON.stringify(payload),
   });
-  if (!res.ok) {
-    throw new Error("Failed to complete study session");
-  }
-  return res.json();
 }

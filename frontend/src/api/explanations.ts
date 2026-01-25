@@ -1,8 +1,9 @@
 import { ExplanationResponse } from "@/types/explanations";
 import { getClientUserId } from "@/lib/user";
+import { apiFetch } from "./client";
 
 export async function generateExplanation(text: string, mode: string = "auto"): Promise<ExplanationResponse> {
-  const res = await fetch(`/explanations/generate`, {
+  return apiFetch<ExplanationResponse>("/explanations/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,10 +11,4 @@ export async function generateExplanation(text: string, mode: string = "auto"): 
     },
     body: JSON.stringify({ text, mode }),
   });
-
-  if (!res.ok) {
-    throw new Error("Failed to generate explanation");
-  }
-
-  return res.json();
 }

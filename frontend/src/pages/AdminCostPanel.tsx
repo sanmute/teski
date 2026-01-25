@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "@/api";
 import {
   Bar,
   BarChart,
@@ -42,9 +43,9 @@ export default function AdminCostPanel() {
   const [kpis, setKpis] = useState<Kpis | null>(null);
 
   useEffect(() => {
-    fetch("/feedback/admin/stats/costs").then((r) => r.json()).then(setCost).catch(() => undefined);
-    fetch("/feedback/admin/stats/cache").then((r) => r.json()).then(setCache).catch(() => undefined);
-    fetch("/analytics/admin/kpis").then((r) => r.json()).then(setKpis).catch(() => undefined);
+    apiFetch<CostStats>("/feedback/admin/stats/costs").then(setCost).catch(() => undefined);
+    apiFetch<CacheStats>("/feedback/admin/stats/cache").then(setCache).catch(() => undefined);
+    apiFetch<Kpis>("/analytics/admin/kpis").then(setKpis).catch(() => undefined);
   }, []);
 
   const chartData = [

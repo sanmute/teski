@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import * as htmlToImage from "html-to-image";
 import jsPDF from "jspdf";
+import { apiFetch } from "@/api";
 
 type KPI = {
   range_days: number;
@@ -43,11 +44,7 @@ export default function InvestorDashboard() {
     async function load() {
       setError(null);
       try {
-        const resp = await fetch(`/analytics/investor?range_days=${range}`);
-        if (!resp.ok) {
-          throw new Error(`Failed to load metrics (${resp.status})`);
-        }
-        const payload = (await resp.json()) as KPI;
+        const payload = await apiFetch<KPI>(`/analytics/investor?range_days=${range}`);
         if (!cancelled) {
           setData(payload);
         }

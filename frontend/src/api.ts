@@ -1,4 +1,5 @@
-export const API_BASE = import.meta.env.VITE_API_BASE ?? "/api";
+import { API_BASE } from "./api/client";
+export { API_BASE_URL, apiFetch, API_BASE } from "./api/client";
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {

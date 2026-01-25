@@ -1,7 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import type { UserPrefs } from "@/types/prefs";
+import { API_BASE_URL, apiFetch } from "@/api";
 
-const PREFS_BASE = import.meta.env.VITE_PREFS_BASE ?? "";
+function resolvePrefsBase() {
+  const customBase = import.meta.env.VITE_PREFS_BASE?.trim();
+  if (customBase) {
+    const trimmed = customBase.replace(/\/+$/, "");
+    return /^https?:\/\//i.test(trimmed) ? trimmed : `http://${trimmed}`;
+  }
+  return API_BASE_URL;
+}
+
+const PREFS_BASE = resolvePrefsBase();
 
 const defaults: UserPrefs = {
   user_id: "",
@@ -21,8 +31,8 @@ export function DeepPrefs({ userId }: { userId: string }) {
 
   const load = useCallback(async () => {
     if (!userId) return;
-    const res = await fetch(`${PREFS_BASE}/prefs/get?user_id=${userId}`);
-    if (res.ok) setPrefs(await res.json());
+    const data = await apiFetch<UserPrefs>(`${PREFS_BASE}/prefs/get?user_id=${userId}`);
+    if (data) setPrefs(data);
   }, [userId]);
 
   useEffect(() => {
@@ -32,7 +42,7 @@ export function DeepPrefs({ userId }: { userId: string }) {
   async function save() {
     if (!prefs) return;
     setSaving(true);
-    await fetch(`${PREFS_BASE}/prefs/set`, {
+    await apiFetch(`${PREFS_BASE}/prefs/set`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(prefs),

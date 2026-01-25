@@ -1,7 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import type { UserPrefs } from "@/types/prefs";
+import { API_BASE_URL, apiFetch } from "@/api";
 
-const PREFS_BASE = import.meta.env.VITE_PREFS_BASE ?? "";
+function resolvePrefsBase() {
+  const customBase = import.meta.env.VITE_PREFS_BASE?.trim();
+  if (customBase) {
+    const trimmed = customBase.replace(/\/+$/, "");
+    return /^https?:\/\//i.test(trimmed) ? trimmed : `http://${trimmed}`;
+  }
+  return API_BASE_URL;
+}
+
+const PREFS_BASE = resolvePrefsBase();
 
 export function useUserPrefs(userId?: string) {
   const [prefs, setPrefs] = useState<UserPrefs | null>(null);
@@ -11,8 +21,8 @@ export function useUserPrefs(userId?: string) {
     if (!userId) return;
     setLoading(true);
     try {
-      const res = await fetch(`${PREFS_BASE}/prefs/get?user_id=${userId}`);
-      if (res.ok) setPrefs(await res.json());
+      const data = await apiFetch<UserPrefs>(`${PREFS_BASE}/prefs/get?user_id=${userId}`);
+      if (data) setPrefs(data);
     } finally {
       setLoading(false);
     }

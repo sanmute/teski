@@ -1,14 +1,14 @@
+import { apiFetch } from "./client";
+
 // >>> PERSONA START
 export async function listPersonas() {
-  const response = await fetch("/api/v1/personas/");
-  if (!response.ok) throw new Error("persona_list_failed");
-  return (await response.json()).items as { code: string; displayName: string }[];
+  const data = await apiFetch<{ items: { code: string; displayName: string }[] }>("/api/v1/personas/");
+  return data.items;
 }
 
 export async function fetchPersona(code: string) {
-  const response = await fetch(`/api/v1/personas/${code}`);
-  if (!response.ok) throw new Error("persona_fetch_failed");
-  return (await response.json()).config;
+  const data = await apiFetch<{ config: unknown }>(`/api/v1/personas/${code}`);
+  return data.config;
 }
 
 export async function previewNudge(payload: {
@@ -22,12 +22,10 @@ export async function previewNudge(payload: {
     dueAt?: string;
   };
 }) {
-  const response = await fetch("/api/v1/personas/nudge/preview", {
+  return apiFetch("/api/v1/personas/nudge/preview", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
-  if (!response.ok) throw new Error("nudge_preview_failed");
-  return await response.json();
 }
 // <<< PERSONA END

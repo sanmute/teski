@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "@/api";
 
 type Overview = {
   users_total: number;
@@ -28,30 +29,27 @@ export default function PilotAdmin() {
   useEffect(() => {
     if (!authHeader) return;
     const headers = { Authorization: authHeader };
-    fetch("/pilot/admin/overview", { headers })
-      .then((r) => r.json())
+    apiFetch<Overview>("/pilot/admin/overview", { headers })
       .then(setOverview)
       .catch(() => setOverview(null));
-    fetch("/pilot/admin/users", { headers })
-      .then((r) => r.json())
+    apiFetch<any[]>("/pilot/admin/users", { headers })
       .then(setUsers)
       .catch(() => setUsers([]));
-    fetch("/pilot/admin/sessions?limit=100", { headers })
-      .then((r) => r.json())
+    apiFetch<any[]>("/pilot/admin/sessions?limit=100", { headers })
       .then(setSessions)
       .catch(() => setSessions([]));
-    fetch("/pilot/admin/depth?limit=100", { headers })
-      .then((r) => r.json())
+    apiFetch<any[]>("/pilot/admin/depth?limit=100", { headers })
       .then(setDepth)
       .catch(() => setDepth([]));
   }, [authHeader]);
 
   async function loadReport() {
     if (!authHeader) return;
-    const response = await fetch("/pilot/admin/report", { headers: { Authorization: authHeader } });
-    if (!response.ok) return;
-    const payload = await response.json();
-    setCsv(payload.csv);
+    const payload = await apiFetch<{ csv?: string }>("/pilot/admin/report", {
+      headers: { Authorization: authHeader },
+    }).catch(() => null);
+    if (!payload) return;
+    setCsv(payload.csv || "");
   }
 
   return (

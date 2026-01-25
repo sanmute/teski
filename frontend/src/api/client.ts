@@ -1,6 +1,32 @@
 let authToken: string | null = null;
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+const DEFAULT_BASE_URL = "http://localhost:8000";
+const rawBaseUrl =
+  import.meta.env.VITE_API_BASE_URL ??
+  (import.meta.env as Record<string, unknown>).VITE_API_BASE ??
+  DEFAULT_BASE_URL;
+
+function normalizeBaseUrl(url: string): string {
+  const trimmed = url.trim().replace(/\/+$/, "");
+  const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `http://${trimmed}`;
+  return withProtocol;
+}
+
+export const API_BASE_URL = normalizeBaseUrl(rawBaseUrl);
+export const API_BASE = `${API_BASE_URL}/api`;
+const isProd = Boolean(import.meta.env.PROD);
+
+if (typeof window !== "undefined") {
+  const configuredBase = import.meta.env.VITE_API_BASE_URL ?? (import.meta.env as Record<string, unknown>).VITE_API_BASE;
+  if (isProd && !configuredBase) {
+    console.warn("[api] VITE_API_BASE_URL is missing in production; defaulting to localhost");
+  }
+
+  const origin = window.location.origin.replace(/\/+$/, "");
+  if (API_BASE_URL.replace(/\/+$/, "") === origin) {
+    console.warn("[api] API_BASE_URL resolves to the current origin; cross-origin backend may be misconfigured");
+  }
+}
 
 export function setAuthToken(token: string | null) {
   authToken = token;
@@ -17,26 +43,58 @@ export function loadAuthTokenFromStorage() {
   return token;
 }
 
-async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+function buildApiUrl(path: string): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  if (path.startsWith("/")) return `${API_BASE_URL}${path}`;
+  return `${API_BASE_URL}/${path}`;
+}
+
+function withAuthHeaders(options: RequestInit = {}): RequestInit {
   const headers = new Headers(options.headers || {});
+  if (authToken && !headers.has("Authorization")) {
+    headers.set("Authorization", `Bearer ${authToken}`);
+  }
+  return { ...options, headers };
+}
+
+function maybeStringifyBody(body: unknown, headers: Headers): BodyInit | undefined {
+  if (body === undefined || body === null) return undefined;
+  if (
+    body instanceof FormData ||
+    body instanceof URLSearchParams ||
+    body instanceof Blob ||
+    typeof body === "string"
+  ) {
+    return body as BodyInit;
+  }
   if (!headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
-  if (authToken) {
-    headers.set("Authorization", `Bearer ${authToken}`);
+  return JSON.stringify(body);
+}
+
+export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}): Promise<T> {
+  const headers = new Headers(init.headers || {});
+  const body = maybeStringifyBody(init.body as unknown, headers);
+  const response = await fetch(buildApiUrl(path), withAuthHeaders({ ...init, headers, body }));
+  const text = await response.text();
+  const parsed = text ? (() => { try { return JSON.parse(text); } catch { return text as unknown; } })() : undefined;
+
+  if (!response.ok) {
+    const reason = parsed && typeof parsed === "object" && "message" in (parsed as Record<string, unknown>)
+      ? (parsed as Record<string, unknown>).message
+      : text || response.statusText;
+    throw new Error(typeof reason === "string" ? reason : response.statusText);
   }
 
-  const res = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `HTTP ${res.status}`);
-  }
-  if (res.status === 204) return undefined as unknown as T;
-  return (await res.json()) as T;
+  return parsed as T;
 }
 
 export const api = {
-  get: <T>(path: string) => request<T>(path),
-  post: <T>(path: string, body?: unknown) =>
-    request<T>(path, { method: "POST", body: body ? JSON.stringify(body) : undefined }),
+  get: <T>(path: string, options: RequestInit = {}) => apiFetch<T>(path, { ...options, method: "GET" }),
+  post: <T>(path: string, body?: unknown, options: RequestInit = {}) => {
+    const headers = new Headers(options.headers || {});
+    const preparedBody = maybeStringifyBody(body, headers);
+    return apiFetch<T>(path, { ...options, method: options.method ?? "POST", headers, body: preparedBody });
+  },
 };
