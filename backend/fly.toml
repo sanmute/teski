@@ -6,6 +6,9 @@
 app = 'teski-zj2gsg'
 primary_region = 'ams'
 
+[processes]
+  app = "uvicorn app.main:app --host 0.0.0.0 --port 8080"
+
 [build]
 
 [http_service]
