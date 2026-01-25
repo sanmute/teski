@@ -7,8 +7,10 @@ const rawBaseUrl =
   DEFAULT_BASE_URL;
 
 function normalizeBaseUrl(url: string): string {
-  const trimmed = url.trim().replace(/\/+$/, "");
-  const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `http://${trimmed}`;
+  const trimmed = (url || "").trim().replace(/\/+$/, "");
+  if (!trimmed) return DEFAULT_BASE_URL;
+  const hasProtocol = /^https?:\/\//i.test(trimmed);
+  const withProtocol = hasProtocol ? trimmed : `https://${trimmed}`;
   return withProtocol;
 }
 
