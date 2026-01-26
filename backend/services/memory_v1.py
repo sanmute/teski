@@ -7,9 +7,9 @@ from typing import Any, Dict, List, Optional, Tuple
 from sqlalchemy import func
 from sqlmodel import Session, select
 
-from backend.models_memory import MemoryStat, MistakeLog, ReviewCard
-from backend.settings import memory_v1_settings
-from backend.utils.analytics import emit
+from models_memory import MemoryStat, MistakeLog, ReviewCard
+from settings import memory_v1_settings
+from utils.analytics import emit
 
 
 def _now() -> datetime:
@@ -222,7 +222,7 @@ def _instantiate_for_user(
     session: Session, template_code: str, user_id: int, force_new: bool = True
 ):
     try:
-        from backend.services.dfe_tasks import instantiate_for_user  # type: ignore
+        from services.dfe_tasks import instantiate_for_user  # type: ignore
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("instantiate_for_user unavailable; integrate with tasks module.") from exc
 

@@ -1,7 +1,7 @@
 # routes/debug_db.py
 from fastapi import APIRouter
 import sqlite3
-from ..db import DB_PATH
+from db import DB_PATH
 
 router = APIRouter(prefix="/api/debug", tags=["debug"])
 

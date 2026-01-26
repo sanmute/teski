@@ -11,7 +11,7 @@ from sqlalchemy.dialects.sqlite import JSON
 from sqlalchemy.orm import relationship
 from sqlmodel import SQLModel, Field, Relationship, Column
 
-from backend.utils import time as time_utils
+from utils import time as time_utils
 
 
 class Leaderboard(SQLModel, table=True):

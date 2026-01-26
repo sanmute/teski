@@ -2,12 +2,12 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from datetime import datetime, timedelta
-from ..db import get_session
-from ..models_studypack import StudyPack
-from ..schemas_studypack import StudyPackOut, Resource, PracticeItem
-from ..services.studypack import build_study_pack_for_task
+from db import get_session
+from models_studypack import StudyPack
+from schemas_studypack import StudyPackOut, Resource, PracticeItem
+from services.studypack import build_study_pack_for_task
 from pydantic import BaseModel
-from ..settings import DEFAULT_TIMEZONE
+from settings import DEFAULT_TIMEZONE
 import json
 
 router = APIRouter(prefix="/api/study-pack", tags=["study-pack"])

@@ -8,9 +8,9 @@ from uuid import UUID, uuid4
 
 from sqlmodel import Session, select
 
-from backend.models import Task as LegacyTask
-from backend.models import User as LegacyUser
-from backend.settings import memory_settings
+from models import Task as LegacyTask
+from models import User as LegacyUser
+from settings import memory_settings
 from app.db import get_session as get_app_session
 from app.models import (
     LegacyTaskMap,

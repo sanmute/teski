@@ -9,8 +9,8 @@ import hashlib
 
 from os import getenv
 
-from backend.core.leaderboard_constants import HASH_SALT_ENV
-from backend.settings import TESKI_ANON_SALT
+from core.leaderboard_constants import HASH_SALT_ENV
+from settings import TESKI_ANON_SALT
 
 
 def _salt_value() -> str:

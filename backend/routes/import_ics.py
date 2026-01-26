@@ -2,10 +2,10 @@
 from __future__ import annotations
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, Query
 from sqlmodel import Session
-from ..db import get_session
-from ..models import Task
-from ..services.ics_parser import parse_ics_text
-from ..settings import DEFAULT_TIMEZONE
+from db import get_session
+from models import Task
+from services.ics_parser import parse_ics_text
+from settings import DEFAULT_TIMEZONE
 import httpx
 import json
 
@@ -46,7 +46,7 @@ async def import_ics_url(
     return {"imported": inserted, "updated": updated, "skipped": skipped}
 
 from datetime import datetime
-from ..services.effort import analyze_assignment
+from services.effort import analyze_assignment
 
 UPDATE_FIELDS = {
     "title","course","due_iso","status","confidence","notes","link",

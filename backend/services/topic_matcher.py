@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 from typing import List, Dict, Tuple
-from .topic_map import TOPIC_MAP  # your big dict
+from services.topic_map import TOPIC_MAP  # your big dict
 
 _WORD = re.compile(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9']+")
 

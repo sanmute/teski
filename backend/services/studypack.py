@@ -3,9 +3,9 @@ import json
 from datetime import datetime
 from typing import Dict, Any, List
 from sqlmodel import Session, select
-from ..models import Task
-from ..models_studypack import StudyPack
-from .topic_map import TOPIC_MAP, resolve_topic
+from models import Task
+from models_studypack import StudyPack
+from services.topic_map import TOPIC_MAP, resolve_topic
 
 FALLBACK_RESOURCES = [
     {
@@ -34,7 +34,7 @@ FALLBACK_PRACTICE = [
 ]
 
 FALLBACK_TOPIC = "general.productivity"
-from ..settings import DEFAULT_TIMEZONE
+from settings import DEFAULT_TIMEZONE
 
 # Deterministic brief templates – persona + escalation aware
 def make_brief(persona: str, escalation: str, hours_to_due: float, topic: str) -> str:

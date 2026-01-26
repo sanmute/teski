@@ -3,10 +3,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from datetime import datetime, timedelta
 import json
-from ..db import get_session
-from ..models import Task
-from ..services.effort import analyze_assignment as analyze
-from ..settings import DEFAULT_TIMEZONE
+from db import get_session
+from models import Task
+from services.effort import analyze_assignment as analyze
+from settings import DEFAULT_TIMEZONE
 
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 

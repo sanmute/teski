@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from datetime import datetime, timedelta
 from typing import Tuple, Dict, Any
-from ..settings import DEFAULT_TIMEZONE
+from settings import DEFAULT_TIMEZONE
 
 # 1) Keyword maps for coarse classification
 # Order matters: more specific patterns should come first.

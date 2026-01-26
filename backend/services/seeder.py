@@ -3,11 +3,11 @@ from pathlib import Path
 import json
 from datetime import datetime
 from sqlmodel import Session
-from ..models import Task
+from models import Task
 
 def load_seed(session: Session) -> int:
     from sqlmodel import select
-    from ..models import Task
+    from models import Task
     import json
     from datetime import datetime
     from pathlib import Path

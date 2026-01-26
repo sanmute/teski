@@ -5,10 +5,10 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import SQLModel, Session, select
 
-from ..db import get_session
-from ..models import User
-from ..models_institution import Institution, InstitutionType
-from .deps import require_teski_admin
+from db import get_session
+from models import User
+from models_institution import Institution, InstitutionType
+from routes.deps import require_teski_admin
 
 router = APIRouter(prefix="/admin/institutions", tags=["institutions-admin"])
 

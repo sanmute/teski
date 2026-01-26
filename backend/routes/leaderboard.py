@@ -6,12 +6,12 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel import Session, select
 
-from backend.core.leaderboard_constants import DEFAULT_TZ
-from backend.db import get_session
-from backend.models import User
-from backend.models_leaderboard import Leaderboard, LeaderboardMember
-from backend.routes.deps import get_current_user
-from backend.schemas_leaderboard import (
+from core.leaderboard_constants import DEFAULT_TZ
+from db import get_session
+from models import User
+from models_leaderboard import Leaderboard, LeaderboardMember
+from routes.deps import get_current_user
+from schemas_leaderboard import (
     AwardPoints,
     JoinLeaderboard,
     LeaderboardCreate,
@@ -21,7 +21,7 @@ from backend.schemas_leaderboard import (
     MemberOut,
     PointsEventOut,
 )
-from backend.services import leaderboard as leaderboard_service
+from services import leaderboard as leaderboard_service
 
 router = APIRouter(prefix="/leaderboards", tags=["leaderboards"])
 

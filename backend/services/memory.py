@@ -7,8 +7,8 @@ from typing import Any, Dict, List, Optional
 
 from sqlmodel import Session, select
 
-from backend.models_memory import MemoryStat, MistakeLog, ResurfacePlan
-from backend.settings import memory_settings
+from models_memory import MemoryStat, MistakeLog, ResurfacePlan
+from settings import memory_settings
 
 
 DECAY_HALF_LIFE_DAYS = memory_settings.DECAY_HALF_LIFE_DAYS
@@ -142,7 +142,7 @@ def fetch_next_resurfaced_instances(
     session: Session, *, user_id: int, count: int = 3
 ) -> List[Dict[str, Any]]:
     try:
-        from backend.services.dfe_tasks import instantiate_for_user  # type: ignore
+        from services.dfe_tasks import instantiate_for_user  # type: ignore
     except Exception as exc:  # pragma: no cover - optional dependency
         raise RuntimeError("instantiate_for_user unavailable; integrate with tasks module.") from exc
 

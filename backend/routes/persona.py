@@ -2,9 +2,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 
-from ..db import get_session
-from ..services.persona import get_persona, list_personas
-from ..services.nudges import generate_nudge, choose_bucket
+from db import get_session
+from services.persona import get_persona, list_personas
+from services.nudges import generate_nudge, choose_bucket
 
 router = APIRouter(prefix="/api/v1/personas", tags=["personas"])
 

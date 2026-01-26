@@ -5,12 +5,12 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
 from sqlmodel import Session
 
-from backend import settings
-from backend.db import get_session
-from backend.models import User, UserRole
-from backend.models_institution import Course
-from backend.security import decode_access_token
-from backend.services.authorization import user_can_edit_course
+import settings
+from db import get_session
+from models import User, UserRole
+from models_institution import Course
+from security import decode_access_token
+from services.authorization import user_can_edit_course
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login", auto_error=False)
 

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from sqlmodel import Session, select
 
-from backend.models import User, UserRole
-from backend.models_institution import (
+from models import User, UserRole
+from models_institution import (
     Course,
     Institution,
     UserInstitutionRole,

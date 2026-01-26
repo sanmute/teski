@@ -2,11 +2,11 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select, delete
 import json
-from ..db import get_session
-from ..models import Task, Reminder
-from ..models_studypack import StudyPack
-from ..models_integrations import MoodleFeed
-from ..services.scoring import score
+from db import get_session
+from models import Task, Reminder
+from models_studypack import StudyPack
+from models_integrations import MoodleFeed
+from services.scoring import score
 
 router = APIRouter(prefix="/api/users", tags=["users"])
 
@@ -36,8 +36,8 @@ def purge_user_data(user_id: str, session: Session = Depends(get_session)):
         }
     }
 from datetime import datetime
-from ..schemas import TaskOut
-from ..settings import DEFAULT_TIMEZONE
+from schemas import TaskOut
+from settings import DEFAULT_TIMEZONE
 
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 

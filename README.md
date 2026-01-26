@@ -84,14 +84,14 @@ make dev      # runs uvicorn app.main + npm run dev simultaneously
 
 Windows alternative (no Make):
 ```powershell
-uvicorn app.main:app --env-file .env --port 8000
+uvicorn main:app --env-file .env --port 8000
 cd frontend; npm run dev
 ```
 
 To serve from FastAPI only (no dev server):
 ```bash
 cd frontend && npm run build
-uvicorn app.main:app --env-file .env --port 8000
+uvicorn main:app --env-file .env --port 8000
 ```
 Static assets under `frontend/dist` can be served via FastAPI StaticFiles or your web server.
 

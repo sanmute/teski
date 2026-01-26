@@ -4,11 +4,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from datetime import datetime, timedelta
 import json
-from ..models import Task
-from ..schemas import TaskOut, TaskIn, MockLoadResp
-from ..db import get_session
-from ..services.scoring import score
-from ..settings import DEFAULT_TIMEZONE
+from models import Task
+from schemas import TaskOut, TaskIn, MockLoadResp
+from db import get_session
+from services.scoring import score
+from settings import DEFAULT_TIMEZONE
 from sqlalchemy.exc import IntegrityError
 
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])

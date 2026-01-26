@@ -3,7 +3,7 @@ from __future__ import annotations
 from ics import Calendar
 import re
 from typing import List, Dict, Any
-from ..settings import DEFAULT_TIMEZONE
+from settings import DEFAULT_TIMEZONE
 
 DUE_RE = re.compile(r'\b(due|deadline|closes?|submission|submit|DL)\b', re.I)
 

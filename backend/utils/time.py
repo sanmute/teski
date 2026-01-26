@@ -8,7 +8,7 @@ from typing import Tuple
 
 from zoneinfo import ZoneInfo
 
-from backend.core.leaderboard_constants import DEFAULT_TZ
+from core.leaderboard_constants import DEFAULT_TZ
 
 
 def now_utc() -> datetime:

@@ -7,12 +7,12 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 
-from backend.db import get_session
-from backend.models import User
-from backend.models_exercise import Exercise
-from backend.models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
-from backend.routes.deps import get_current_user
-from backend.schemas_microquest import (
+from db import get_session
+from models import User
+from models_exercise import Exercise
+from models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
+from routes.deps import get_current_user
+from schemas_microquest import (
     ExerciseDTO,
     MicroQuestAnswerRequest,
     MicroQuestAnswerResponse,
@@ -181,7 +181,7 @@ def complete_microquest(
     session.commit()
 
     try:
-        from backend.services.debrief_engine import build_microquest_debrief
+        from services.debrief_engine import build_microquest_debrief
 
         debrief = build_microquest_debrief(
             user_id=current_user.id,

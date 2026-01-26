@@ -4,17 +4,17 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
-from backend.db import get_session
-from backend.routes.deps import get_current_user
-from backend.utils.analytics import emit
-from backend.models_memory import MistakeLog
-from backend.schemas_memory import (
+from db import get_session
+from routes.deps import get_current_user
+from utils.analytics import emit
+from models_memory import MistakeLog
+from schemas_memory import (
     BuildReviewsIn,
     LogMistakeInV1,
     ReviewItemOut,
     WarmupOut,
 )
-from backend.services.memory_v1 import (
+from services.memory_v1 import (
     build_reviews,
     fetch_due_reviews,
     log_mistake_v1,
@@ -25,7 +25,7 @@ from app.analytics import log as log_event
 from app.personas import get_persona_copy
 
 try:
-    from backend.services.persona import get_persona
+    from services.persona import get_persona
 except Exception:  # pragma: no cover - optional dependency
     get_persona = None
 

@@ -2,9 +2,9 @@
 from __future__ import annotations
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, Query
 from sqlmodel import Session
-from ..db import get_session
-from ..models import Task
-from ..services.ics_parser import parse_ics_text
+from db import get_session
+from models import Task
+from services.ics_parser import parse_ics_text
 import httpx
 
 router = APIRouter(prefix="/api/import", tags=["import"])

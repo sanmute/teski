@@ -7,7 +7,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from passlib.hash import bcrypt_sha256, pbkdf2_sha256
 
-from backend import settings
+import settings
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256", "bcrypt_sha256"], deprecated="auto")
 

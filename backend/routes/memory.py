@@ -4,10 +4,10 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
-from backend.db import get_session
-from backend.routes.deps import get_current_user
-from backend.schemas_memory import LogMistakeIn, NextTasksOut, PlanBuildIn
-from backend.services.memory import build_resurface_plan, fetch_next_resurfaced_instances, log_mistake
+from db import get_session
+from routes.deps import get_current_user
+from schemas_memory import LogMistakeIn, NextTasksOut, PlanBuildIn
+from services.memory import build_resurface_plan, fetch_next_resurfaced_instances, log_mistake
 
 router = APIRouter(prefix="/api/v1/memory", tags=["memory"])
 

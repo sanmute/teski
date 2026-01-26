@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from sqlmodel import Session, select
 
-from backend.models_exercise import Exercise
+from models_exercise import Exercise
 
 
 def seed_intro_python_exercises(session: Session) -> None:

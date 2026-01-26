@@ -135,28 +135,28 @@ def init_db():
 
     # 1) ORM tables
     try:
-        from .models import Task, Reminder
-        from .models_studypack import StudyPack
-        from .models_integrations import MoodleFeed
-        from .models_leaderboard import Leaderboard, LeaderboardMember, PointsEvent, WeeklyScore
-        from .models_push import PushSubscription
+        from models import Task, Reminder
+        from models_studypack import StudyPack
+        from models_integrations import MoodleFeed
+        from models_leaderboard import Leaderboard, LeaderboardMember, PointsEvent, WeeklyScore
+        from models_push import PushSubscription
         # >>> MEMORY START
-        from .models_memory import MemoryStat, MistakeLog, ResurfacePlan
+        from models_memory import MemoryStat, MistakeLog, ResurfacePlan
 
         _ = (MemoryStat, MistakeLog, ResurfacePlan)
         # <<< MEMORY END
         # >>> MEMORY V1 START
-        from .models_memory import ReviewCard
+        from models_memory import ReviewCard
 
         _ = (ReviewCard,)
         # <<< MEMORY V1 END
         # >>> DFE START
-        from .models_dfe import SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate
+        from models_dfe import SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate
         _ = (SkillEdge, SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate)
         # <<< DFE END
-        from .models_institution import Course, Institution, Module, UserInstitutionRole, UserCourseRole
-        from .models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
-        from .models_exercise import Exercise
+        from models_institution import Course, Institution, Module, UserInstitutionRole, UserCourseRole
+        from models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
+        from models_exercise import Exercise
 
         _ = (Course, Institution, Module, UserInstitutionRole, UserCourseRole, MicroQuest, MicroQuestAnswer, MicroQuestExercise, Exercise)
         SQLModel.metadata.create_all(engine)

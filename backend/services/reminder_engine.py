@@ -2,9 +2,9 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 from typing import Optional, Tuple
 from sqlmodel import Session, select
-from ..models import Task, Reminder
-from .scoring import score, script_hint  # you already have these
-from ..settings import DEFAULT_TIMEZONE
+from models import Task, Reminder
+from services.scoring import score, script_hint  # you already have these
+from settings import DEFAULT_TIMEZONE
 
 # Cooldowns per escalation level (so we don't nag too often)
 COOLDOWNS = {

@@ -5,7 +5,7 @@ from sqlalchemy import Column
 from sqlalchemy.types import JSON
 from datetime import datetime
 from enum import Enum
-from .settings import DEFAULT_TIMEZONE
+from settings import DEFAULT_TIMEZONE
 
 
 class UserRole(str, Enum):

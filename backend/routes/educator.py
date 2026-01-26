@@ -6,9 +6,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import SQLModel, Session, select
 from datetime import datetime
 
-from ..db import get_session
-from ..models import User, UserRole
-from ..models_institution import (
+from db import get_session
+from models import User, UserRole
+from models_institution import (
     Course,
     CourseRole,
     Institution,
@@ -16,7 +16,7 @@ from ..models_institution import (
     UserCourseRole,
     UserInstitutionRole,
 )
-from .deps import require_educator
+from routes.deps import require_educator
 
 router = APIRouter(prefix="/educator", tags=["educator"])
 

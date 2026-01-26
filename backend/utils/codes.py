@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import secrets
 
-from backend.core.leaderboard_constants import JOIN_CODE_ALPHABET, JOIN_CODE_LENGTH
+from core.leaderboard_constants import JOIN_CODE_ALPHABET, JOIN_CODE_LENGTH
 
 
 def generate_join_code() -> str:

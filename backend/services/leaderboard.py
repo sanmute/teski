@@ -13,22 +13,22 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from backend.core.leaderboard_constants import (
+from core.leaderboard_constants import (
     DEFAULT_EVENT_POINTS,
     DEFAULT_TZ,
 )
-from backend.models import User
-from backend.models_leaderboard import (
+from models import User
+from models_leaderboard import (
     Leaderboard,
     LeaderboardMember,
     PointsEvent,
     WeeklyScore,
 )
-from backend.schemas_leaderboard import LeaderboardOut, MemberOut, LeaderboardStandings
-from backend.utils.codes import generate_join_code
-from backend.utils.crypto import anon_handle
-from backend.utils.time import now_utc, to_week_key, start_end_of_week_iso
-from backend.services.memory_bridge import record_xp_event
+from schemas_leaderboard import LeaderboardOut, MemberOut, LeaderboardStandings
+from utils.codes import generate_join_code
+from utils.crypto import anon_handle
+from utils.time import now_utc, to_week_key, start_end_of_week_iso
+from services.memory_bridge import record_xp_event
 
 
 # >>> LEADERBOARD START UTIL

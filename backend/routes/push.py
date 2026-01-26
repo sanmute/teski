@@ -5,8 +5,8 @@ from sqlmodel import Session, select, delete
 from os import getenv
 from pywebpush import webpush, WebPushException
 import json
-from ..db import get_session
-from ..models_push import PushSubscription
+from db import get_session
+from models_push import PushSubscription
 
 router = APIRouter(prefix="/api/push", tags=["push"])
 

@@ -3,10 +3,10 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session, select
 from datetime import datetime, timedelta
 import httpx
-from ..db import get_session
-from ..models_integrations import MoodleFeed
-from ..services.ics_parser import parse_ics_text
-from ..routes.import_ics import upsert_tasks  # reuse
+from db import get_session
+from models_integrations import MoodleFeed
+from services.ics_parser import parse_ics_text
+from routes.import_ics import upsert_tasks  # reuse
 
 router = APIRouter(prefix="/api/integrations/moodle", tags=["moodle"])
 

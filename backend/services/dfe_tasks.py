@@ -13,28 +13,28 @@ from jinja2.exceptions import TemplateError, UndefinedError
 from sqlalchemy.exc import SQLAlchemyError
 from sqlmodel import Session, select
 
-from backend.models_dfe import SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate, TaskTypeEnum
-from backend.schemas_dfe_tasks import TaskTemplateCreate
-from backend.settings import EWMA_ALPHA, TESKI_PARAM_SALT
-from backend.utils.evalsafe import eval_numeric_formula, eval_predicate
-from backend.utils.rand import deterministic_seed, sample_params
-from backend.services.memory import log_mistake, mark_mastered
-from backend.services.memory_v1 import classify_error_subtype, log_mistake_v1, mark_review_result
-from backend.services.memory_bridge import (
+from models_dfe import SkillMastery, SkillNode, TaskAttempt, TaskInstance, TaskTemplate, TaskTypeEnum
+from schemas_dfe_tasks import TaskTemplateCreate
+from settings import EWMA_ALPHA, TESKI_PARAM_SALT
+from utils.evalsafe import eval_numeric_formula, eval_predicate
+from utils.rand import deterministic_seed, sample_params
+from services.memory import log_mistake, mark_mastered
+from services.memory_v1 import classify_error_subtype, log_mistake_v1, mark_review_result
+from services.memory_bridge import (
     record_mistake_dual_write,
     record_review_dual_write,
     record_xp_event,
 )
 from app.detectors import classify_mistake
-from backend.utils.analytics import emit
+from utils.analytics import emit
 
 try:
-    from backend.services.leaderboard import award_points
+    from services.leaderboard import award_points
 except Exception:  # pragma: no cover - optional dependency
     award_points = None
 
 try:
-    from backend.services.persona import get_persona
+    from services.persona import get_persona
 except Exception:  # pragma: no cover - optional dependency
     get_persona = None
 
@@ -316,7 +316,7 @@ def grade_and_update_with_memory_v1(
             mark_review_result(session, user_id=user_id, template_code=template_code, correct=True)
         if award_points and template_code:
             try:
-                from backend.models_leaderboard import LeaderboardMember  # type: ignore
+                from models_leaderboard import LeaderboardMember  # type: ignore
 
                 membership = session.exec(
                     select(LeaderboardMember).where(LeaderboardMember.user_id == user_id)

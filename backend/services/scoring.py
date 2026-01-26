@@ -1,7 +1,7 @@
 from __future__ import annotations
 from datetime import datetime
 from typing import Tuple, Literal
-from ..settings import DEFAULT_TIMEZONE
+from settings import DEFAULT_TIMEZONE
 
 Escalation = Literal["calm", "snark", "disappointed", "intervention"]
 
@@ -34,7 +34,7 @@ def score(now_dt: datetime, due_dt: datetime, status: str) -> Tuple[int, Escalat
     return 1, "calm"              # later
 
 # services/scoring.py
-from .topic_matcher import match_topics, merge_resources, merge_practice_prompts
+from services.topic_matcher import match_topics, merge_resources, merge_practice_prompts
 
 def script_hint(title: str, escalation: str, hours_left: float, notes: str = "") -> list[str]:
     # 1) find relevant topics (multiple)

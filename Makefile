@@ -2,7 +2,7 @@
 
 PYTHON ?= python3
 PIP ?= $(PYTHON) -m pip
-API_APP ?= app.main:app
+API_APP ?= main:app
 LEGACY_APP ?= backend.main:app
 API_ENV ?= .env
 

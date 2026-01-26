@@ -4,16 +4,16 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
-from backend.db import get_session
-from backend.routes.deps import get_current_user
-from backend.schemas_dfe_tasks import (
+from db import get_session
+from routes.deps import get_current_user
+from schemas_dfe_tasks import (
     AttemptResult,
     SkillNodeCreate,
     SubmitAnswer,
     TaskInstanceOut,
     TaskTemplateCreate,
 )
-from backend.services.dfe_tasks import (
+from services.dfe_tasks import (
     create_template,
     get_or_create_skill,
     grade_and_update_with_memory_v1,

@@ -30,5 +30,5 @@ COPY . .
 EXPOSE 8080
 
 # IMPORTANT: run uvicorn as a Python module (no reliance on uvicorn console script)
-# Adjust "app.main:app" if your FastAPI instance lives elsewhere (e.g. "main:app")
+# Default entrypoint uses main:app; adjust only if your FastAPI instance lives elsewhere.
 CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

@@ -1,7 +1,7 @@
 # routes/library.py
 from fastapi import APIRouter, Query
-from ..services.crawl_whitelist import crawl_domain
-from ..services.search_docs import search_docs
+from services.crawl_whitelist import crawl_domain
+from services.search_docs import search_docs
 
 router = APIRouter(prefix="/api/library", tags=["library"])
 

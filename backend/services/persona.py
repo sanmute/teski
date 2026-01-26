@@ -1,7 +1,7 @@
 # >>> PERSONA START
 from typing import Optional, Dict, Any, List
 from sqlmodel import Session, select
-from ..models import Persona
+from models import Persona
 
 
 def upsert_persona(db: Session, code: str, display_name: str, config: Dict[str, Any]) -> Persona:
