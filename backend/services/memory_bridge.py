@@ -11,26 +11,37 @@ from sqlmodel import Session, select
 from models import Task as LegacyTask
 from models import User as LegacyUser
 from settings import memory_settings
-from app.db import get_session as get_app_session
-from app.models import (
-    LegacyTaskMap,
-    LegacyUserMap,
-    MemoryItem,
-    Mistake,
-    Task as NewTask,
-    User as NewUser,
-)
-from app.scheduler import review as scheduler_review, schedule_from_mistake
-from app.xp import award as award_xp
-from app.badges import check_nemesis
+
+# The v2 memory stack lives in the sibling "app" package. Import lazily so that
+# the legacy backend can start even when that package isn't present (e.g. in the
+# lightweight Fly image). Dual-write remains disabled if imports fail.
+try:  # pragma: no cover - optional dependency
+    from app.db import get_session as get_app_session
+    from app.models import (
+        LegacyTaskMap,
+        LegacyUserMap,
+        MemoryItem,
+        Mistake,
+        Task as NewTask,
+        User as NewUser,
+    )
+    from app.scheduler import review as scheduler_review, schedule_from_mistake
+    from app.xp import award as award_xp
+    from app.badges import check_nemesis
+except ModuleNotFoundError:  # pragma: no cover
+    get_app_session = None
+    LegacyTaskMap = LegacyUserMap = MemoryItem = Mistake = NewTask = NewUser = None
+    scheduler_review = schedule_from_mistake = award_xp = check_nemesis = None
 
 
 def _should_dual_write() -> bool:
-    return getattr(memory_settings, "MEMORY_V2_DUAL_WRITE", False)
+    return getattr(memory_settings, "MEMORY_V2_DUAL_WRITE", False) and get_app_session is not None
 
 
 @contextmanager
 def _session_scope() -> Session:
+    if get_app_session is None:
+        raise RuntimeError("app package not available; memory v2 session unavailable")
     gen = get_app_session()
     session = next(gen)
     try:

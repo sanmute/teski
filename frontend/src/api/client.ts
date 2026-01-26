@@ -1,6 +1,6 @@
 let authToken: string | null = null;
 
-const DEFAULT_BASE_URL = "http://localhost:8000";
+const DEFAULT_BASE_URL = import.meta.env.DEV ? "http://localhost:8000" : "https://teski-zj2gsg.fly.dev";
 const rawBaseUrl =
   import.meta.env.VITE_API_BASE_URL ??
   (import.meta.env as Record<string, unknown>).VITE_API_BASE ??
@@ -20,13 +20,12 @@ const isProd = Boolean(import.meta.env.PROD);
 
 if (typeof window !== "undefined") {
   const configuredBase = import.meta.env.VITE_API_BASE_URL ?? (import.meta.env as Record<string, unknown>).VITE_API_BASE;
-  if (isProd && !configuredBase) {
-    console.warn("[api] VITE_API_BASE_URL is missing in production; defaulting to localhost");
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log("API_BASE_URL:", API_BASE_URL, "(configured:", configuredBase ?? "default", ")");
   }
-
-  const origin = window.location.origin.replace(/\/+$/, "");
-  if (API_BASE_URL.replace(/\/+$/, "") === origin) {
-    console.warn("[api] API_BASE_URL resolves to the current origin; cross-origin backend may be misconfigured");
+  if (isProd && !configuredBase && API_BASE_URL === DEFAULT_BASE_URL) {
+    console.warn("[api] VITE_API_BASE_URL missing in production; using fallback");
   }
 }
 

@@ -25,8 +25,12 @@ from services.memory_bridge import (
     record_review_dual_write,
     record_xp_event,
 )
-from app.detectors import classify_mistake
 from utils.analytics import emit
+
+try:  # pragma: no cover - optional dependency (app package)
+    from app.detectors import classify_mistake
+except ModuleNotFoundError:  # pragma: no cover
+    classify_mistake = None
 
 try:
     from services.leaderboard import award_points
@@ -290,12 +294,15 @@ def _infer_error_subtype(
         if expected_unit:
             context["expected_unit"] = expected_unit
 
-    subtype = classify_mistake(
-        prompt_text=prompt_text,
-        user_answer=answer_text,
-        correct_answer=correct_str,
-        context=context,
-    )
+    if classify_mistake:
+        subtype = classify_mistake(
+            prompt_text=prompt_text,
+            user_answer=answer_text,
+            correct_answer=correct_str,
+            context=context,
+        )
+    else:
+        subtype = None
     return subtype or "recall"
 # <<< DETECTORS END
 

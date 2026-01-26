@@ -20,9 +20,23 @@ from services.memory_v1 import (
     log_mistake_v1,
     mark_review_result,
 )
-from app.abtest import assign as assign_bucket
-from app.analytics import log as log_event
-from app.personas import get_persona_copy
+try:  # pragma: no cover - optional dependency
+    from app.abtest import assign as assign_bucket
+except ModuleNotFoundError:  # pragma: no cover
+    def assign_bucket(*_, **__):
+        return "A"
+
+try:  # pragma: no cover - optional dependency
+    from app.analytics import log as log_event
+except ModuleNotFoundError:  # pragma: no cover
+    def log_event(*_, **__):
+        return None
+
+try:  # pragma: no cover - optional dependency
+    from app.personas import get_persona_copy
+except ModuleNotFoundError:  # pragma: no cover
+    def get_persona_copy(*_, **__):
+        return "Keep going!"
 
 try:
     from services.persona import get_persona

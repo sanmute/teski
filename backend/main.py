@@ -1,10 +1,7 @@
 from pathlib import Path
-import sys
 from dotenv import load_dotenv
 
 BASE_PATH = Path(__file__).resolve().parent.parent
-if str(BASE_PATH) not in sys.path:
-    sys.path.append(str(BASE_PATH))
 load_dotenv(BASE_PATH / ".env", override=False)
 load_dotenv(BASE_PATH / ".env.backend", override=True)
 
@@ -27,7 +24,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://teski.app",
-        "https://www.teski.app",
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:4173",
