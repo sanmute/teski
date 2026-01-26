@@ -1,9 +1,9 @@
 import { Task } from "@/types/tasks";
 import { getClientUserId } from "@/lib/user";
-import { apiFetch } from "./client";
+import { apiFetch, API_BASE } from "./client";
 
 export async function fetchUpcomingTasks(): Promise<Task[]> {
-  return apiFetch<Task[]>("/tasks/upcoming", {
+  return apiFetch<Task[]>(`${API_BASE}/tasks/upcoming`, {
     headers: {
       "X-User-Id": getClientUserId(),
     },
@@ -11,7 +11,7 @@ export async function fetchUpcomingTasks(): Promise<Task[]> {
 }
 
 export async function markTaskDone(taskId: number): Promise<void> {
-  await apiFetch(`/tasks/${taskId}/status`, {
+  await apiFetch(`${API_BASE}/tasks/${taskId}/status`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export interface TaskCreatePayload {
 }
 
 export async function createTask(payload: TaskCreatePayload): Promise<Task> {
-  return apiFetch<Task>("/tasks", {
+  return apiFetch<Task>(`${API_BASE}/tasks`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

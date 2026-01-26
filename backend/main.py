@@ -138,3 +138,10 @@ def seed_intro_python():
     with Session(engine) as session:
         seed_intro_python_exercises(session)
 # <<< SEED EXERCISES END
+
+# Backward compatibility: allow legacy clients hitting /tasks/upcoming without /api prefix
+from routes.tasks import list_upcoming as list_upcoming_tasks  # type: ignore
+
+@app.get("/tasks/upcoming", include_in_schema=False)
+def upcoming_compat(session: Session = Depends(get_session)):
+    return list_upcoming_tasks(session=session)
