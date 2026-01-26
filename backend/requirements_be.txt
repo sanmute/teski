@@ -1,0 +1,21 @@
+fastapi==0.115.2
+uvicorn[standard]==0.40.0
+sqlmodel==0.0.22
+python-dateutil==2.9.0.post0
+pydantic==2.9.2
+apscheduler==3.10.4
+ics==0.7.2
+httpx==0.27.2
+python-dotenv==1.0.1
+pywebpush==1.15.2
+pyyaml==6.0.2
+# >>> DFE START
+Jinja2==3.1.4
+# <<< DFE END
+tiktoken>=0.7
+anthropic>=0.34.0
+openai>=1.54.0
+faster-whisper>=1.0
+pydub>=0.25
+python-multipart>=0.0.9
+WeasyPrint==62.3
