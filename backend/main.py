@@ -17,8 +17,10 @@ if parent_str not in sys.path:
     sys.path.insert(1, parent_str)
 # Fallback for app package settings in environments missing secrets (keeps imports from failing)
 os.environ.setdefault("TESKI_SECRET_KEY", "dev-placeholder-secret")
-from fastapi import FastAPI, Depends, APIRouter
+from fastapi import FastAPI, Depends, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+import logging
 from routes import tasks as tasks_route
 from routes import reminders as reminders_route
 from routes import health as health_route
@@ -27,6 +29,8 @@ from routes import integrations as integrations_route
 from routes import memory as memory_route
 from routes import estimates as estimates_route
 from routes import topics as topics_route
+from routes import analytics as analytics_route
+from routes import exercises as exercises_route
 from routes import push as push_route
 from routes import microquest as microquest_route
 from routes import leaderboard as leaderboard_route
@@ -35,22 +39,40 @@ from sqlmodel import Session
 from services.seeder import load_seed
 from schemas import MockLoadResp
 
+ALLOW_ORIGINS = [
+    "https://teski.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+]
+
 init_db()
 app = FastAPI(title="Deadline Agent Backend", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://teski.app",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:4173",
-        "http://127.0.0.1:4173",
-    ],
+    allow_origins=ALLOW_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def ensure_cors_on_error(request: Request, call_next):
+    """
+    Safety net to keep CORS headers on error responses (e.g., 500s) so browsers
+    don't mask JSON errors with CORS failures.
+    """
+    origin = request.headers.get("origin")
+    try:
+        response = await call_next(request)
+    except Exception as exc:  # pragma: no cover - last-resort guard
+        response = JSONResponse({"detail": "Internal Server Error"}, status_code=500)
+    if origin in ALLOW_ORIGINS and "access-control-allow-origin" not in response.headers:
+        response.headers["access-control-allow-origin"] = origin
+        response.headers["access-control-allow-credentials"] = "true"
+    return response
 
 from routes import debug_db as debug_db_route
 app.include_router(debug_db_route.router)
@@ -71,6 +93,8 @@ api_router.include_router(topics_route.router)
 api_router.include_router(push_route.router)
 api_router.include_router(microquest_route.router)
 api_router.include_router(leaderboard_route.router)
+api_router.include_router(analytics_route.router)
+api_router.include_router(exercises_route.router)
 
 app.include_router(health_route.router)
 from routes import auth as auth_route
@@ -78,7 +102,6 @@ app.include_router(auth_route.router)
 
 from routes import users as users_route
 app.include_router(users_route.router)
-app.include_router(api_router)
 
 # >>> PERSONA START
 from routes import persona as persona_route
@@ -105,14 +128,8 @@ from routes import memory_v1 as memory_v1_route
 app.include_router(memory_v1_route.router)
 # <<< MEMORY V1 END
 
-# >>> EXERCISES START (from sibling app package)
-try:  # pragma: no cover - optional, but needed in production for /api/ex/*
-    from app import ex_api as app_ex_api
-    app.include_router(app_ex_api.router, prefix="/api")
-except Exception as exc:  # pragma: no cover
-    # Keep startup alive even if exercises package fails
-    print(f"[WARN] app.ex_api not loaded: {exc}", file=sys.stderr)
-# <<< EXERCISES END
+# Mount aggregated API routes after all potential inclusions.
+app.include_router(api_router)
 
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
@@ -144,6 +161,12 @@ from seed.exercises_intro_python import seed_intro_python_exercises
 def seed_intro_python():
     with Session(engine) as session:
         seed_intro_python_exercises(session)
+# --- debug: log key API routes at startup so we know they are mounted in prod ---
+@app.on_event("startup")
+def log_key_routes():
+    logger = logging.getLogger("startup.routes")
+    targets = [r.path for r in app.router.routes if r.path.startswith("/api/")]
+    logger.warning("Mounted /api routes (%d): %s", len(targets), sorted(set(targets)))
 # <<< SEED EXERCISES END
 
 # Backward compatibility: allow legacy clients hitting /tasks/upcoming without /api prefix

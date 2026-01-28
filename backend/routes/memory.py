@@ -1,8 +1,9 @@
 # >>> MEMORY START
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlmodel import Session
+from typing import Optional
 
 from db import get_session
 from routes.deps import get_current_user
@@ -39,7 +40,23 @@ def build_plan_endpoint(
 
 
 @router.get("/next", response_model=NextTasksOut)
-def next_tasks_endpoint(count: int = 3, session: Session = Depends(get_session), user=Depends(get_current_user)):
-    items = fetch_next_resurfaced_instances(session, user_id=user.id, count=count)
+def next_tasks_endpoint(
+    limit: int = Query(default=3, ge=1, le=100, alias="limit"),
+    user_id: Optional[str] = Query(default=None),
+    session: Session = Depends(get_session),
+):
+    """
+    Accepts user_id as a UUID/string (front-end sends UUID). If user_id cannot
+    be coerced to an int for the legacy memory tables, return an empty list
+    rather than a 422/500.
+    """
+    if user_id is None:
+        return {"items": []}
+    try:
+        legacy_user_id = int(user_id)
+    except (TypeError, ValueError):
+        return {"items": []}
+
+    items = fetch_next_resurfaced_instances(session, user_id=legacy_user_id, count=limit)
     return {"items": items}
 # <<< MEMORY END

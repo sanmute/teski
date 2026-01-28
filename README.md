@@ -79,6 +79,28 @@ Generate VAPID keys if you want push notifications (set in `.env.backend` + `.en
 ```bash
 make dev      # runs uvicorn app.main + npm run dev simultaneously
 ```
+
+## Exercises System (authoring, seeding, APIs)
+- Author JSON files under `seed/exercises/` (you can nest subfolders). Format:
+  ```json
+  {
+    "id": "temp-ENG_ACAD-001",
+    "question_text": "...",
+    "type": "multiple_choice",
+    "choices": ["...","..."],
+    "correct_answer": "...",
+    "difficulty": 1,
+    "skill_ids": ["eng_acad_tense_pres_simple_1"],
+    "solution_explanation": "...",
+    "hint": "...",
+    "metadata": { "topic": "...", "estimated_time_seconds": 40 }
+  }
+  ```
+- Seed (dev): `cd backend && python -m uvicorn main:app --reload` then POST `/api/ex/seed` (optionally `?path=seed/exercises`). If `TESKI_ADMIN_KEY` is set, include header `X-Admin-Key`.
+- Query:
+  - `curl "<BASE>/api/ex/list?user_id=UUID&difficulty_min=1&difficulty_max=5"`
+  - `curl "<BASE>/api/ex/get?id=temp-ENG_ACAD-001"`
+  - `curl -X POST "<BASE>/api/ex/answer" -H "Content-Type: application/json" -d '{"user_id":"UUID","exercise_id":"temp-ENG_ACAD-001","answer":"..."}'`
 - API docs: http://localhost:8000/docs
 - React app: http://localhost:5173 (dev server proxies `/api`, `/feedback`, `/analytics`, `/prefs`, `/deep`, etc.)
 
