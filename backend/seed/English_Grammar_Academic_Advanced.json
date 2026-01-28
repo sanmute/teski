@@ -1,0 +1,2379 @@
+{
+"id": "temp-ENG_ACAD-001",
+"question_text": "Choose the sentence that correctly uses the present simple for a general academic fact.",
+"type": "multiple_choice",
+"choices": [
+"Researchers are analysing data to identify long-term trends.",
+"The study examines the relationship between diet and cognition.",
+"Participants are completing the questionnaire now."
+],
+"correct_answer": "The study examines the relationship between diet and cognition.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "General descriptions of what a study does use the present simple ('examines'). The other options describe ongoing actions.",
+"hint": "Look for a sentence describing a general function.",
+"metadata": {
+"topic": "Present Simple in Academic Statements",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-002",
+"question_text": "Rewrite the sentence using the correct tense: \"Researchers are often investigating how language evolves.\"",
+"type": "short_answer",
+"correct_answer": "Researchers often investigate how language evolves.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "The adverb 'often' signals a habitual action, which requires the present simple.",
+"hint": "Habitual actions take present simple.",
+"metadata": {
+"topic": "Present Simple vs Continuous",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-ENG_ACAD-003",
+"question_text": "Which verb form correctly completes the sentence? \"This model ___ the factors influencing student motivation.\"",
+"type": "multiple_choice",
+"choices": ["is identifying", "identifies", "has identified"],
+"correct_answer": "identifies",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "To describe what a model generally does, present simple is used.",
+"hint": "Is this a general function?",
+"metadata": {
+"topic": "General Functions",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-004",
+"question_text": "Fill in the blank with the best tense: \"The study currently ___ data from 400 participants.\"",
+"type": "short_answer",
+"correct_answer": "is collecting",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "‘Currently’ signals an action in progress, requiring present continuous.",
+"hint": "Think: happening now.",
+"metadata": {
+"topic": "Time Markers & Tense Choice",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-005",
+"question_text": "Choose the sentence that is incorrect because it should use the present continuous.",
+"type": "multiple_choice",
+"choices": [
+"The article discusses several theoretical approaches.",
+"The team analyses migration data every year.",
+"The researchers collect samples at this moment."
+],
+"correct_answer": "The researchers collect samples at this moment.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "‘At this moment’ requires present continuous, not present simple.",
+"hint": "Look for 'right now' meaning.",
+"metadata": {
+"topic": "Present Simple vs Continuous",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-006",
+"question_text": "Fill in the blank: \"This theory generally ___ that language learning is socially constructed.\"",
+"type": "short_answer",
+"correct_answer": "argues",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "General claims made by theories use present simple.",
+"hint": "General academic claims → present simple.",
+"metadata": {
+"topic": "Academic Claims",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-007",
+"question_text": "Which option correctly uses the present simple to describe a stable fact?",
+"type": "multiple_choice",
+"choices": [
+"Temperature levels are fluctuating this week.",
+"The enzyme regulates metabolic activity in the cell.",
+"The team is preparing the final report today."
+],
+"correct_answer": "The enzyme regulates metabolic activity in the cell.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "Stable scientific facts are expressed in present simple.",
+"hint": "Which is always true?",
+"metadata": {
+"topic": "Scientific Facts",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-008",
+"question_text": "Correct the tense error: \"The method is providing a clear framework for analysis in most cases.\"",
+"type": "short_answer",
+"correct_answer": "The method provides a clear framework for analysis in most cases.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "General characteristics take present simple, not continuous.",
+"hint": "General feature, not temporary action.",
+"metadata": {
+"topic": "General Characteristics",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-009",
+"question_text": "Select the correct verb: "The institution typically ___ financial aid to eligible students."",
+"type": "multiple_choice",
+"choices": ["is offering", "offers", "offer"],
+"correct_answer": "offers",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "‘Typically’ signals a habitual action.",
+"hint": "Habitual action.",
+"metadata": {
+"topic": "Habitual Actions",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ENG_ACAD-010",
+"question_text": "Rewrite using the correct tense: "The lecturer explains the concept right now."",
+"type": "short_answer",
+"correct_answer": "The lecturer is explaining the concept right now.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "‘Right now’ requires present continuous.",
+"hint": "Action in progress.",
+"metadata": {
+"topic": "Time Indicators",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-011",
+"question_text": "Choose the best academic option: "The paper ___ how cultural norms shape behaviour."",
+"type": "multiple_choice",
+"choices": ["is exploring", "explores", "has explored"],
+"correct_answer": "explores",
+"difficulty": 4,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "Academic summaries of content typically use present simple.",
+"hint": "Describe what the paper does.",
+"metadata": {
+"topic": "Academic Style",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-012",
+"question_text": "Choose the best academic version: "This chapter ___ the main theoretical debates in the field."",
+"type": "multiple_choice",
+"choices": ["is outlining", "outlines", "has outlined"],
+"correct_answer": "outlines",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_simple_1"],
+"solution_explanation": "To describe a chapter’s function, present simple is standard.",
+"hint": "Stable function of a text.",
+"metadata": {
+"topic": "Describing Text Content",
+"estimated_time_seconds": 50
+}
+}
+English_Grammar_Academic_Advanced_Usage__Week_02.json
+
+Skill: eng_acad_tense_past_simple_1
+IDs: temp-ENG_ACAD-013 → temp-ENG_ACAD-024
+
+{
+"id": "temp-ENG_ACAD-013",
+"question_text": "Choose the sentence that correctly uses the past simple to describe completed research.",
+"type": "multiple_choice",
+"choices": [
+"The survey measures the attitudes of urban residents.",
+"The researchers measured the participants’ cortisol levels last year.",
+"The study is measuring patterns of consumption."
+],
+"correct_answer": "The researchers measured the participants’ cortisol levels last year.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "Past simple is used for actions completed at a specific time in the past, such as 'last year'.",
+"hint": "Look for a finished time reference.",
+"metadata": {
+"topic": "Past Simple – Completed Research",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-014",
+"question_text": "Rewrite the sentence using correct tense for completed research: "The authors investigate the impact of nutrition on memory in their 2012 paper."",
+"type": "short_answer",
+"correct_answer": "The authors investigated the impact of nutrition on memory in their 2012 paper.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "A specific year indicates the research is completed, so past simple ('investigated') is required.",
+"hint": "A specific year signals past simple.",
+"metadata": {
+"topic": "Reporting Past Studies",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-ENG_ACAD-015",
+"question_text": "Select the correct verb form: "Smith (1998) ___ that social cohesion increases economic stability."",
+"type": "multiple_choice",
+"choices": ["argues", "argued", "is arguing"],
+"correct_answer": "argued",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "With a past publication year, academic reporting commonly uses past simple ('argued').",
+"hint": "Check the date in the citation.",
+"metadata": {
+"topic": "Citing Past Literature",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-016",
+"question_text": "Fill the blank: "The experiment ___ significant variation across the three groups."",
+"type": "short_answer",
+"correct_answer": "showed",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "Completed experiments are described using past simple ('showed').",
+"hint": "Assume the experiment is finished.",
+"metadata": {
+"topic": "Describing Results",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-017",
+"question_text": "Which sentence does NOT describe a completed past action?",
+"type": "multiple_choice",
+"choices": [
+"Johnson (2005) identified three key stages of negotiation.",
+"The theory emerged from studies conducted in the 1990s.",
+"Research shows that bilingualism improves cognitive flexibility."
+],
+"correct_answer": "Research shows that bilingualism improves cognitive flexibility.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "This sentence states a general finding that is presented as currently valid, so present simple is used rather than past simple.",
+"hint": "Find the option that reads like a general truth.",
+"metadata": {
+"topic": "Present vs Past in Academic Writing",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-018",
+"question_text": "Correct the tense: "The authors conclude that the treatment was effective in their 2010 trial."",
+"type": "short_answer",
+"correct_answer": "The authors concluded that the treatment was effective in their 2010 trial.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "The trial is dated (2010), so the reporting verb should be past simple ('concluded').",
+"hint": "Match the verb tense to the year.",
+"metadata": {
+"topic": "Reporting Completed Trials",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-019",
+"question_text": "Fill the gap: "The investigation ___ several unexpected correlations."",
+"type": "short_answer",
+"correct_answer": "revealed",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "Completed investigations are reported with past simple ('revealed').",
+"hint": "Use a past-tense reporting verb.",
+"metadata": {
+"topic": "Research Findings",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-020",
+"question_text": "Choose the correct option: "The team ___ data between 2015 and 2017."",
+"type": "multiple_choice",
+"choices": ["collects", "collected", "has been collecting"],
+"correct_answer": "collected",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "A finished time period requires past simple ('collected').",
+"hint": "Is the period finished?",
+"metadata": {
+"topic": "Finished Time Periods",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ENG_ACAD-021",
+"question_text": "Identify the correct academic form: "The researchers ___ a significant decline in biodiversity."",
+"type": "multiple_choice",
+"choices": ["observe", "observed", "are observing"],
+"correct_answer": "observed",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "If the observation is completed and being reported, past simple ('observed') is appropriate.",
+"hint": "Completed action → past simple.",
+"metadata": {
+"topic": "Completed Observations",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-022",
+"question_text": "Correct the error: "The trial is indicated positive outcomes when assessed in 2008."",
+"type": "short_answer",
+"correct_answer": "The trial indicated positive outcomes when assessed in 2008.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "The year 2008 requires past simple, and 'is indicated' is incorrect here. The correct reporting verb is 'indicated'.",
+"hint": "Use past simple with a specific past year.",
+"metadata": {
+"topic": "Correcting Tense Errors",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-023",
+"question_text": "Which sentence best represents a completed action suitable for past simple?",
+"type": "multiple_choice",
+"choices": [
+"The researchers are analysing the archived samples.",
+"The authors discuss implications for future policy.",
+"The team interviewed 60 participants during the pilot phase."
+],
+"correct_answer": "The team interviewed 60 participants during the pilot phase.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "The pilot phase is a completed stage, so past simple ('interviewed') is correct.",
+"hint": "Choose the clearly finished event.",
+"metadata": {
+"topic": "Recognising Completed Actions",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-024",
+"question_text": "Rewrite to correctly reflect that the action is complete: "The project demonstrates a decline in enrolment numbers in 2011."",
+"type": "short_answer",
+"correct_answer": "The project demonstrated a decline in enrolment numbers in 2011.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_past_simple_1"],
+"solution_explanation": "Because 2011 is a completed time reference, the verb should be past simple ('demonstrated').",
+"hint": "A past year usually triggers past simple.",
+"metadata": {
+"topic": "Past Simple with Time Markers",
+"estimated_time_seconds": 55
+}
+}
+
+English_Grammar_Academic_Advanced_Usage__Week_03.json
+
+Skill: eng_acad_tense_pres_perfect_1
+IDs: temp-ENG_ACAD-025 → temp-ENG_ACAD-036
+
+{
+"id": "temp-ENG_ACAD-025",
+"question_text": "Choose the sentence that correctly uses the present perfect to describe a research trend over time.",
+"type": "multiple_choice",
+"choices": [
+"Researchers increased their focus on climate adaptation in 2019.",
+"Researchers have increasingly focused on climate adaptation over the past decade.",
+"Researchers are focusing on climate adaptation right now."
+],
+"correct_answer": "Researchers have increasingly focused on climate adaptation over the past decade.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Present perfect connects past developments to the present, especially with time spans like 'over the past decade'.",
+"hint": "Choose the option with a past-to-present time span.",
+"metadata": {
+"topic": "Present Perfect for Trends",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-026",
+"question_text": "Fill in the blank with the best tense: "In recent years, scholars ___ considerable attention to digital privacy."",
+"type": "short_answer",
+"correct_answer": "have paid",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "‘In recent years’ refers to a period continuing to the present, so present perfect ('have paid') is appropriate.",
+"hint": "‘In recent years’ often takes present perfect.",
+"metadata": {
+"topic": "Recent Time Expressions",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-027",
+"question_text": "Select the best option: "A number of studies ___ the relationship between sleep and academic performance."",
+"type": "multiple_choice",
+"choices": [
+"have examined",
+"examined",
+"are examining"
+],
+"correct_answer": "have examined",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Without a specific completed time, present perfect is common for summarising research up to now.",
+"hint": "No year is given.",
+"metadata": {
+"topic": "Summarising Research",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-028",
+"question_text": "Rewrite using present perfect to show relevance up to the present: "Researchers identified several limitations in the existing framework."",
+"type": "short_answer",
+"correct_answer": "Researchers have identified several limitations in the existing framework.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Present perfect ('have identified') emphasizes that the limitations are still relevant now.",
+"hint": "Connect the past finding to the present.",
+"metadata": {
+"topic": "Present Relevance",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-029",
+"question_text": "Choose the sentence where present perfect is the most appropriate choice for academic background.",
+"type": "multiple_choice",
+"choices": [
+"In 2003, the team has published the dataset.",
+"Several researchers have proposed alternative definitions of resilience.",
+"The author has argued in 1997 that the method is unreliable."
+],
+"correct_answer": "Several researchers have proposed alternative definitions of resilience.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Present perfect works well for summarising proposals over time without a specific finished date. Using present perfect with a specific year is usually incorrect.",
+"hint": "Avoid present perfect with a specific year.",
+"metadata": {
+"topic": "Time Reference Compatibility",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ENG_ACAD-030",
+"question_text": "Select the correct tense: "There ___ growing concern about the reproducibility of certain experimental results."",
+"type": "multiple_choice",
+"choices": [
+"was",
+"has been",
+"is being"
+],
+"correct_answer": "has been",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "‘Has been’ indicates a state that developed in the past and continues to the present.",
+"hint": "Think: started earlier, still true now.",
+"metadata": {
+"topic": "Ongoing States",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-031",
+"question_text": "Correct the tense error: "In the last decade, researchers studied the effects of social media on attention."",
+"type": "short_answer",
+"correct_answer": "In the last decade, researchers have studied the effects of social media on attention.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "‘In the last decade’ typically links past to present, so present perfect is preferred for an overview of work up to now.",
+"hint": "Time span → past-to-present.",
+"metadata": {
+"topic": "Time Spans to Present",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-032",
+"question_text": "Select the best tense: "So far, the review ___ three competing explanations for the phenomenon."",
+"type": "multiple_choice",
+"choices": [
+"has highlighted",
+"highlighted",
+"is highlighting"
+],
+"correct_answer": "has highlighted",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "‘So far’ refers to a period continuing to the present, which triggers present perfect.",
+"hint": "‘So far’ is a present perfect marker.",
+"metadata": {
+"topic": "Present Perfect with 'So far'",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-033",
+"question_text": "Fill in the blank with a present perfect form: "Multiple meta-analyses ___ consistent evidence for the intervention’s effectiveness."",
+"type": "short_answer",
+"correct_answer": "have found",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Present perfect is used to summarise accumulated findings up to now.",
+"hint": "Think: evidence gathered over time.",
+"metadata": {
+"topic": "Accumulated Evidence",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-034",
+"question_text": "Choose the option that best completes the sentence: "Over time, the field ___ from descriptive accounts to predictive modelling."",
+"type": "multiple_choice",
+"choices": [
+"shifted",
+"has shifted",
+"is shifting"
+],
+"correct_answer": "has shifted",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Present perfect describes a development that occurred over time and is relevant to the present.",
+"hint": "A change leading to the current state.",
+"metadata": {
+"topic": "Field Development",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-035",
+"question_text": "Decide which sentence is correctly formed for academic writing.",
+"type": "multiple_choice",
+"choices": [
+"Recent studies have investigated this issue in 2016.",
+"Recent studies investigated this issue.",
+"Recent studies have investigated this issue."
+],
+"correct_answer": "Recent studies have investigated this issue.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Present perfect fits with 'recent studies' when no specific year is given. A specific year like 2016 typically requires past simple.",
+"hint": "Present perfect and a specific past year usually don’t mix.",
+"metadata": {
+"topic": "Present Perfect vs Specific Dates",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-036",
+"question_text": "Rewrite to make the research background sound current and connected to the present: "Many scholars proposed new frameworks for assessing inequality."",
+"type": "short_answer",
+"correct_answer": "Many scholars have proposed new frameworks for assessing inequality.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_pres_perfect_1"],
+"solution_explanation": "Present perfect is commonly used to summarise proposals made over time that remain relevant now.",
+"hint": "Connect past proposals to present relevance.",
+"metadata": {
+"topic": "Ongoing Relevance",
+"estimated_time_seconds": 60
+}
+}
+# English_Grammar_Academic_Advanced_Usage__Week_04.json
+
+**Skill:** `eng_acad_tense_prog_perfect_1`
+**IDs:** `temp-ENG_ACAD-037` → `temp-ENG_ACAD-048`
+
+{
+"id": "temp-ENG_ACAD-037",
+"question_text": "Choose the sentence that correctly uses the present perfect continuous to describe an ongoing research activity.",
+"type": "multiple_choice",
+"choices": [
+"Researchers have analysed the data for several months.",
+"Researchers have been analysing the data for several months.",
+"Researchers analysed the data for several months."
+],
+"correct_answer": "Researchers have been analysing the data for several months.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "The present perfect continuous emphasises duration and ongoing activity up to the present ('have been analysing').",
+"hint": "Look for an action that started earlier and is still continuing.",
+"metadata": {
+"topic": "Present Perfect Continuous – Ongoing Research",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-038",
+"question_text": "Fill in the blank: 'The team ___ working on the revised model since early March.'",
+"type": "short_answer",
+"correct_answer": "has been",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "‘Since early March’ indicates duration from the past up to now, so present perfect continuous is required: 'has been working'.",
+"hint": "Use the form that expresses duration up to the present.",
+"metadata": {
+"topic": "Duration with Since",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-039",
+"question_text": "Which sentence best highlights the process rather than the result?",
+"type": "multiple_choice",
+"choices": [
+"The researchers have completed the survey.",
+"The researchers completed the survey.",
+"The researchers have been conducting the survey."
+],
+"correct_answer": "The researchers have been conducting the survey.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "Present perfect continuous focuses on the ongoing process, whereas 'completed' emphasises the finished result.",
+"hint": "Choose the option that suggests the work is ongoing.",
+"metadata": {
+"topic": "Process vs Result",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-040",
+"question_text": "Rewrite using the correct tense: 'The authors work on refining the framework for several years.'",
+"type": "short_answer",
+"correct_answer": "The authors have been working on refining the framework for several years.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "An activity continuing over several years up to the present is typically expressed with the present perfect continuous.",
+"hint": "Show that the action started in the past and continues now.",
+"metadata": {
+"topic": "Long-Term Ongoing Work",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-ENG_ACAD-041",
+"question_text": "Choose the most appropriate academic sentence.",
+"type": "multiple_choice",
+"choices": [
+"Scholars have debated the issue for decades.",
+"Scholars have been debating the issue for decades.",
+"Scholars debated the issue for decades."
+],
+"correct_answer": "Scholars have been debating the issue for decades.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "The present perfect continuous ('have been debating') emphasises a sustained, ongoing debate that continues into the present.",
+"hint": "Pick the option that signals an ongoing activity across a long period.",
+"metadata": {
+"topic": "Academic Debates Over Time",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-042",
+"question_text": "Fill the gap: 'Researchers ___ examining alternative explanations throughout the study.'",
+"type": "short_answer",
+"correct_answer": "have been",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "‘Throughout the study’ suggests continuous activity over a period; present perfect continuous fits: 'have been examining'.",
+"hint": "Use the auxiliary that forms the present perfect continuous.",
+"metadata": {
+"topic": "Continuous Examination",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-043",
+"question_text": "Identify the sentence where present perfect continuous is used inappropriately for academic style.",
+"type": "multiple_choice",
+"choices": [
+"The team has been collecting data since January.",
+"The paper has been arguing that inequality is structural.",
+"The researchers have been testing the model repeatedly."
+],
+"correct_answer": "The paper has been arguing that inequality is structural.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "A paper is not an ongoing actor in time; its content is typically described with the present simple (e.g., 'The paper argues...'), not present perfect continuous.",
+"hint": "Think about whether the subject can plausibly perform an ongoing action.",
+"metadata": {
+"topic": "Genre Constraints",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-044",
+"question_text": "Select the correct tense: 'The research group ___ collaborating with international partners for five years.'",
+"type": "multiple_choice",
+"choices": [
+"has collaborated",
+"has been collaborating",
+"collaborated"
+],
+"correct_answer": "has been collaborating",
+"difficulty": 2,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "The present perfect continuous highlights ongoing collaboration over a period of time: 'has been collaborating'.",
+"hint": "Focus on duration and ongoing activity.",
+"metadata": {
+"topic": "Ongoing Collaboration",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-045",
+"question_text": "Rewrite to emphasise ongoing effort: 'The team has revised the methodology repeatedly.'",
+"type": "short_answer",
+"correct_answer": "The team has been revising the methodology repeatedly.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "Using the present perfect continuous shifts emphasis from the end result to the repeated ongoing process.",
+"hint": "Use the form that highlights repeated activity over time.",
+"metadata": {
+"topic": "Emphasising Effort",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-046",
+"question_text": "Which sentence best describes an activity that is still in progress?",
+"type": "multiple_choice",
+"choices": [
+"The authors have finalised their conclusions.",
+"The authors finalised their conclusions.",
+"The authors have been developing their conclusions."
+],
+"correct_answer": "The authors have been developing their conclusions.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "Present perfect continuous indicates an activity that started in the past and is still ongoing.",
+"hint": "Look for the option that does not imply completion.",
+"metadata": {
+"topic": "Work in Progress",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-047",
+"question_text": "Correct the tense error: 'The committee has discussed the proposal for months.'",
+"type": "short_answer",
+"correct_answer": "The committee has been discussing the proposal for months.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "With 'for months' and emphasis on ongoing activity, present perfect continuous is preferred: 'has been discussing'.",
+"hint": "Use the tense that emphasises duration and continuation.",
+"metadata": {
+"topic": "Ongoing Discussion",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-048",
+"question_text": "Choose the best academic option: 'Over the past year, researchers ___ refining the analytical framework.'",
+"type": "multiple_choice",
+"choices": [
+"have refined",
+"have been refining",
+"refined"
+],
+"correct_answer": "have been refining",
+"difficulty": 3,
+"skill_ids": ["eng_acad_tense_prog_perfect_1"],
+"solution_explanation": "The present perfect continuous emphasises the ongoing process of refinement across the past year.",
+"hint": "Pick the option that highlights an ongoing process.",
+"metadata": {
+"topic": "Process-Oriented Development",
+"estimated_time_seconds": 55
+}
+}
+
+---
+
+# English_Grammar_Academic_Advanced_Usage__Week_05.json
+
+**Skill:** `eng_acad_modal_deduction_1`
+**IDs:** `temp-ENG_ACAD-049` → `temp-ENG_ACAD-060`
+
+{
+"id": "temp-ENG_ACAD-049",
+"question_text": "Choose the sentence that best expresses strong logical deduction in academic writing.",
+"type": "multiple_choice",
+"choices": [
+"The results might indicate a sampling error.",
+"The results must reflect a structural limitation in the model.",
+"The results could reflect participant bias."
+],
+"correct_answer": "The results must reflect a structural limitation in the model.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "‘Must’ is used for strong logical deduction when the evidence leaves little room for alternative explanations.",
+"hint": "Which option is the most certain?",
+"metadata": {
+"topic": "Modal Verbs for Deduction",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-050",
+"question_text": "Fill in the blank: 'Given the absence of control variables, the findings ___ be interpreted with caution.'",
+"type": "short_answer",
+"correct_answer": "must",
+"difficulty": 2,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "‘Must’ expresses logical necessity: the lack of controls makes cautious interpretation unavoidable.",
+"hint": "Choose the strongest necessity modal.",
+"metadata": {
+"topic": "Logical Necessity",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-051",
+"question_text": "Which modal best signals tentative deduction?",
+"type": "multiple_choice",
+"choices": [
+"must",
+"might",
+"cannot"
+],
+"correct_answer": "might",
+"difficulty": 1,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "‘Might’ indicates a weak or tentative inference rather than a firm conclusion.",
+"hint": "Pick the option with the lowest certainty.",
+"metadata": {
+"topic": "Tentative Reasoning",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ENG_ACAD-052",
+"question_text": "Rewrite to express weaker deduction: 'The discrepancy must result from measurement error.'",
+"type": "short_answer",
+"correct_answer": "The discrepancy might result from measurement error.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "Replacing ‘must’ with ‘might’ reduces certainty and makes the claim more cautious.",
+"hint": "Swap to a weaker modal.",
+"metadata": {
+"topic": "Adjusting Strength of Claims",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-053",
+"question_text": "Choose the sentence that is methodologically inappropriate due to excessive certainty.",
+"type": "multiple_choice",
+"choices": [
+"The data suggest a possible association.",
+"The results must prove the hypothesis.",
+"The findings may reflect contextual factors."
+],
+"correct_answer": "The results must prove the hypothesis.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "Academic writing rarely claims proof; ‘must prove’ overstates what empirical results can typically establish.",
+"hint": "Look for language of absolute proof.",
+"metadata": {
+"topic": "Academic Caution",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-054",
+"question_text": "Select the most academically appropriate option: 'The observed variation ___ be attributed to seasonal effects.'",
+"type": "multiple_choice",
+"choices": [
+"must",
+"might",
+"will"
+],
+"correct_answer": "might",
+"difficulty": 2,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "‘Might’ signals a tentative interpretation, which is typically preferable unless attribution is definitively established.",
+"hint": "Choose the cautious inference.",
+"metadata": {
+"topic": "Tentative Interpretation",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-055",
+"question_text": "Fill in the blank: 'This pattern ___ indicate a shift in learner strategies.'",
+"type": "short_answer",
+"correct_answer": "may",
+"difficulty": 2,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "‘May’ is a standard way to express cautious possibility in academic interpretation.",
+"hint": "Use a cautious modal of possibility.",
+"metadata": {
+"topic": "Cautious Claims",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-056",
+"question_text": "Which sentence best balances evidence and caution?",
+"type": "multiple_choice",
+"choices": [
+"The intervention must eliminate all confounding variables.",
+"The intervention may have reduced the impact of confounding variables.",
+"The intervention eliminated all confounding variables."
+],
+"correct_answer": "The intervention may have reduced the impact of confounding variables.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "‘May have reduced’ avoids absolute claims while still describing a plausible effect supported by evidence.",
+"hint": "Avoid claims of total elimination.",
+"metadata": {
+"topic": "Balanced Academic Claims",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-057",
+"question_text": "Correct the overconfident claim: 'The findings must confirm the theory.'",
+"type": "short_answer",
+"correct_answer": "The findings may support the theory.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "Academic claims are often framed as ‘support’ rather than ‘confirm’, and a weaker modal improves methodological caution.",
+"hint": "Replace 'confirm' with a more cautious verb.",
+"metadata": {
+"topic": "Avoiding Overstatement",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-058",
+"question_text": "Choose the modal that signals strong negative deduction: 'Given the methodology, this explanation ___ be valid.'",
+"type": "multiple_choice",
+"choices": [
+"must not",
+"cannot",
+"might not"
+],
+"correct_answer": "cannot",
+"difficulty": 2,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "‘Cannot’ expresses strong negative certainty: the explanation is incompatible with the evidence or method.",
+"hint": "Pick the strongest negative conclusion.",
+"metadata": {
+"topic": "Negative Deduction",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-059",
+"question_text": "Rewrite using appropriate academic modality: 'The discrepancy proves a flaw in the design.'",
+"type": "short_answer",
+"correct_answer": "The discrepancy may indicate a flaw in the design.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "Replacing 'proves' with 'may indicate' reduces certainty and aligns with academic norms.",
+"hint": "Avoid absolute proof language.",
+"metadata": {
+"topic": "Academic Hedging",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-060",
+"question_text": "Which option is least appropriate for academic reasoning?",
+"type": "multiple_choice",
+"choices": [
+"The data may suggest an emerging trend.",
+"The data must unquestionably prove the hypothesis.",
+"The data could reflect contextual influences."
+],
+"correct_answer": "The data must unquestionably prove the hypothesis.",
+"difficulty": 5,
+"skill_ids": ["eng_acad_modal_deduction_1"],
+"solution_explanation": "Combining ‘must unquestionably’ with ‘prove’ creates an absolute claim that is typically inappropriate in academic reasoning.",
+"hint": "Look for exaggerated certainty and proof language.",
+"metadata": {
+"topic": "Evaluating Academic Tone",
+"estimated_time_seconds": 80
+}
+}
+
+---
+
+# English_Grammar_Academic_Advanced_Usage__Week_06.json
+
+**Skill:** `eng_acad_modal_obligation_1`
+**IDs:** `temp-ENG_ACAD-061` → `temp-ENG_ACAD-072`
+
+{
+"id": "temp-ENG_ACAD-061",
+"question_text": "Choose the sentence that best expresses methodological obligation in academic writing.",
+"type": "multiple_choice",
+"choices": [
+"Participants should complete the questionnaire before the interview.",
+"Participants must complete the questionnaire before the interview.",
+"Participants could complete the questionnaire before the interview."
+],
+"correct_answer": "Participants must complete the questionnaire before the interview.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "‘Must’ expresses a non-negotiable requirement, which is appropriate for procedural steps in a study design.",
+"hint": "Choose the option that sounds mandatory.",
+"metadata": {
+"topic": "Methodological Obligation",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-062",
+"question_text": "Fill in the blank: 'All data ___ be anonymised prior to analysis.'",
+"type": "short_answer",
+"correct_answer": "must",
+"difficulty": 1,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "Ethical and procedural requirements are typically expressed using ‘must’.",
+"hint": "Think of an ethics requirement.",
+"metadata": {
+"topic": "Ethical Requirements",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ENG_ACAD-063",
+"question_text": "Which modal best expresses strong recommendation rather than strict obligation?",
+"type": "multiple_choice",
+"choices": [
+"must",
+"should",
+"have to"
+],
+"correct_answer": "should",
+"difficulty": 2,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "‘Should’ is commonly used for best-practice guidance that is advisable but not compulsory.",
+"hint": "Pick the option that sounds like advice.",
+"metadata": {
+"topic": "Academic Recommendations",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-064",
+"question_text": "Rewrite to express recommendation instead of obligation: 'Researchers must consider potential confounding variables.'",
+"type": "short_answer",
+"correct_answer": "Researchers should consider potential confounding variables.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "Replacing ‘must’ with ‘should’ reframes the statement as a recommendation rather than a requirement.",
+"hint": "Soften 'must' to advice.",
+"metadata": {
+"topic": "Adjusting Obligation Strength",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-065",
+"question_text": "Choose the most appropriate sentence for an ethics section.",
+"type": "multiple_choice",
+"choices": [
+"Participants might provide informed consent.",
+"Participants must provide informed consent.",
+"Participants are providing informed consent."
+],
+"correct_answer": "Participants must provide informed consent.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "Informed consent is a mandatory ethical requirement, so ‘must’ is appropriate.",
+"hint": "Ethics requirements are not optional.",
+"metadata": {
+"topic": "Ethics in Research",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-066",
+"question_text": "Fill in the blank: 'To ensure validity, the sampling procedure ___ be clearly documented.'",
+"type": "short_answer",
+"correct_answer": "must",
+"difficulty": 2,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "Clear documentation is required to support validity and reproducibility, so ‘must’ fits.",
+"hint": "Think of a core requirement.",
+"metadata": {
+"topic": "Research Validity",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-067",
+"question_text": "Which option is too weak for describing a compulsory procedure?",
+"type": "multiple_choice",
+"choices": [
+"Data must be stored securely.",
+"Data should be stored securely.",
+"Data have to be stored securely."
+],
+"correct_answer": "Data should be stored securely.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "‘Should’ indicates recommendation, which is weaker than the obligation implied by ‘must’ or ‘have to’.",
+"hint": "Which one sounds like advice?",
+"metadata": {
+"topic": "Strength of Obligation",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-068",
+"question_text": "Rewrite to express externally imposed obligation: 'Researchers follow institutional guidelines.'",
+"type": "short_answer",
+"correct_answer": "Researchers have to follow institutional guidelines.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "‘Have to’ is commonly used for obligations imposed by rules, policies, or institutions.",
+"hint": "Use a form that signals an external requirement.",
+"metadata": {
+"topic": "Externally Imposed Obligation",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-069",
+"question_text": "Select the best option: 'All instruments ___ be calibrated before data collection.'",
+"type": "multiple_choice",
+"choices": [
+"might",
+"should",
+"must"
+],
+"correct_answer": "must",
+"difficulty": 1,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "Calibration is a required procedural step, so ‘must’ is the strongest and most appropriate modal.",
+"hint": "Think mandatory procedure.",
+"metadata": {
+"topic": "Procedural Requirements",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-070",
+"question_text": "Which sentence best fits a methods section?",
+"type": "multiple_choice",
+"choices": [
+"The questionnaire might be administered online.",
+"The questionnaire was administered online.",
+"The questionnaire must be administered online."
+],
+"correct_answer": "The questionnaire was administered online.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "Methods sections typically report procedures that were carried out, rather than possibilities or requirements.",
+"hint": "Methods report what happened.",
+"metadata": {
+"topic": "Methods Section Conventions",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-071",
+"question_text": "Correct the modality: 'Participants should not be exposed to harm under any circumstances.'",
+"type": "short_answer",
+"correct_answer": "Participants must not be exposed to harm under any circumstances.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "Ethical prohibitions are expressed as strict obligations; ‘must not’ is appropriate.",
+"hint": "Strengthen it to a strict prohibition.",
+"metadata": {
+"topic": "Ethical Prohibition",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-072",
+"question_text": "Which option is least appropriate for formal academic guidelines?",
+"type": "multiple_choice",
+"choices": [
+"Researchers must disclose conflicts of interest.",
+"Researchers should disclose conflicts of interest.",
+"Researchers gotta disclose conflicts of interest."
+],
+"correct_answer": "Researchers gotta disclose conflicts of interest.",
+"difficulty": 5,
+"skill_ids": ["eng_acad_modal_obligation_1"],
+"solution_explanation": "‘Gotta’ is informal and unsuitable for academic or professional registers.",
+"hint": "Watch for informal wording.",
+"metadata": {
+"topic": "Academic Register",
+"estimated_time_seconds": 80
+}
+}
+
+---
+
+# English_Grammar_Academic_Advanced_Usage__Week_07.json
+
+**Skill:** `eng_acad_hedging_1`
+**IDs:** `temp-ENG_ACAD-073` → `temp-ENG_ACAD-084`
+
+{
+"id": "temp-ENG_ACAD-073",
+"question_text": "Choose the sentence that demonstrates appropriate academic hedging.",
+"type": "multiple_choice",
+"choices": [
+"The intervention proves the theory.",
+"The intervention may support the theory.",
+"The intervention definitely supports the theory."
+],
+"correct_answer": "The intervention may support the theory.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘May’ softens the claim and reflects appropriate caution in academic argumentation.",
+"hint": "Avoid absolute certainty.",
+"metadata": {
+"topic": "Hedging Claims",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-074",
+"question_text": "Fill in the blank: 'These findings ___ suggest a relationship between stress and performance.'",
+"type": "short_answer",
+"correct_answer": "may",
+"difficulty": 1,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘May’ is commonly used to present tentative interpretations without overclaiming.",
+"hint": "Choose a cautious modal.",
+"metadata": {
+"topic": "Tentative Interpretation",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ENG_ACAD-075",
+"question_text": "Which expression best hedges an academic claim?",
+"type": "multiple_choice",
+"choices": [
+"clearly demonstrates",
+"appears to indicate",
+"undeniably proves"
+],
+"correct_answer": "appears to indicate",
+"difficulty": 2,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘Appears to indicate’ reduces certainty and is characteristic of cautious academic stance.",
+"hint": "Choose the least absolute phrase.",
+"metadata": {
+"topic": "Hedging Expressions",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-076",
+"question_text": "Rewrite to make the claim more cautious: 'The results show a causal relationship.'",
+"type": "short_answer",
+"correct_answer": "The results suggest a causal relationship.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘Suggest’ is less categorical than ‘show’ and better aligns with cautious interpretation.",
+"hint": "Use a weaker reporting verb.",
+"metadata": {
+"topic": "Softening Claims",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-ENG_ACAD-077",
+"question_text": "Which sentence is overly assertive for academic writing?",
+"type": "multiple_choice",
+"choices": [
+"The data indicate a possible trend.",
+"The data suggest a potential explanation.",
+"The data unquestionably confirm the hypothesis."
+],
+"correct_answer": "The data unquestionably confirm the hypothesis.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘Unquestionably confirm’ is an unusually strong claim and is often inappropriate unless evidence is exceptional.",
+"hint": "Look for absolute certainty.",
+"metadata": {
+"topic": "Evaluating Academic Tone",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-078",
+"question_text": "Fill in the blank: 'This pattern ___ be partly explained by contextual factors.'",
+"type": "short_answer",
+"correct_answer": "could",
+"difficulty": 2,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘Could’ expresses possibility and keeps the claim appropriately tentative.",
+"hint": "Use a possibility modal.",
+"metadata": {
+"topic": "Expressing Possibility",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-079",
+"question_text": "Choose the best hedged alternative: 'The intervention eliminates bias.'",
+"type": "multiple_choice",
+"choices": [
+"The intervention eliminates bias.",
+"The intervention may reduce bias.",
+"The intervention completely removes bias."
+],
+"correct_answer": "The intervention may reduce bias.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "This option avoids absolute language and frames the effect cautiously.",
+"hint": "Soften the strength of the claim.",
+"metadata": {
+"topic": "Reducing Overstatement",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-080",
+"question_text": "Rewrite using appropriate hedging: 'This model explains learner behaviour.'",
+"type": "short_answer",
+"correct_answer": "This model may explain learner behaviour.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "Adding a modal verb introduces appropriate uncertainty in the claim.",
+"hint": "Add a cautious modal.",
+"metadata": {
+"topic": "Modal Hedging",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-081",
+"question_text": "Which phrase is most appropriate in a discussion section?",
+"type": "multiple_choice",
+"choices": [
+"This proves beyond doubt that...",
+"These results may indicate that...",
+"This absolutely demonstrates that..."
+],
+"correct_answer": "These results may indicate that...",
+"difficulty": 3,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "Discussion sections typically interpret results cautiously and avoid the language of proof.",
+"hint": "Choose the interpretive, cautious option.",
+"metadata": {
+"topic": "Discussion Section Language",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-082",
+"question_text": "Correct the overconfident wording: 'The findings prove the effectiveness of the method.'",
+"type": "short_answer",
+"correct_answer": "The findings suggest the effectiveness of the method.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "Replacing ‘prove’ with ‘suggest’ makes the statement more consistent with academic norms.",
+"hint": "Avoid claiming proof.",
+"metadata": {
+"topic": "Avoiding Absolute Claims",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-083",
+"question_text": "Which option best demonstrates a cautious academic stance?",
+"type": "multiple_choice",
+"choices": [
+"The results definitely establish causality.",
+"The results might reflect underlying mechanisms.",
+"The results establish causality."
+],
+"correct_answer": "The results might reflect underlying mechanisms.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘Might reflect’ signals uncertainty and interpretive caution, which is appropriate for inference.",
+"hint": "Pick the least certain statement.",
+"metadata": {
+"topic": "Academic Stance",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-084",
+"question_text": "Which sentence is least appropriate for academic writing?",
+"type": "multiple_choice",
+"choices": [
+"The evidence appears to support this view.",
+"The evidence suggests a possible explanation.",
+"The evidence totally proves this view."
+],
+"correct_answer": "The evidence totally proves this view.",
+"difficulty": 5,
+"skill_ids": ["eng_acad_hedging_1"],
+"solution_explanation": "‘Totally proves’ is both overly absolute and stylistically informal for academic prose.",
+"hint": "Look for exaggerated certainty and informality.",
+"metadata": {
+"topic": "Register and Hedging",
+"estimated_time_seconds": 80
+}
+}
+
+---
+
+# English_Grammar_Academic_Advanced_Usage__Week_08.json
+
+**Skill:** `eng_acad_boosting_1`
+**IDs:** `temp-ENG_ACAD-085` → `temp-ENG_ACAD-096`
+
+{
+"id": "temp-ENG_ACAD-085",
+"question_text": "Choose the sentence that appropriately uses boosting in academic writing.",
+"type": "multiple_choice",
+"choices": [
+"The results possibly demonstrate a clear pattern.",
+"The results clearly demonstrate a consistent pattern.",
+"The results might demonstrate a consistent pattern."
+],
+"correct_answer": "The results clearly demonstrate a consistent pattern.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "Boosters such as ‘clearly’ are used when the evidence is strong and the claim is well supported.",
+"hint": "Pick the option that signals justified confidence.",
+"metadata": {
+"topic": "Boosting Claims",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-086",
+"question_text": "Fill in the blank: 'The data ___ support the proposed framework.'",
+"type": "short_answer",
+"correct_answer": "clearly",
+"difficulty": 1,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "‘Clearly’ functions as a booster, increasing confidence in the claim.",
+"hint": "Use a confident, formal adverb.",
+"metadata": {
+"topic": "Expressing Confidence",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ENG_ACAD-087",
+"question_text": "Which adverb functions as a booster rather than a hedge?",
+"type": "multiple_choice",
+"choices": [
+"possibly",
+"clearly",
+"apparently"
+],
+"correct_answer": "clearly",
+"difficulty": 1,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "‘Clearly’ strengthens a claim, whereas ‘possibly’ and ‘apparently’ weaken it.",
+"hint": "Which increases certainty?",
+"metadata": {
+"topic": "Boosters vs Hedges",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ENG_ACAD-088",
+"question_text": "Rewrite to strengthen the claim appropriately: 'The results suggest a difference between groups.'",
+"type": "short_answer",
+"correct_answer": "The results clearly indicate a difference between groups.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "‘Clearly indicate’ strengthens the claim while remaining stylistically appropriate for academic writing.",
+"hint": "Strengthen without exaggerating.",
+"metadata": {
+"topic": "Strengthening Claims",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-ENG_ACAD-089",
+"question_text": "Which sentence uses boosting inappropriately?",
+"type": "multiple_choice",
+"choices": [
+"The results clearly demonstrate a statistically significant effect.",
+"The results unquestionably prove the theory.",
+"The results strongly support the hypothesis."
+],
+"correct_answer": "The results unquestionably prove the theory.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "Boosting should not be combined with the language of proof, which is methodologically too absolute in many contexts.",
+"hint": "Be cautious with 'prove'.",
+"metadata": {
+"topic": "Limits of Boosting",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-090",
+"question_text": "Fill in the blank: 'The findings ___ highlight the importance of contextual variables.'",
+"type": "short_answer",
+"correct_answer": "strongly",
+"difficulty": 2,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "‘Strongly’ is a booster that signals confident emphasis based on evidence.",
+"hint": "Use a formal intensifier.",
+"metadata": {
+"topic": "Emphasising Importance",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-091",
+"question_text": "Which option best balances confidence and academic appropriateness?",
+"type": "multiple_choice",
+"choices": [
+"The model totally explains the phenomenon.",
+"The model clearly explains the phenomenon.",
+"The model might explain the phenomenon."
+],
+"correct_answer": "The model clearly explains the phenomenon.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "‘Clearly’ expresses confidence without informal exaggeration ('totally') or excessive uncertainty ('might').",
+"hint": "Avoid informal boosters.",
+"metadata": {
+"topic": "Balanced Confidence",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-092",
+"question_text": "Rewrite to remove informal emphasis: 'The results really show a strong effect.'",
+"type": "short_answer",
+"correct_answer": "The results clearly show a strong effect.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "‘Really’ is conversational; ‘clearly’ is more appropriate for academic prose while keeping emphasis.",
+"hint": "Swap the informal adverb for a formal one.",
+"metadata": {
+"topic": "Academic Register",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-093",
+"question_text": "Which sentence is most suitable for a conclusions section?",
+"type": "multiple_choice",
+"choices": [
+"The evidence may suggest a possible implication.",
+"The evidence clearly supports the main conclusion.",
+"The evidence might be pointing to something."
+],
+"correct_answer": "The evidence clearly supports the main conclusion.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "Conclusions typically summarise the strongest supported claims; ‘clearly supports’ is appropriate if evidence is robust.",
+"hint": "Conclusions can be more confident than discussions.",
+"metadata": {
+"topic": "Conclusion Writing",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-094",
+"question_text": "Correct the excessive boosting: 'The findings absolutely and unquestionably prove the hypothesis.'",
+"type": "short_answer",
+"correct_answer": "The findings strongly support the hypothesis.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "Replacing exaggerated boosters and removing 'prove' preserves confidence while staying within academic norms.",
+"hint": "Reduce intensity and avoid proof language.",
+"metadata": {
+"topic": "Controlling Emphasis",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-095",
+"question_text": "Which option demonstrates appropriate academic emphasis?",
+"type": "multiple_choice",
+"choices": [
+"The theory totally explains all observed outcomes.",
+"The theory clearly accounts for the observed outcomes.",
+"The theory maybe explains the outcomes."
+],
+"correct_answer": "The theory clearly accounts for the observed outcomes.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "This option uses a formal booster and an academically common verb ('accounts for') without exaggeration.",
+"hint": "Avoid 'totally' and 'maybe'.",
+"metadata": {
+"topic": "Academic Emphasis",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-096",
+"question_text": "Which sentence is least appropriate due to exaggerated boosting?",
+"type": "multiple_choice",
+"choices": [
+"The results clearly indicate a robust pattern.",
+"The results strongly support the proposed model.",
+"The results completely and totally prove the model."
+],
+"correct_answer": "The results completely and totally prove the model.",
+"difficulty": 5,
+"skill_ids": ["eng_acad_boosting_1"],
+"solution_explanation": "Stacked intensifiers and the verb ‘prove’ create an excessively absolute claim that is rarely suitable in academic writing.",
+"hint": "Look for overstatement and stacked boosters.",
+"metadata": {
+"topic": "Evaluating Academic Tone",
+"estimated_time_seconds": 80
+}
+}
+# English_Grammar_Academic_Advanced_Usage__Week_09.json
+
+**Skill:** `eng_acad_passive_1`
+**Focus:** passive voice in academic writing
+**IDs:** `temp-ENG_ACAD-097` → `temp-ENG_ACAD-108`
+
+{
+"id": "temp-ENG_ACAD-097",
+"question_text": "Choose the sentence that best matches academic style by using the passive voice appropriately.",
+"type": "multiple_choice",
+"choices": [
+"We collected the data from three institutions.",
+"The researchers collected the data from three institutions.",
+"The data were collected from three institutions."
+],
+"correct_answer": "The data were collected from three institutions.",
+"difficulty": 1,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "Academic methods sections often foreground procedures or data rather than the researcher, so the passive form 'were collected' is preferred.",
+"hint": "Focus on the data, not the researcher.",
+"metadata": {
+"topic": "Passive Voice in Methods",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-098",
+"question_text": "Rewrite the sentence in an appropriate passive form: 'Researchers distributed the questionnaires online.'",
+"type": "short_answer",
+"correct_answer": "The questionnaires were distributed online.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "The object 'the questionnaires' becomes the subject, and the verb becomes passive: 'were distributed'.",
+"hint": "Move 'the questionnaires' to the subject position.",
+"metadata": {
+"topic": "Active to Passive Transformation",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-099",
+"question_text": "Which sentence uses the passive voice in a way that sounds awkward or unnecessary?",
+"type": "multiple_choice",
+"choices": [
+"The survey was administered in three phases.",
+"The theoretical framework was developed over several years.",
+"It is believed by the researchers that the model is accurate."
+],
+"correct_answer": "It is believed by the researchers that the model is accurate.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "The phrase 'It is believed by the researchers' is wordy and unnatural; a more concise form would usually be preferred.",
+"hint": "Look for the most clumsy, over-long option.",
+"metadata": {
+"topic": "Effective vs Awkward Passive",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-100",
+"question_text": "Fill in the blank with the correct passive form: 'Ethical approval ___ granted by the review board.'",
+"type": "short_answer",
+"correct_answer": "was",
+"difficulty": 2,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "The subject 'ethical approval' is singular and the action is completed, so 'was granted' is the correct passive form.",
+"hint": "Use a singular past passive auxiliary.",
+"metadata": {
+"topic": "Passive Auxiliary Choice",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-101",
+"question_text": "Choose the option that best fits a methods section.",
+"type": "multiple_choice",
+"choices": [
+"We interviewed 30 participants.",
+"Thirty participants were interviewed.",
+"Researchers have interviewed 30 participants."
+],
+"correct_answer": "Thirty participants were interviewed.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "Passive voice with the participants as subject foregrounds the sample and aligns with impersonal academic style.",
+"hint": "Focus on the participants rather than the researchers.",
+"metadata": {
+"topic": "Impersonal Style",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-102",
+"question_text": "Rewrite the sentence to make it more appropriately impersonal: 'We analysed the transcripts using thematic analysis.'",
+"type": "short_answer",
+"correct_answer": "The transcripts were analysed using thematic analysis.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "Using the passive removes the first-person subject and foregrounds the material analysed.",
+"hint": "Start the sentence with 'The transcripts...'.",
+"metadata": {
+"topic": "Impersonal Passive",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-103",
+"question_text": "Which sentence shows an appropriate balance between passive and active voice for academic style?",
+"type": "multiple_choice",
+"choices": [
+"The survey was designed by us and was distributed by us.",
+"We designed the survey, which was then distributed online.",
+"The survey was designed and was distributed online by the authors."
+],
+"correct_answer": "We designed the survey, which was then distributed online.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "This option uses active voice for the design (where agency is important) and passive for the distribution (where the procedure is more central).",
+"hint": "Look for a mix of active and passive that feels natural.",
+"metadata": {
+"topic": "Balancing Voices",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-104",
+"question_text": "Fill in the blank: 'Several limitations of the study ___ identified in the final section.'",
+"type": "short_answer",
+"correct_answer": "are",
+"difficulty": 2,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "The sentence describes what typically happens in the final section, so present passive 'are identified' is appropriate.",
+"hint": "Use present passive for a general description.",
+"metadata": {
+"topic": "General Passive Statements",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-105",
+"question_text": "Choose the sentence where the passive voice is most justified.",
+"type": "multiple_choice",
+"choices": [
+"It was decided that the second phase would be cancelled.",
+"The committee decided that the second phase would be cancelled.",
+"They decided that the second phase would be cancelled."
+],
+"correct_answer": "It was decided that the second phase would be cancelled.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "In formal minutes or reports, the passive 'It was decided that...' is common when the decision is more important than who exactly made it.",
+"hint": "Focus on the decision, not the decision-makers.",
+"metadata": {
+"topic": "Decisions in Reports",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-106",
+"question_text": "Rewrite the sentence to avoid an unnecessary passive: 'It is argued by many scholars that the concept is too broad.'",
+"type": "short_answer",
+"correct_answer": "Many scholars argue that the concept is too broad.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "Here, the agent 'many scholars' is important, so an active construction is clearer and more concise.",
+"hint": "Move 'many scholars' to the subject position.",
+"metadata": {
+"topic": "Avoiding Clumsy Passive",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-107",
+"question_text": "Which sentence is least appropriate for formal academic writing?",
+"type": "multiple_choice",
+"choices": [
+"The interviews were conducted in a quiet office.",
+"We were doing the interviews in a quiet office.",
+"All interviews were conducted in a quiet office."
+],
+"correct_answer": "We were doing the interviews in a quiet office.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "The progressive 'were doing' is informal and imprecise; the simple passive forms are more appropriate in academic methods.",
+"hint": "Look for informal or conversational phrasing.",
+"metadata": {
+"topic": "Register and Passive",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ENG_ACAD-108",
+"question_text": "Fill in the blank with the correct passive structure: 'The results ___ carefully reviewed before publication.'",
+"type": "short_answer",
+"correct_answer": "are",
+"difficulty": 2,
+"skill_ids": ["eng_acad_passive_1"],
+"solution_explanation": "This is a general statement of practice, so present simple passive 'are reviewed' is appropriate.",
+"hint": "Think about a general, repeated procedure.",
+"metadata": {
+"topic": "General Passive Procedures",
+"estimated_time_seconds": 45
+}
+}
+
+---
+
+# English_Grammar_Academic_Advanced_Usage__Week_10.json
+
+**Skill:** `eng_acad_reporting_verbs_1`
+**Focus:** accurate and nuanced reporting verbs
+**IDs:** `temp-ENG_ACAD-109` → `temp-ENG_ACAD-120`
+
+{
+"id": "temp-ENG_ACAD-109",
+"question_text": "Choose the reporting verb that best fits a neutral academic tone: 'Smith (2019) ___ that motivation is context-dependent.'",
+"type": "multiple_choice",
+"choices": [
+"claims",
+"argues",
+"insists"
+],
+"correct_answer": "argues",
+"difficulty": 2,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Argues’ is a neutral academic verb for presenting an author's position, unlike ‘claims’ (slightly sceptical) or ‘insists’ (emotionally strong).",
+"hint": "Choose the most neutral, academic option.",
+"metadata": {
+"topic": "Neutral Reporting Verbs",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-110",
+"question_text": "Fill in the blank: 'Several studies ___ that early intervention can improve outcomes.'",
+"type": "short_answer",
+"correct_answer": "suggest",
+"difficulty": 2,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Suggest’ is commonly used to present evidence in a cautious and non-absolute way.",
+"hint": "Use a verb that implies cautious indication.",
+"metadata": {
+"topic": "Cautious Reporting",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-111",
+"question_text": "Which reporting verb introduces a stronger sense of doubt about the original author’s position?",
+"type": "multiple_choice",
+"choices": [
+"argues",
+"claims",
+"states"
+],
+"correct_answer": "claims",
+"difficulty": 3,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Claims’ can imply that the writer is not fully endorsing the view, whereas ‘argues’ and ‘states’ are more neutral.",
+"hint": "Think about which verb can sound slightly sceptical.",
+"metadata": {
+"topic": "Stance via Reporting Verbs",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-112",
+"question_text": "Rewrite using a more neutral reporting verb: 'Jones (2015) insists that the model is universally applicable.'",
+"type": "short_answer",
+"correct_answer": "Jones (2015) argues that the model is universally applicable.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Argues’ is less emotive and more neutral than ‘insists’, which suggests strong insistence.",
+"hint": "Replace the verb with a standard academic alternative.",
+"metadata": {
+"topic": "Adjusting Stance",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-113",
+"question_text": "Choose the option that best fits a literature review: 'Brown (2020) ___ three main objections to this approach.'",
+"type": "multiple_choice",
+"choices": [
+"criticises",
+"raises",
+"attacks"
+],
+"correct_answer": "raises",
+"difficulty": 3,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Raises’ is measured and neutral, whereas ‘criticises’ and especially ‘attacks' can sound evaluative or emotive.",
+"hint": "Look for a relatively neutral description of academic disagreement.",
+"metadata": {
+"topic": "Neutral Disagreement",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-114",
+"question_text": "Fill in the blank: 'The author ___ that further research is needed to clarify this relationship.'",
+"type": "short_answer",
+"correct_answer": "notes",
+"difficulty": 2,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Notes’ is a common verb for highlighting observations without strong evaluation.",
+"hint": "Use a verb meaning 'mentions' in a neutral way.",
+"metadata": {
+"topic": "Reporting Observations",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-115",
+"question_text": "Which sentence best maintains an objective tone?",
+"type": "multiple_choice",
+"choices": [
+"The author attacks the traditional view as outdated.",
+"The author strongly criticises the traditional view.",
+"The author challenges the traditional view as outdated."
+],
+"correct_answer": "The author challenges the traditional view as outdated.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Challenges’ signals disagreement without the emotional weight of 'attacks' or 'strongly criticises'.",
+"hint": "Look for the least emotive expression of disagreement.",
+"metadata": {
+"topic": "Objective Tone",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-116",
+"question_text": "Rewrite to reduce bias in reporting: 'Smith proves that the policy is ineffective.'",
+"type": "short_answer",
+"correct_answer": "Smith shows that the policy appears to be ineffective.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "Replacing ‘proves’ with ‘shows’ and adding ‘appears to be’ makes the claim less absolute and more aligned with academic caution.",
+"hint": "Avoid the verb 'proves' and add some hedging.",
+"metadata": {
+"topic": "Reducing Bias",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ENG_ACAD-117",
+"question_text": "Choose the reporting verb that most clearly signals a positive evaluation of the work: 'The author ___ the framework as highly innovative.'",
+"type": "multiple_choice",
+"choices": [
+"presents",
+"praises",
+"describes"
+],
+"correct_answer": "praises",
+"difficulty": 3,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Praises’ explicitly indicates approval, while ‘presents’ and ‘describes’ are more neutral.",
+"hint": "Which verb clearly indicates admiration?",
+"metadata": {
+"topic": "Evaluative Reporting",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-118",
+"question_text": "Fill in the blank with a verb that suggests summarising rather than evaluating: 'The review ___ recent developments in the field.'",
+"type": "short_answer",
+"correct_answer": "outlines",
+"difficulty": 2,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Outlines’ presents information without strongly evaluating it, fitting a summarising function.",
+"hint": "Think of a verb meaning 'gives an overview of'.",
+"metadata": {
+"topic": "Summarising Others' Work",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-119",
+"question_text": "Which sentence is most appropriate for a neutral literature review?",
+"type": "multiple_choice",
+"choices": [
+"The author foolishly ignores earlier research.",
+"The author largely overlooks earlier research.",
+"The author completely ignores earlier research and is clearly biased."
+],
+"correct_answer": "The author largely overlooks earlier research.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "‘Largely overlooks’ is critical but maintains a relatively neutral and professional tone, unlike 'foolishly' or 'clearly biased'.",
+"hint": "Avoid insults and very emotive language.",
+"metadata": {
+"topic": "Critical but Professional Tone",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ENG_ACAD-120",
+"question_text": "Rewrite to sound more neutral and academic: 'The paper totally ignores the social context.'",
+"type": "short_answer",
+"correct_answer": "The paper largely ignores the social context.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_reporting_verbs_1"],
+"solution_explanation": "Replacing 'totally' with 'largely' makes the criticism more measured and appropriate for academic prose.",
+"hint": "Remove informal intensifiers and soften the degree.",
+"metadata": {
+"topic": "Formal Critique",
+"estimated_time_seconds": 60
+}
+}
+
+---
+
+# English_Grammar_Academic_Advanced_Usage__Week_11.json
+
+**Skill:** `eng_acad_linking_devices_1`
+**Focus:** cohesive academic linking words and phrases
+**IDs:** `temp-ENG_ACAD-121` → `temp-ENG_ACAD-132`
+
+{
+"id": "temp-ENG_ACAD-121",
+"question_text": "Choose the most appropriate linker to express contrast: 'The sample size was small; ___, the findings are still informative.'",
+"type": "multiple_choice",
+"choices": [
+"therefore",
+"however",
+"for example"
+],
+"correct_answer": "however",
+"difficulty": 1,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘However’ contrasts the small sample size with the idea that the findings remain informative.",
+"hint": "You need a contrast, not a result.",
+"metadata": {
+"topic": "Contrastive Linking",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-122",
+"question_text": "Fill in the blank: 'The study focuses on adult learners; ___, it does not examine children.'",
+"type": "short_answer",
+"correct_answer": "therefore",
+"difficulty": 2,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘Therefore’ introduces a logical consequence: if adults are the focus, children are not included.",
+"hint": "Use a connector that signals a logical result.",
+"metadata": {
+"topic": "Result Connectors",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ENG_ACAD-123",
+"question_text": "Which connector best introduces an example in academic writing?",
+"type": "multiple_choice",
+"choices": [
+"for instance",
+"nonetheless",
+"consequently"
+],
+"correct_answer": "for instance",
+"difficulty": 1,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘For instance’ explicitly signals that an example is being introduced.",
+"hint": "Which one clearly announces an example?",
+"metadata": {
+"topic": "Example Connectors",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-124",
+"question_text": "Rewrite the sentence using a more formal linking phrase: 'The results were surprising, but they were consistent with earlier work.'",
+"type": "short_answer",
+"correct_answer": "The results were surprising; however, they were consistent with earlier work.",
+"difficulty": 2,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "Replacing 'but' with 'however' and using a semi-colon produces a more formal written structure.",
+"hint": "Replace 'but' with a sentence-level connector.",
+"metadata": {
+"topic": "Formal Contrast",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-ENG_ACAD-125",
+"question_text": "Choose the connector that signals addition of similar information: 'The intervention improved test scores; ___, it increased student engagement.'",
+"type": "multiple_choice",
+"choices": [
+"in addition",
+"on the contrary",
+"otherwise"
+],
+"correct_answer": "in addition",
+"difficulty": 1,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘In addition’ introduces extra, similar information to the previous statement.",
+"hint": "You are adding another positive effect.",
+"metadata": {
+"topic": "Additive Linking",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ENG_ACAD-126",
+"question_text": "Fill in the blank: 'The questionnaire was concise; ___, some participants still found it demanding.'",
+"type": "short_answer",
+"correct_answer": "nevertheless",
+"difficulty": 3,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘Nevertheless’ signals a contrast that is somewhat unexpected, given the preceding clause.",
+"hint": "Use a connector for a surprising contrast.",
+"metadata": {
+"topic": "Concessive Linking",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-127",
+"question_text": "Which sentence misuses the linking word?",
+"type": "multiple_choice",
+"choices": [
+"The sample was small; however, the results are indicative.",
+"The study is limited; for example, it uses self-report measures only.",
+"The intervention was costly; consequently, it may be difficult to implement widely."
+],
+"correct_answer": "The study is limited; for example, it uses self-report measures only.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘For example’ does not fit naturally with 'is limited' in this structure; a phrase like 'in particular' would be more appropriate.",
+"hint": "Look for the connector that does not logically fit its clause.",
+"metadata": {
+"topic": "Appropriate Connector Choice",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-128",
+"question_text": "Rewrite using a clearer logical connector: 'The data were incomplete, and the conclusions should be treated with caution.'",
+"type": "short_answer",
+"correct_answer": "Because the data were incomplete, the conclusions should be treated with caution.",
+"difficulty": 3,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "Introducing 'Because' makes the causal relation between incomplete data and cautious conclusions explicit.",
+"hint": "Make the cause–effect link explicit.",
+"metadata": {
+"topic": "Causal Linking",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ENG_ACAD-129",
+"question_text": "Choose the connector that best signals a summary: '___, the findings highlight the need for further research.'",
+"type": "multiple_choice",
+"choices": [
+"Meanwhile",
+"In summary",
+"Despite this"
+],
+"correct_answer": "In summary",
+"difficulty": 1,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘In summary’ is a conventional phrase used to introduce a concluding overview.",
+"hint": "You are signalling that you are drawing things together.",
+"metadata": {
+"topic": "Concluding Connectors",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ENG_ACAD-130",
+"question_text": "Fill in the blank: 'The findings are promising; ___, the study has several limitations.'",
+"type": "short_answer",
+"correct_answer": "at the same time",
+"difficulty": 3,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "‘At the same time’ balances a positive statement with a contrasting caution in a natural academic way.",
+"hint": "Use a phrase that balances two opposing points.",
+"metadata": {
+"topic": "Balancing Points",
+"estimated_time_seconds": 55
+}
+}
+
+{
+"id": "temp-ENG_ACAD-131",
+"question_text": "Which option best expresses a direct contrast between two explanations?",
+"type": "multiple_choice",
+"choices": [
+"On the one hand, the data support a biological explanation; on the other hand, they suggest a social explanation.",
+"For example, the data support a biological explanation; for instance, they suggest a social explanation.",
+"Consequently, the data support a biological explanation; therefore, they suggest a social explanation."
+],
+"correct_answer": "On the one hand, the data support a biological explanation; on the other hand, they suggest a social explanation.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "The paired structure 'on the one hand... on the other hand...' clearly marks two contrasting perspectives.",
+"hint": "Look for a paired structure signalling two sides.",
+"metadata": {
+"topic": "Paired Connectors",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ENG_ACAD-132",
+"question_text": "Rewrite to improve cohesion between the sentences: 'The study used a cross-sectional design. It cannot establish causality.'",
+"type": "short_answer",
+"correct_answer": "Because the study used a cross-sectional design, it cannot establish causality.",
+"difficulty": 4,
+"skill_ids": ["eng_acad_linking_devices_1"],
+"solution_explanation": "Linking the sentences with 'Because' makes the causal relationship explicit and improves cohesion.",
+"hint": "Combine the ideas using a causal connector.",
+"metadata": {
+"topic": "Linking Sentences Cohesively",
+"estimated_time_seconds": 75
+}
+}
+]

@@ -1,0 +1,2228 @@
+{
+"id": "temp-ECON_MICRO-001",
+"question_text": "Define the concept of market equilibrium in microeconomic theory.",
+"type": "short_answer",
+"correct_answer": "Market equilibrium is the point at which quantity demanded equals quantity supplied at a given price.",
+"difficulty": 1,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "In microeconomics, market equilibrium occurs when the price adjusts such that the quantity consumers are willing to buy equals the quantity producers are willing to sell. At this point, there is no tendency for the price to change.",
+"hint": "Think about the condition where there is neither excess demand nor excess supply.",
+"metadata": {
+"topic": "market equilibrium",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-002",
+"question_text": "Which of the following best describes excess demand in a market?",
+"type": "multiple_choice",
+"choices": [
+"Quantity supplied exceeds quantity demanded at the current price",
+"Quantity demanded exceeds quantity supplied at the current price",
+"Quantity demanded equals quantity supplied at the current price"
+],
+"correct_answer": "Quantity demanded exceeds quantity supplied at the current price",
+"difficulty": 1,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "Excess demand arises when the price is below the equilibrium level, leading consumers to demand more than producers are willing to supply.",
+"hint": "Consider what happens when prices are set too low.",
+"metadata": {
+"topic": "excess demand",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-003",
+"question_text": "In a competitive market, what is the expected effect of excess supply on price?",
+"type": "multiple_choice",
+"choices": [
+"Price will tend to rise",
+"Price will tend to fall",
+"Price will remain unchanged"
+],
+"correct_answer": "Price will tend to fall",
+"difficulty": 2,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "When there is excess supply, producers have unsold goods and are incentivised to lower prices to increase quantity demanded, pushing the market toward equilibrium.",
+"hint": "Think about how sellers respond when goods remain unsold.",
+"metadata": {
+"topic": "price adjustment",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-004",
+"question_text": "Assume the equilibrium price of a good is €10. If the market price is €12, what market condition is likely to occur?",
+"type": "short_answer",
+"correct_answer": "Excess supply",
+"difficulty": 2,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "A price above the equilibrium level encourages producers to supply more while discouraging consumers from purchasing, resulting in excess supply.",
+"hint": "Compare the given price to the equilibrium price.",
+"metadata": {
+"topic": "price deviations from equilibrium",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-005",
+"question_text": "Which curve represents consumers’ willingness to pay for a good in a standard supply and demand model?",
+"type": "multiple_choice",
+"choices": [
+"Supply curve",
+"Demand curve",
+"Marginal cost curve"
+],
+"correct_answer": "Demand curve",
+"difficulty": 1,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "The demand curve reflects consumers’ willingness to pay for different quantities of a good, typically sloping downward.",
+"hint": "Recall which curve captures buyer behaviour.",
+"metadata": {
+"topic": "demand",
+"estimated_time_seconds": 20
+}
+}
+
+{
+"id": "temp-ECON_MICRO-006",
+"question_text": "Explain why the supply curve typically slopes upward in a competitive market.",
+"type": "short_answer",
+"correct_answer": "Because higher prices provide incentives for producers to supply greater quantities, reflecting increasing marginal costs.",
+"difficulty": 3,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "As output increases, firms often face rising marginal costs due to factors such as capacity constraints. Higher prices are therefore required to induce producers to supply additional units.",
+"hint": "Consider the relationship between price and marginal cost.",
+"metadata": {
+"topic": "supply behavior",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-007",
+"question_text": "If a market is in equilibrium, which of the following statements is correct?",
+"type": "multiple_choice",
+"choices": [
+"There is upward pressure on price",
+"There is downward pressure on price",
+"There is no tendency for price to change"
+],
+"correct_answer": "There is no tendency for price to change",
+"difficulty": 2,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "At equilibrium, quantity demanded equals quantity supplied, eliminating incentives for buyers or sellers to push prices up or down.",
+"hint": "Focus on price stability at equilibrium.",
+"metadata": {
+"topic": "equilibrium stability",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-008",
+"question_text": "The intersection of the supply and demand curves determines which two key market outcomes?",
+"type": "multiple_choice",
+"choices": [
+"Equilibrium price and equilibrium quantity",
+"Total revenue and total cost",
+"Consumer surplus and producer surplus"
+],
+"correct_answer": "Equilibrium price and equilibrium quantity",
+"difficulty": 2,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "The point where supply equals demand identifies both the price at which transactions occur and the quantity exchanged in the market.",
+"hint": "Think about what is solved simultaneously at the intersection.",
+"metadata": {
+"topic": "equilibrium outcomes",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-009",
+"question_text": "Suppose quantity demanded is 120 units and quantity supplied is 100 units at the current price. Calculate the size of the market imbalance.",
+"type": "numeric",
+"correct_answer": "20",
+"difficulty": 3,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "The market imbalance is the absolute difference between quantity demanded and quantity supplied: 120 − 100 = 20 units, indicating excess demand.",
+"hint": "Subtract quantity supplied from quantity demanded.",
+"metadata": {
+"topic": "market imbalance",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ECON_MICRO-010",
+"question_text": "How does the price mechanism contribute to the achievement of market equilibrium?",
+"type": "short_answer",
+"correct_answer": "By adjusting prices in response to excess demand or excess supply until quantity demanded equals quantity supplied.",
+"difficulty": 4,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "When excess demand exists, prices tend to rise, reducing quantity demanded and increasing quantity supplied. Conversely, excess supply leads to falling prices. These adjustments continue until equilibrium is reached.",
+"hint": "Describe how prices respond to shortages and surpluses.",
+"metadata": {
+"topic": "price mechanism",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-ECON_MICRO-011",
+"question_text": "Which assumption is crucial for the standard supply and demand model to predict equilibrium accurately?",
+"type": "multiple_choice",
+"choices": [
+"Perfect competition",
+"Government price controls",
+"Monopolistic market structure"
+],
+"correct_answer": "Perfect competition",
+"difficulty": 3,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "The standard model assumes many buyers and sellers, none of whom can influence price individually, allowing prices to adjust freely toward equilibrium.",
+"hint": "Consider which market structure allows free price adjustment.",
+"metadata": {
+"topic": "model assumptions",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ECON_MICRO-012",
+"question_text": "Evaluate whether a market can remain in disequilibrium in the long run under competitive conditions.",
+"type": "short_answer",
+"correct_answer": "Under competitive conditions, a market is unlikely to remain in disequilibrium in the long run because price adjustments tend to eliminate excess demand or supply.",
+"difficulty": 5,
+"skill_ids": ["econ_supply_demand_equilibrium_1"],
+"solution_explanation": "In competitive markets, flexible prices and profit incentives encourage adjustments in supply and demand. Persistent disequilibrium would require barriers such as price controls or information failures.",
+"hint": "Think about long-run incentives and price flexibility.",
+"metadata": {
+"topic": "long-run equilibrium",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-013",
+"question_text": "Define price elasticity of demand.",
+"type": "short_answer",
+"correct_answer": "Price elasticity of demand measures the responsiveness of quantity demanded to a change in price.",
+"difficulty": 1,
+"skill_ids": ["econ_elasticity_price_demand_2"],
+"solution_explanation": "Price elasticity of demand quantifies how sensitive consumers are to price changes by comparing the percentage change in quantity demanded to the percentage change in price.",
+"hint": "Focus on responsiveness to price changes.",
+"metadata": {
+"topic": "price elasticity of demand",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-014",
+"question_text": "If the price elasticity of demand is greater than 1 in absolute value, demand is described as:",
+"type": "multiple_choice",
+"choices": [
+"Inelastic",
+"Unit elastic",
+"Elastic"
+],
+"correct_answer": "Elastic",
+"difficulty": 1,
+"skill_ids": ["econ_elasticity_price_demand_2"],
+"solution_explanation": "When elasticity exceeds 1 in absolute value, quantity demanded responds more than proportionally to price changes, indicating elastic demand.",
+"hint": "Compare the elasticity value to one.",
+"metadata": {
+"topic": "elastic vs inelastic demand",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-015",
+"question_text": "Explain why necessities tend to have inelastic demand.",
+"type": "short_answer",
+"correct_answer": "Because consumers cannot easily reduce consumption of necessities when prices change.",
+"difficulty": 3,
+"skill_ids": ["econ_elasticity_price_demand_2"],
+"solution_explanation": "Necessities such as basic food or medicine lack close substitutes and are required for daily life, limiting consumers’ ability to adjust quantity demanded in response to price changes.",
+"hint": "Think about substitution possibilities.",
+"metadata": {
+"topic": "determinants of elasticity",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-016",
+"question_text": "Which factor generally increases the price elasticity of demand for a good?",
+"type": "multiple_choice",
+"choices": [
+"Few substitutes",
+"Broad market definition",
+"Availability of close substitutes"
+],
+"correct_answer": "Availability of close substitutes",
+"difficulty": 2,
+"skill_ids": ["econ_elasticity_price_demand_2"],
+"solution_explanation": "When close substitutes are available, consumers can more easily switch goods in response to price changes, increasing elasticity.",
+"hint": "Consider consumer choice flexibility.",
+"metadata": {
+"topic": "elasticity determinants",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-017",
+"question_text": "Calculate the price elasticity of demand if quantity demanded falls by 10% when price rises by 5%.",
+"type": "numeric",
+"correct_answer": "-2",
+"difficulty": 3,
+"skill_ids": ["econ_elasticity_price_demand_2"],
+"solution_explanation": "Elasticity equals percentage change in quantity divided by percentage change in price: −10% ÷ 5% = −2.",
+"hint": "Use the elasticity formula.",
+"metadata": {
+"topic": "elasticity calculation",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ECON_MICRO-018",
+"question_text": "Explain the relationship between price elasticity of demand and total revenue.",
+"type": "short_answer",
+"correct_answer": "When demand is elastic, a price increase reduces total revenue; when demand is inelastic, a price increase raises total revenue.",
+"difficulty": 4,
+"skill_ids": ["econ_elasticity_price_demand_2"],
+"solution_explanation": "Total revenue depends on both price and quantity. Elastic demand implies quantity responds strongly to price changes, dominating the revenue effect, whereas inelastic demand implies price changes dominate.",
+"hint": "Think about how quantity reacts relative to price.",
+"metadata": {
+"topic": "elasticity and revenue",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-019",
+"question_text": "Define price elasticity of supply.",
+"type": "short_answer",
+"correct_answer": "Price elasticity of supply measures the responsiveness of quantity supplied to a change in price.",
+"difficulty": 1,
+"skill_ids": ["econ_elasticity_supply_3"],
+"solution_explanation": "It captures how much producers adjust output when market prices change, expressed as a ratio of percentage changes.",
+"hint": "Focus on producer response to price.",
+"metadata": {
+"topic": "price elasticity of supply",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-020",
+"question_text": "Which time horizon typically results in more elastic supply?",
+"type": "multiple_choice",
+"choices": [
+"Very short run",
+"Short run",
+"Long run"
+],
+"correct_answer": "Long run",
+"difficulty": 2,
+"skill_ids": ["econ_elasticity_supply_3"],
+"solution_explanation": "In the long run, firms can adjust all inputs and production capacity, making supply more responsive to price changes.",
+"hint": "Consider production flexibility over time.",
+"metadata": {
+"topic": "time and supply elasticity",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-021",
+"question_text": "Explain why agricultural supply is often inelastic in the short run.",
+"type": "short_answer",
+"correct_answer": "Because production cannot be easily adjusted due to biological and seasonal constraints.",
+"difficulty": 3,
+"skill_ids": ["econ_elasticity_supply_3"],
+"solution_explanation": "Crop growth cycles and fixed land availability limit farmers’ ability to respond quickly to price changes, reducing short-run supply elasticity.",
+"hint": "Think about production constraints.",
+"metadata": {
+"topic": "short-run supply constraints",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-022",
+"question_text": "If price increases by 20% and quantity supplied increases by 10%, what is the price elasticity of supply?",
+"type": "numeric",
+"correct_answer": "0.5",
+"difficulty": 3,
+"skill_ids": ["econ_elasticity_supply_3"],
+"solution_explanation": "Elasticity equals percentage change in quantity supplied divided by percentage change in price: 10% ÷ 20% = 0.5.",
+"hint": "Divide quantity change by price change.",
+"metadata": {
+"topic": "elasticity calculation",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-ECON_MICRO-023",
+"question_text": "Which supply elasticity value indicates perfectly inelastic supply?",
+"type": "multiple_choice",
+"choices": [
+"0",
+"1",
+"Infinity"
+],
+"correct_answer": "0",
+"difficulty": 2,
+"skill_ids": ["econ_elasticity_supply_3"],
+"solution_explanation": "A value of zero means quantity supplied does not respond at all to price changes.",
+"hint": "Consider no quantity response.",
+"metadata": {
+"topic": "extreme elasticity cases",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-024",
+"question_text": "Analyse how production capacity affects the elasticity of supply.",
+"type": "short_answer",
+"correct_answer": "Greater production capacity increases supply elasticity by allowing firms to expand output more easily when prices rise.",
+"difficulty": 4,
+"skill_ids": ["econ_elasticity_supply_3"],
+"solution_explanation": "Firms operating near capacity face higher marginal costs when expanding output, limiting responsiveness. Spare capacity enables more elastic supply.",
+"hint": "Think about constraints on output expansion.",
+"metadata": {
+"topic": "capacity and supply",
+"estimated_time_seconds": 80
+}
+}
+
+{
+"id": "temp-ECON_MICRO-025",
+"question_text": "Define consumer surplus.",
+"type": "short_answer",
+"correct_answer": "Consumer surplus is the difference between what consumers are willing to pay and what they actually pay.",
+"difficulty": 1,
+"skill_ids": ["econ_surplus_welfare_4"],
+"solution_explanation": "It measures the net benefit consumers receive from purchasing a good at a market price lower than their maximum willingness to pay.",
+"hint": "Focus on willingness to pay versus price.",
+"metadata": {
+"topic": "consumer surplus",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-026",
+"question_text": "Producer surplus is best defined as:",
+"type": "multiple_choice",
+"choices": [
+"The difference between price received and marginal cost",
+"Total revenue minus total cost",
+"The difference between willingness to pay and price"
+],
+"correct_answer": "The difference between price received and marginal cost",
+"difficulty": 1,
+"skill_ids": ["econ_surplus_welfare_4"],
+"solution_explanation": "Producer surplus captures the benefit to sellers from receiving a price higher than the minimum they are willing to accept, represented by marginal cost.",
+"hint": "Think about sellers’ minimum acceptable price.",
+"metadata": {
+"topic": "producer surplus",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-027",
+"question_text": "Explain how total surplus is related to economic efficiency.",
+"type": "short_answer",
+"correct_answer": "Total surplus measures the overall gains from trade and is maximised when resources are allocated efficiently.",
+"difficulty": 3,
+"skill_ids": ["econ_surplus_welfare_4"],
+"solution_explanation": "Economic efficiency occurs when goods are produced and consumed by those who value them most, maximising the sum of consumer and producer surplus.",
+"hint": "Link surplus to gains from trade.",
+"metadata": {
+"topic": "total surplus",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ECON_MICRO-028",
+"question_text": "Which market outcome maximises total surplus?",
+"type": "multiple_choice",
+"choices": [
+"Price ceiling",
+"Price floor",
+"Competitive equilibrium"
+],
+"correct_answer": "Competitive equilibrium",
+"difficulty": 2,
+"skill_ids": ["econ_surplus_welfare_4"],
+"solution_explanation": "Competitive equilibrium ensures that goods are traded whenever willingness to pay exceeds marginal cost, maximising total surplus.",
+"hint": "Recall the efficiency properties of equilibrium.",
+"metadata": {
+"topic": "welfare economics",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-029",
+"question_text": "If a tax creates a deadweight loss, what does this imply?",
+"type": "short_answer",
+"correct_answer": "That total surplus is reduced due to inefficiently low levels of trade.",
+"difficulty": 4,
+"skill_ids": ["econ_surplus_welfare_4"],
+"solution_explanation": "Taxes distort prices, preventing some mutually beneficial transactions from occurring, which reduces total surplus beyond the tax revenue collected.",
+"hint": "Think about lost trades.",
+"metadata": {
+"topic": "deadweight loss",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-030",
+"question_text": "Evaluate whether government intervention always reduces total surplus.",
+"type": "short_answer",
+"correct_answer": "Government intervention does not always reduce total surplus, particularly when correcting market failures.",
+"difficulty": 5,
+"skill_ids": ["econ_surplus_welfare_4"],
+"solution_explanation": "While some interventions create deadweight losses, others, such as policies addressing externalities or public goods, can increase total surplus and improve efficiency.",
+"hint": "Consider market failures.",
+"metadata": {
+"topic": "policy and welfare",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-031",
+"question_text": "Define price controls in a market economy.",
+"type": "short_answer",
+"correct_answer": "Price controls are government-imposed limits on the prices that can be charged in a market.",
+"difficulty": 1,
+"skill_ids": ["econ_price_controls_5"],
+"solution_explanation": "Price controls include price ceilings and price floors, which restrict how high or low market prices can legally be set.",
+"hint": "Think about legal limits on prices.",
+"metadata": {
+"topic": "price controls",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-032",
+"question_text": "A price ceiling set below the equilibrium price will typically result in:",
+"type": "multiple_choice",
+"choices": [
+"A surplus",
+"A shortage",
+"No effect on the market"
+],
+"correct_answer": "A shortage",
+"difficulty": 2,
+"skill_ids": ["econ_price_controls_5"],
+"solution_explanation": "When a price ceiling is binding, quantity demanded exceeds quantity supplied, creating a shortage.",
+"hint": "Compare the controlled price to equilibrium.",
+"metadata": {
+"topic": "price ceilings",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-033",
+"question_text": "Give one example of a market where price ceilings are commonly applied.",
+"type": "short_answer",
+"correct_answer": "Rental housing markets",
+"difficulty": 1,
+"skill_ids": ["econ_price_controls_5"],
+"solution_explanation": "Rent controls are a common form of price ceilings, intended to make housing more affordable.",
+"hint": "Think about housing policies.",
+"metadata": {
+"topic": "applications of price ceilings",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-034",
+"question_text": "Which of the following is a typical consequence of a binding price floor?",
+"type": "multiple_choice",
+"choices": [
+"Shortage",
+"Surplus",
+"Increased efficiency"
+],
+"correct_answer": "Surplus",
+"difficulty": 2,
+"skill_ids": ["econ_price_controls_5"],
+"solution_explanation": "A price floor set above equilibrium causes quantity supplied to exceed quantity demanded, resulting in surplus.",
+"hint": "Think about minimum prices.",
+"metadata": {
+"topic": "price floors",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-035",
+"question_text": "Explain why price controls can lead to inefficiency.",
+"type": "short_answer",
+"correct_answer": "They prevent mutually beneficial trades from occurring.",
+"difficulty": 3,
+"skill_ids": ["econ_price_controls_5"],
+"solution_explanation": "By distorting market prices, price controls misallocate resources and reduce total surplus.",
+"hint": "Consider lost gains from trade.",
+"metadata": {
+"topic": "efficiency effects",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-036",
+"question_text": "Evaluate the distributional effects of price ceilings.",
+"type": "short_answer",
+"correct_answer": "They may benefit some consumers but harm others and producers.",
+"difficulty": 5,
+"skill_ids": ["econ_price_controls_5"],
+"solution_explanation": "While some consumers pay lower prices, shortages and non-price rationing can disadvantage others, and producers typically lose surplus.",
+"hint": "Think beyond average effects.",
+"metadata": {
+"topic": "distributional effects",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-ECON_MICRO-037",
+"question_text": "Define an externality.",
+"type": "short_answer",
+"correct_answer": "An externality is a cost or benefit affecting a third party not involved in a market transaction.",
+"difficulty": 1,
+"skill_ids": ["econ_externalities_6"],
+"solution_explanation": "Externalities arise when market prices fail to reflect all social costs or benefits of production or consumption.",
+"hint": "Think about effects on bystanders.",
+"metadata": {
+"topic": "externalities",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-038",
+"question_text": "Pollution generated by a factory is an example of:",
+"type": "multiple_choice",
+"choices": [
+"Positive externality",
+"Negative externality",
+"Public good"
+],
+"correct_answer": "Negative externality",
+"difficulty": 1,
+"skill_ids": ["econ_externalities_6"],
+"solution_explanation": "Pollution imposes costs on others that are not reflected in the market price.",
+"hint": "Consider unintended harms.",
+"metadata": {
+"topic": "negative externalities",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-039",
+"question_text": "Which policy instrument is commonly used to internalise negative externalities?",
+"type": "multiple_choice",
+"choices": [
+"Subsidy",
+"Pigouvian tax",
+"Price ceiling"
+],
+"correct_answer": "Pigouvian tax",
+"difficulty": 2,
+"skill_ids": ["econ_externalities_6"],
+"solution_explanation": "Pigouvian taxes align private costs with social costs by taxing activities that generate external harm.",
+"hint": "Think about correcting incentives.",
+"metadata": {
+"topic": "policy responses",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-040",
+"question_text": "Explain how positive externalities affect market outcomes.",
+"type": "short_answer",
+"correct_answer": "They lead to underconsumption or underproduction relative to the socially optimal level.",
+"difficulty": 3,
+"skill_ids": ["econ_externalities_6"],
+"solution_explanation": "Because individuals do not account for external benefits, the market quantity is lower than what maximises total surplus.",
+"hint": "Consider spillover benefits.",
+"metadata": {
+"topic": "positive externalities",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ECON_MICRO-041",
+"question_text": "Education is often cited as an example of:",
+"type": "multiple_choice",
+"choices": [
+"Negative externality",
+"Positive externality",
+"Common resource"
+],
+"correct_answer": "Positive externality",
+"difficulty": 2,
+"skill_ids": ["econ_externalities_6"],
+"solution_explanation": "Education generates social benefits beyond private returns, such as higher productivity and civic engagement.",
+"hint": "Think about spillover benefits.",
+"metadata": {
+"topic": "examples of externalities",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-042",
+"question_text": "Assess whether government intervention can improve efficiency in the presence of externalities.",
+"type": "short_answer",
+"correct_answer": "Yes, by aligning private incentives with social costs or benefits.",
+"difficulty": 5,
+"skill_ids": ["econ_externalities_6"],
+"solution_explanation": "Policies such as taxes, subsidies, or regulation can correct market failures caused by externalities and increase total surplus.",
+"hint": "Focus on incentive alignment.",
+"metadata": {
+"topic": "efficiency and policy",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-ECON_MICRO-043",
+"question_text": "Define a public good.",
+"type": "short_answer",
+"correct_answer": "A public good is non-excludable and non-rival in consumption.",
+"difficulty": 1,
+"skill_ids": ["econ_public_goods_common_resources_7"],
+"solution_explanation": "Non-excludability means people cannot be prevented from using the good, and non-rivalry means one person’s use does not reduce availability to others.",
+"hint": "Recall the two defining properties.",
+"metadata": {
+"topic": "public goods",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ECON_MICRO-044",
+"question_text": "National defence is an example of:",
+"type": "multiple_choice",
+"choices": [
+"Private good",
+"Public good",
+"Common resource"
+],
+"correct_answer": "Public good",
+"difficulty": 1,
+"skill_ids": ["econ_public_goods_common_resources_7"],
+"solution_explanation": "National defence is both non-excludable and non-rival, as protection applies to all citizens simultaneously.",
+"hint": "Think about exclusion and rivalry.",
+"metadata": {
+"topic": "examples of public goods",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-045",
+"question_text": "What is the free-rider problem?",
+"type": "short_answer",
+"correct_answer": "The tendency of individuals to benefit from a good without paying for it.",
+"difficulty": 2,
+"skill_ids": ["econ_public_goods_common_resources_7"],
+"solution_explanation": "Because public goods are non-excludable, individuals have incentives to avoid contributing, leading to under-provision.",
+"hint": "Think about incentives to pay.",
+"metadata": {
+"topic": "free-rider problem",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ECON_MICRO-046",
+"question_text": "Which type of good is rival but non-excludable?",
+"type": "multiple_choice",
+"choices": [
+"Public good",
+"Common resource",
+"Club good"
+],
+"correct_answer": "Common resource",
+"difficulty": 2,
+"skill_ids": ["econ_public_goods_common_resources_7"],
+"solution_explanation": "Common resources can be depleted by use but are difficult to exclude users from accessing.",
+"hint": "Focus on rivalry.",
+"metadata": {
+"topic": "types of goods",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-047",
+"question_text": "Explain why common resources are prone to overuse.",
+"type": "short_answer",
+"correct_answer": "Because individuals do not bear the full social cost of their consumption.",
+"difficulty": 3,
+"skill_ids": ["econ_public_goods_common_resources_7"],
+"solution_explanation": "Each user considers private benefits but ignores the negative impact on others, leading to excessive use.",
+"hint": "Think about external costs.",
+"metadata": {
+"topic": "tragedy of the commons",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ECON_MICRO-048",
+"question_text": "Evaluate one policy approach to managing common resources.",
+"type": "short_answer",
+"correct_answer": "Assigning property rights can reduce overuse.",
+"difficulty": 5,
+"skill_ids": ["econ_public_goods_common_resources_7"],
+"solution_explanation": "Clear property rights internalise external costs, giving owners incentives to conserve and manage resources efficiently.",
+"hint": "Consider incentive structures.",
+"metadata": {
+"topic": "resource management",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-049",
+"question_text": "Define a monopoly in microeconomic theory.",
+"type": "short_answer",
+"correct_answer": "A monopoly is a market structure in which a single firm is the sole producer of a good with no close substitutes.",
+"difficulty": 1,
+"skill_ids": ["econ_market_structures_monopoly_8"],
+"solution_explanation": "A monopoly exists when one firm dominates the market and barriers to entry prevent competition, allowing the firm to influence price.",
+"hint": "Focus on number of firms and entry barriers.",
+"metadata": {
+"topic": "monopoly definition",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-050",
+"question_text": "Which of the following is a key source of monopoly power?",
+"type": "multiple_choice",
+"choices": [
+"Perfect information",
+"Barriers to entry",
+"Homogeneous products"
+],
+"correct_answer": "Barriers to entry",
+"difficulty": 1,
+"skill_ids": ["econ_market_structures_monopoly_8"],
+"solution_explanation": "Barriers to entry prevent other firms from entering the market, allowing the monopolist to maintain market power.",
+"hint": "Think about what blocks competitors.",
+"metadata": {
+"topic": "sources of monopoly power",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-051",
+"question_text": "Explain why a monopolist faces a downward-sloping demand curve.",
+"type": "short_answer",
+"correct_answer": "Because the monopolist is the sole supplier and must lower price to sell additional units.",
+"difficulty": 3,
+"skill_ids": ["econ_market_structures_monopoly_8"],
+"solution_explanation": "Unlike firms in competitive markets, a monopolist supplies the entire market and therefore faces the market demand curve, which is downward sloping.",
+"hint": "Compare monopoly to perfect competition.",
+"metadata": {
+"topic": "monopoly demand",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-052",
+"question_text": "At the profit-maximising output level, a monopolist sets output where:",
+"type": "multiple_choice",
+"choices": [
+"Price equals marginal cost",
+"Marginal revenue equals marginal cost",
+"Average cost equals marginal cost"
+],
+"correct_answer": "Marginal revenue equals marginal cost",
+"difficulty": 2,
+"skill_ids": ["econ_market_structures_monopoly_8"],
+"solution_explanation": "Profit maximisation requires producing where marginal revenue equals marginal cost, regardless of market structure.",
+"hint": "Recall the general profit condition.",
+"metadata": {
+"topic": "profit maximisation",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-053",
+"question_text": "Explain why monopolies can lead to deadweight loss.",
+"type": "short_answer",
+"correct_answer": "Because monopolies restrict output below the socially efficient level.",
+"difficulty": 4,
+"skill_ids": ["econ_market_structures_monopoly_8"],
+"solution_explanation": "By producing less than the competitive quantity and charging higher prices, monopolies prevent some mutually beneficial trades, reducing total surplus.",
+"hint": "Think about output restriction.",
+"metadata": {
+"topic": "welfare effects",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-054",
+"question_text": "Evaluate one argument for government regulation of monopolies.",
+"type": "short_answer",
+"correct_answer": "Regulation can reduce inefficiency by limiting monopoly pricing power.",
+"difficulty": 5,
+"skill_ids": ["econ_market_structures_monopoly_8"],
+"solution_explanation": "Policies such as price regulation or antitrust laws aim to increase output and lower prices, improving allocative efficiency.",
+"hint": "Focus on efficiency gains.",
+"metadata": {
+"topic": "monopoly regulation",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-ECON_MICRO-055",
+"question_text": "Define monopolistic competition.",
+"type": "short_answer",
+"correct_answer": "Monopolistic competition is a market structure with many firms selling differentiated products.",
+"difficulty": 1,
+"skill_ids": ["econ_market_structures_monopolistic_competition_9"],
+"solution_explanation": "Firms compete on product differentiation rather than price alone, and entry into the market is relatively easy.",
+"hint": "Think about differentiation and number of firms.",
+"metadata": {
+"topic": "monopolistic competition",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-056",
+"question_text": "Which feature distinguishes monopolistic competition from perfect competition?",
+"type": "multiple_choice",
+"choices": [
+"Many firms",
+"Product differentiation",
+"Free entry"
+],
+"correct_answer": "Product differentiation",
+"difficulty": 2,
+"skill_ids": ["econ_market_structures_monopolistic_competition_9"],
+"solution_explanation": "Unlike perfect competition, firms in monopolistic competition sell differentiated products, giving them some price-setting power.",
+"hint": "Focus on product characteristics.",
+"metadata": {
+"topic": "market structure comparison",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-057",
+"question_text": "Explain why firms in monopolistic competition earn zero economic profit in the long run.",
+"type": "short_answer",
+"correct_answer": "Because entry of new firms eliminates economic profits.",
+"difficulty": 3,
+"skill_ids": ["econ_market_structures_monopolistic_competition_9"],
+"solution_explanation": "Positive profits attract entry, shifting demand leftward for existing firms until profits are driven to zero.",
+"hint": "Think about entry incentives.",
+"metadata": {
+"topic": "long-run equilibrium",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ECON_MICRO-058",
+"question_text": "In monopolistic competition, firms operate with excess capacity because:",
+"type": "multiple_choice",
+"choices": [
+"Price equals marginal cost",
+"Output is less than the minimum average cost",
+"Demand is perfectly elastic"
+],
+"correct_answer": "Output is less than the minimum average cost",
+"difficulty": 3,
+"skill_ids": ["econ_market_structures_monopolistic_competition_9"],
+"solution_explanation": "Downward-sloping demand leads firms to produce where average cost is declining, resulting in excess capacity.",
+"hint": "Think about cost curves.",
+"metadata": {
+"topic": "excess capacity",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ECON_MICRO-059",
+"question_text": "Evaluate whether product variety can offset inefficiency in monopolistic competition.",
+"type": "short_answer",
+"correct_answer": "Yes, increased variety can enhance consumer welfare despite inefficiency.",
+"difficulty": 5,
+"skill_ids": ["econ_market_structures_monopolistic_competition_9"],
+"solution_explanation": "Although excess capacity reduces efficiency, consumers benefit from greater choice and differentiation, which may increase overall welfare.",
+"hint": "Balance efficiency and variety.",
+"metadata": {
+"topic": "welfare trade-offs",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-ECON_MICRO-060",
+"question_text": "Define oligopoly.",
+"type": "short_answer",
+"correct_answer": "An oligopoly is a market structure dominated by a small number of interdependent firms.",
+"difficulty": 1,
+"skill_ids": ["econ_market_structures_oligopoly_10"],
+"solution_explanation": "In oligopolies, firms recognise their mutual interdependence when making pricing and output decisions.",
+"hint": "Focus on number of firms and interdependence.",
+"metadata": {
+"topic": "oligopoly definition",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-061",
+"question_text": "Which feature is most characteristic of oligopolistic markets?",
+"type": "multiple_choice",
+"choices": [
+"Price-taking behaviour",
+"Strategic interaction",
+"Perfect information"
+],
+"correct_answer": "Strategic interaction",
+"difficulty": 2,
+"skill_ids": ["econ_market_structures_oligopoly_10"],
+"solution_explanation": "Firms in oligopolies must consider rivals’ responses when making decisions, leading to strategic behaviour.",
+"hint": "Think about mutual dependence.",
+"metadata": {
+"topic": "oligopoly behaviour",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-062",
+"question_text": "Explain why collusion is unstable in many oligopolistic markets.",
+"type": "short_answer",
+"correct_answer": "Because individual firms have incentives to cheat to increase profits.",
+"difficulty": 3,
+"skill_ids": ["econ_market_structures_oligopoly_10"],
+"solution_explanation": "Each firm can gain short-run benefits by undercutting agreed prices, making sustained collusion difficult.",
+"hint": "Consider individual incentives.",
+"metadata": {
+"topic": "collusion",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ECON_MICRO-063",
+"question_text": "The prisoner’s dilemma illustrates which problem in oligopoly?",
+"type": "multiple_choice",
+"choices": [
+"Market entry",
+"Incentives to collude",
+"Incentives to cheat on collusion"
+],
+"correct_answer": "Incentives to cheat on collusion",
+"difficulty": 2,
+"skill_ids": ["econ_market_structures_oligopoly_10"],
+"solution_explanation": "The prisoner’s dilemma shows how rational self-interest can prevent mutually beneficial outcomes such as collusion.",
+"hint": "Think about dominant strategies.",
+"metadata": {
+"topic": "game theory",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ECON_MICRO-064",
+"question_text": "Evaluate one policy concern associated with oligopolistic markets.",
+"type": "short_answer",
+"correct_answer": "Oligopolies may reduce competition and raise prices.",
+"difficulty": 5,
+"skill_ids": ["econ_market_structures_oligopoly_10"],
+"solution_explanation": "Limited competition and potential collusion can lead to higher prices and reduced consumer welfare, justifying antitrust intervention.",
+"hint": "Focus on competition outcomes.",
+"metadata": {
+"topic": "policy and oligopoly",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-065",
+"question_text": "Define marginal cost.",
+"type": "short_answer",
+"correct_answer": "Marginal cost is the additional cost of producing one more unit of output.",
+"difficulty": 1,
+"skill_ids": ["econ_costs_production_11"],
+"solution_explanation": "Marginal cost reflects how total cost changes as output increases by one unit and is central to firms’ production decisions.",
+"hint": "Think about cost changes at the margin.",
+"metadata": {
+"topic": "costs of production",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-066",
+"question_text": "Which costs are included in marginal cost?",
+"type": "multiple_choice",
+"choices": [
+"Fixed costs only",
+"Variable costs only",
+"Both fixed and variable costs"
+],
+"correct_answer": "Variable costs only",
+"difficulty": 2,
+"skill_ids": ["econ_costs_production_11"],
+"solution_explanation": "Fixed costs do not change with output, so marginal cost depends solely on changes in variable costs.",
+"hint": "Consider which costs change with output.",
+"metadata": {
+"topic": "cost components",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-067",
+"question_text": "Explain why marginal cost eventually rises as output increases.",
+"type": "short_answer",
+"correct_answer": "Because of diminishing marginal returns to variable inputs.",
+"difficulty": 3,
+"skill_ids": ["econ_costs_production_11"],
+"solution_explanation": "As more variable inputs are added to fixed inputs, productivity eventually falls, increasing the cost of producing additional units.",
+"hint": "Think about diminishing returns.",
+"metadata": {
+"topic": "diminishing returns",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-068",
+"question_text": "At the profit-maximising output level, a competitive firm produces where:",
+"type": "multiple_choice",
+"choices": [
+"Price equals average cost",
+"Price equals marginal cost",
+"Marginal cost equals average cost"
+],
+"correct_answer": "Price equals marginal cost",
+"difficulty": 2,
+"skill_ids": ["econ_costs_production_11"],
+"solution_explanation": "In competitive markets, firms are price takers and maximise profit where marginal cost equals market price.",
+"hint": "Recall the profit-maximisation condition.",
+"metadata": {
+"topic": "firm behaviour",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-069",
+"question_text": "Define average total cost.",
+"type": "short_answer",
+"correct_answer": "Average total cost is total cost divided by quantity of output.",
+"difficulty": 1,
+"skill_ids": ["econ_costs_production_11"],
+"solution_explanation": "It measures the cost per unit of output, including both fixed and variable costs.",
+"hint": "Think total cost per unit.",
+"metadata": {
+"topic": "average cost",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-070",
+"question_text": "Explain the relationship between marginal cost and average total cost.",
+"type": "short_answer",
+"correct_answer": "Marginal cost pulls average total cost toward it.",
+"difficulty": 4,
+"skill_ids": ["econ_costs_production_11"],
+"solution_explanation": "When marginal cost is below average total cost, average total cost falls; when marginal cost is above it, average total cost rises.",
+"hint": "Think about averages and margins.",
+"metadata": {
+"topic": "cost curves",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-071",
+"question_text": "Define profit in economic terms.",
+"type": "short_answer",
+"correct_answer": "Profit is total revenue minus total cost, including opportunity costs.",
+"difficulty": 1,
+"skill_ids": ["econ_firm_profit_decisions_12"],
+"solution_explanation": "Economic profit differs from accounting profit by incorporating implicit costs.",
+"hint": "Include opportunity costs.",
+"metadata": {
+"topic": "economic profit",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-072",
+"question_text": "Which condition indicates that a firm should shut down in the short run?",
+"type": "multiple_choice",
+"choices": [
+"Price < average total cost",
+"Price < average variable cost",
+"Price < marginal cost"
+],
+"correct_answer": "Price < average variable cost",
+"difficulty": 2,
+"skill_ids": ["econ_firm_profit_decisions_12"],
+"solution_explanation": "If price does not cover average variable cost, the firm minimises losses by shutting down.",
+"hint": "Focus on variable costs.",
+"metadata": {
+"topic": "shutdown decision",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ECON_MICRO-073",
+"question_text": "Explain why firms may operate at a loss in the short run.",
+"type": "short_answer",
+"correct_answer": "Because revenue may still cover variable costs and part of fixed costs.",
+"difficulty": 3,
+"skill_ids": ["econ_firm_profit_decisions_12"],
+"solution_explanation": "Operating at a loss can be rational if shutting down would result in larger losses equal to fixed costs.",
+"hint": "Compare losses from operating versus shutting down.",
+"metadata": {
+"topic": "short-run decisions",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-074",
+"question_text": "In the long run, firms exit a competitive market when:",
+"type": "multiple_choice",
+"choices": [
+"Profit is zero",
+"Profit is negative",
+"Marginal cost exceeds price"
+],
+"correct_answer": "Profit is negative",
+"difficulty": 2,
+"skill_ids": ["econ_firm_profit_decisions_12"],
+"solution_explanation": "Persistent losses motivate firms to exit the market in the long run.",
+"hint": "Think about long-run sustainability.",
+"metadata": {
+"topic": "market exit",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-075",
+"question_text": "Evaluate the role of profit signals in resource allocation.",
+"type": "short_answer",
+"correct_answer": "Profits guide resources toward more valued uses.",
+"difficulty": 5,
+"skill_ids": ["econ_firm_profit_decisions_12"],
+"solution_explanation": "High profits attract entry and investment, while losses encourage exit, promoting efficient allocation of resources.",
+"hint": "Think about incentives.",
+"metadata": {
+"topic": "market signals",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-ECON_MICRO-076",
+"question_text": "Define labour demand.",
+"type": "short_answer",
+"correct_answer": "Labour demand is the quantity of labour firms are willing to hire at different wage rates.",
+"difficulty": 1,
+"skill_ids": ["econ_labor_markets_13"],
+"solution_explanation": "Labour demand reflects firms’ hiring decisions based on productivity and wages.",
+"hint": "Focus on firms’ perspective.",
+"metadata": {
+"topic": "labour demand",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-077",
+"question_text": "Why does the labour demand curve slope downward?",
+"type": "short_answer",
+"correct_answer": "Because of diminishing marginal product of labour.",
+"difficulty": 3,
+"skill_ids": ["econ_labor_markets_13"],
+"solution_explanation": "As more workers are hired, each additional worker contributes less to output, reducing willingness to pay higher wages.",
+"hint": "Think marginal productivity.",
+"metadata": {
+"topic": "labour demand theory",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-078",
+"question_text": "Labour supply is best described as:",
+"type": "multiple_choice",
+"choices": [
+"Firms’ willingness to hire",
+"Workers’ willingness to work",
+"Total population"
+],
+"correct_answer": "Workers’ willingness to work",
+"difficulty": 1,
+"skill_ids": ["econ_labor_markets_13"],
+"solution_explanation": "Labour supply reflects workers’ trade-off between leisure and income.",
+"hint": "Think about workers’ choices.",
+"metadata": {
+"topic": "labour supply",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-079",
+"question_text": "What determines equilibrium wages in a competitive labour market?",
+"type": "short_answer",
+"correct_answer": "The interaction of labour supply and labour demand.",
+"difficulty": 2,
+"skill_ids": ["econ_labor_markets_13"],
+"solution_explanation": "Equilibrium wages adjust until the quantity of labour supplied equals the quantity demanded.",
+"hint": "Think supply and demand.",
+"metadata": {
+"topic": "wage determination",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ECON_MICRO-080",
+"question_text": "A binding minimum wage above equilibrium will likely cause:",
+"type": "multiple_choice",
+"choices": [
+"Labour shortage",
+"Labour surplus",
+"Higher employment"
+],
+"correct_answer": "Labour surplus",
+"difficulty": 2,
+"skill_ids": ["econ_labor_markets_13"],
+"solution_explanation": "At a higher wage, labour supplied exceeds labour demanded, creating unemployment.",
+"hint": "Compare wage to equilibrium.",
+"metadata": {
+"topic": "minimum wage",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-081",
+"question_text": "Evaluate one argument in favour of minimum wage laws.",
+"type": "short_answer",
+"correct_answer": "They can increase incomes for low-wage workers.",
+"difficulty": 5,
+"skill_ids": ["econ_labor_markets_13"],
+"solution_explanation": "If employment effects are limited, higher wages may improve living standards without large efficiency losses.",
+"hint": "Consider distributional goals.",
+"metadata": {
+"topic": "labour market policy",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-082",
+"question_text": "Define income inequality.",
+"type": "short_answer",
+"correct_answer": "Income inequality refers to the unequal distribution of income across individuals or households in an economy.",
+"difficulty": 1,
+"skill_ids": ["econ_income_inequality_poverty_14"],
+"solution_explanation": "It captures disparities in earnings and income shares among different groups within a population.",
+"hint": "Focus on distribution, not average income.",
+"metadata": {
+"topic": "income inequality",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-083",
+"question_text": "Which measure is commonly used to quantify income inequality?",
+"type": "multiple_choice",
+"choices": [
+"GDP per capita",
+"Gini coefficient",
+"Inflation rate"
+],
+"correct_answer": "Gini coefficient",
+"difficulty": 1,
+"skill_ids": ["econ_income_inequality_poverty_14"],
+"solution_explanation": "The Gini coefficient summarises income inequality on a scale from 0 (perfect equality) to 1 (perfect inequality).",
+"hint": "Think of a standard inequality index.",
+"metadata": {
+"topic": "measurement of inequality",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-084",
+"question_text": "Explain one economic factor that can increase income inequality.",
+"type": "short_answer",
+"correct_answer": "Skill-biased technological change.",
+"difficulty": 3,
+"skill_ids": ["econ_income_inequality_poverty_14"],
+"solution_explanation": "Technological change often increases demand for skilled labour relative to unskilled labour, widening wage differentials.",
+"hint": "Think about technology and wages.",
+"metadata": {
+"topic": "causes of inequality",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-085",
+"question_text": "Which statement about poverty is most accurate?",
+"type": "multiple_choice",
+"choices": [
+"It is measured only in absolute terms",
+"It can be measured in absolute or relative terms",
+"It refers only to unemployment"
+],
+"correct_answer": "It can be measured in absolute or relative terms",
+"difficulty": 2,
+"skill_ids": ["econ_income_inequality_poverty_14"],
+"solution_explanation": "Absolute poverty focuses on minimum living standards, while relative poverty considers income compared to societal norms.",
+"hint": "Think about different benchmarks.",
+"metadata": {
+"topic": "poverty concepts",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ECON_MICRO-086",
+"question_text": "Define absolute poverty.",
+"type": "short_answer",
+"correct_answer": "Absolute poverty refers to a condition where income is insufficient to meet basic needs.",
+"difficulty": 1,
+"skill_ids": ["econ_income_inequality_poverty_14"],
+"solution_explanation": "It is based on a fixed threshold representing the minimum resources required for survival.",
+"hint": "Think basic needs.",
+"metadata": {
+"topic": "absolute poverty",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-087",
+"question_text": "Explain how education policy can reduce income inequality.",
+"type": "short_answer",
+"correct_answer": "By improving access to skills and increasing earning potential for lower-income groups.",
+"difficulty": 4,
+"skill_ids": ["econ_income_inequality_poverty_14"],
+"solution_explanation": "Education raises human capital, narrowing wage gaps and promoting social mobility over time.",
+"hint": "Think long-term effects.",
+"metadata": {
+"topic": "policy and inequality",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-088",
+"question_text": "Evaluate one trade-off associated with redistributive taxation.",
+"type": "short_answer",
+"correct_answer": "It may reduce work incentives while lowering inequality.",
+"difficulty": 5,
+"skill_ids": ["econ_income_inequality_poverty_14"],
+"solution_explanation": "Higher taxes can discourage labour supply or investment, even as they improve equity outcomes.",
+"hint": "Consider efficiency versus equity.",
+"metadata": {
+"topic": "redistribution",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-ECON_MICRO-089",
+"question_text": "Define economic growth.",
+"type": "short_answer",
+"correct_answer": "Economic growth is an increase in an economy’s productive capacity over time.",
+"difficulty": 1,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "It is commonly measured by growth in real GDP or real GDP per capita.",
+"hint": "Think output over time.",
+"metadata": {
+"topic": "economic growth",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-090",
+"question_text": "Which factor directly contributes to long-run economic growth?",
+"type": "multiple_choice",
+"choices": [
+"Inflation",
+"Capital accumulation",
+"Price controls"
+],
+"correct_answer": "Capital accumulation",
+"difficulty": 2,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "Investment in physical capital increases productive capacity and output over time.",
+"hint": "Think productive inputs.",
+"metadata": {
+"topic": "growth determinants",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-091",
+"question_text": "Explain the role of human capital in economic growth.",
+"type": "short_answer",
+"correct_answer": "Human capital improves productivity through skills, education, and health.",
+"difficulty": 3,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "A more skilled workforce can use technology more effectively and generate innovation.",
+"hint": "Think productivity.",
+"metadata": {
+"topic": "human capital",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-092",
+"question_text": "Which indicator is most commonly used to compare living standards across countries?",
+"type": "multiple_choice",
+"choices": [
+"Nominal GDP",
+"GDP per capita",
+"Government spending"
+],
+"correct_answer": "GDP per capita",
+"difficulty": 2,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "GDP per capita adjusts for population size, providing a rough measure of average income.",
+"hint": "Think per person.",
+"metadata": {
+"topic": "living standards",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-093",
+"question_text": "Define economic development.",
+"type": "short_answer",
+"correct_answer": "Economic development refers to sustained improvements in living standards and well-being.",
+"difficulty": 1,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "It encompasses growth as well as improvements in health, education, and institutional quality.",
+"hint": "Think beyond income.",
+"metadata": {
+"topic": "economic development",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ECON_MICRO-094",
+"question_text": "Which factor best explains differences in long-run growth across countries?",
+"type": "multiple_choice",
+"choices": [
+"Natural resource endowments alone",
+"Institutional quality",
+"Short-run fiscal policy"
+],
+"correct_answer": "Institutional quality",
+"difficulty": 3,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "Strong institutions support investment, innovation, and efficient markets, fostering sustained growth.",
+"hint": "Think rules and incentives.",
+"metadata": {
+"topic": "institutions and growth",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ECON_MICRO-095",
+"question_text": "Explain why economic growth does not always reduce poverty.",
+"type": "short_answer",
+"correct_answer": "Because growth gains may be unevenly distributed.",
+"difficulty": 4,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "If income gains accrue mainly to higher-income groups, poverty reduction may be limited despite overall growth.",
+"hint": "Consider distribution.",
+"metadata": {
+"topic": "growth and poverty",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-096",
+"question_text": "Evaluate one policy challenge faced by developing economies.",
+"type": "short_answer",
+"correct_answer": "Balancing growth with inequality reduction.",
+"difficulty": 5,
+"skill_ids": ["econ_economic_growth_development_15"],
+"solution_explanation": "Policies must promote investment and productivity while ensuring broad-based access to opportunities and services.",
+"hint": "Think growth versus equity.",
+"metadata": {
+"topic": "development policy",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-097",
+"question_text": "Define market failure.",
+"type": "short_answer",
+"correct_answer": "Market failure occurs when a free market does not allocate resources efficiently.",
+"difficulty": 1,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Market failure arises when the assumptions required for efficient market outcomes are violated, leading to losses in total surplus.",
+"hint": "Think efficiency and allocation.",
+"metadata": {
+"topic": "market failure",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-098",
+"question_text": "Which of the following is NOT a source of market failure?",
+"type": "multiple_choice",
+"choices": [
+"Externalities",
+"Market power",
+"Perfect information"
+],
+"correct_answer": "Perfect information",
+"difficulty": 1,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Perfect information supports efficient outcomes rather than causing market failure.",
+"hint": "Identify efficiency-enhancing conditions.",
+"metadata": {
+"topic": "sources of market failure",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-099",
+"question_text": "Explain why asymmetric information can lead to inefficient market outcomes.",
+"type": "short_answer",
+"correct_answer": "Because one party has more information than the other, distorting decisions.",
+"difficulty": 3,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Information asymmetries can cause adverse selection or moral hazard, reducing mutually beneficial transactions.",
+"hint": "Think unequal information.",
+"metadata": {
+"topic": "information asymmetry",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-100",
+"question_text": "Which policy is most appropriate for correcting a positive externality?",
+"type": "multiple_choice",
+"choices": [
+"Tax",
+"Subsidy",
+"Price ceiling"
+],
+"correct_answer": "Subsidy",
+"difficulty": 2,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Subsidies encourage activities that generate external benefits, increasing output toward the social optimum.",
+"hint": "Think encouragement.",
+"metadata": {
+"topic": "policy instruments",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-101",
+"question_text": "Define government failure.",
+"type": "short_answer",
+"correct_answer": "Government failure occurs when policy intervention leads to inefficient outcomes.",
+"difficulty": 1,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Poorly designed or implemented policies may worsen efficiency or equity relative to market outcomes.",
+"hint": "Think policy limitations.",
+"metadata": {
+"topic": "government failure",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-102",
+"question_text": "Which factor commonly contributes to government failure?",
+"type": "multiple_choice",
+"choices": [
+"Perfect enforcement",
+"Information constraints",
+"Competitive markets"
+],
+"correct_answer": "Information constraints",
+"difficulty": 2,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Governments may lack sufficient information to design optimal policies, reducing effectiveness.",
+"hint": "Think information limits.",
+"metadata": {
+"topic": "policy limitations",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-103",
+"question_text": "Explain the equity-efficiency trade-off in public policy.",
+"type": "short_answer",
+"correct_answer": "Policies that improve equity may reduce efficiency, and vice versa.",
+"difficulty": 4,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Redistributive policies can distort incentives, while efficiency-enhancing policies may increase inequality.",
+"hint": "Balance fairness and efficiency.",
+"metadata": {
+"topic": "equity vs efficiency",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-104",
+"question_text": "Which criterion focuses on maximising total surplus?",
+"type": "multiple_choice",
+"choices": [
+"Equity",
+"Efficiency",
+"Stability"
+],
+"correct_answer": "Efficiency",
+"difficulty": 1,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Efficiency evaluates outcomes based on total gains from trade and resource allocation.",
+"hint": "Think surplus maximisation.",
+"metadata": {
+"topic": "policy criteria",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-105",
+"question_text": "Explain why cost–benefit analysis is used in policy evaluation.",
+"type": "short_answer",
+"correct_answer": "To compare total social benefits with total social costs.",
+"difficulty": 3,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Cost–benefit analysis helps determine whether a policy increases net social welfare.",
+"hint": "Think benefits minus costs.",
+"metadata": {
+"topic": "cost–benefit analysis",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-106",
+"question_text": "Which outcome suggests a policy should be implemented under cost–benefit analysis?",
+"type": "multiple_choice",
+"choices": [
+"Costs exceed benefits",
+"Benefits equal costs",
+"Benefits exceed costs"
+],
+"correct_answer": "Benefits exceed costs",
+"difficulty": 2,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "A policy increases social welfare when net benefits are positive.",
+"hint": "Think net gains.",
+"metadata": {
+"topic": "policy decision rules",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-107",
+"question_text": "Assess one limitation of cost–benefit analysis.",
+"type": "short_answer",
+"correct_answer": "Some costs and benefits are difficult to quantify.",
+"difficulty": 4,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Intangible effects such as environmental damage or social well-being may be hard to measure accurately.",
+"hint": "Think measurement problems.",
+"metadata": {
+"topic": "evaluation challenges",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-108",
+"question_text": "Evaluate whether correcting market failure always justifies government intervention.",
+"type": "short_answer",
+"correct_answer": "No, because government failure may outweigh potential benefits.",
+"difficulty": 5,
+"skill_ids": ["econ_policy_evaluation_synthesis_16"],
+"solution_explanation": "Effective intervention depends on implementation capacity, information, and incentive alignment; otherwise, intervention may reduce welfare.",
+"hint": "Compare market and government failures.",
+"metadata": {
+"topic": "policy evaluation",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-109",
+"question_text": "Define behavioural economics.",
+"type": "short_answer",
+"correct_answer": "Behavioural economics studies how psychological factors influence economic decision-making.",
+"difficulty": 1,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Behavioural economics relaxes the assumption of fully rational agents by incorporating insights from psychology into economic models.",
+"hint": "Think psychology and economics combined.",
+"metadata": {
+"topic": "behavioural economics",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-110",
+"question_text": "Which assumption of standard economic theory is most directly challenged by behavioural economics?",
+"type": "multiple_choice",
+"choices": [
+"Scarcity",
+"Rational decision-making",
+"Opportunity cost"
+],
+"correct_answer": "Rational decision-making",
+"difficulty": 1,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Behavioural economics shows that individuals often rely on heuristics and exhibit biases rather than strict rationality.",
+"hint": "Think about how people actually decide.",
+"metadata": {
+"topic": "rationality assumptions",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-111",
+"question_text": "Define a cognitive bias.",
+"type": "short_answer",
+"correct_answer": "A cognitive bias is a systematic deviation from rational judgement.",
+"difficulty": 1,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Cognitive biases arise from mental shortcuts that simplify decision-making but can lead to predictable errors.",
+"hint": "Think systematic error.",
+"metadata": {
+"topic": "cognitive biases",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-112",
+"question_text": "Loss aversion implies that individuals:",
+"type": "multiple_choice",
+"choices": [
+"Prefer risk in all situations",
+"Dislike losses more than they value equivalent gains",
+"Always maximise expected value"
+],
+"correct_answer": "Dislike losses more than they value equivalent gains",
+"difficulty": 2,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Loss aversion means the psychological impact of losses exceeds that of equal-sized gains.",
+"hint": "Compare gains and losses.",
+"metadata": {
+"topic": "loss aversion",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-113",
+"question_text": "Explain how heuristics can affect consumer choices.",
+"type": "short_answer",
+"correct_answer": "They simplify decisions but can lead to biased or suboptimal choices.",
+"difficulty": 3,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Heuristics reduce cognitive effort, yet may cause systematic errors such as overconfidence or anchoring.",
+"hint": "Think shortcuts in thinking.",
+"metadata": {
+"topic": "heuristics",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-114",
+"question_text": "Which concept describes individuals placing too much weight on initial information?",
+"type": "multiple_choice",
+"choices": [
+"Anchoring",
+"Framing",
+"Mental accounting"
+],
+"correct_answer": "Anchoring",
+"difficulty": 2,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Anchoring occurs when initial values influence subsequent judgements disproportionately.",
+"hint": "Think first information seen.",
+"metadata": {
+"topic": "anchoring bias",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-115",
+"question_text": "Explain the concept of bounded rationality.",
+"type": "short_answer",
+"correct_answer": "Bounded rationality refers to decision-making under cognitive and informational constraints.",
+"difficulty": 3,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Individuals aim to make reasonable decisions but are limited by time, information, and mental capacity.",
+"hint": "Think limits to rationality.",
+"metadata": {
+"topic": "bounded rationality",
+"estimated_time_seconds": 65
+}
+}
+
+{
+"id": "temp-ECON_MICRO-116",
+"question_text": "Framing effects imply that choices depend on:",
+"type": "multiple_choice",
+"choices": [
+"Objective outcomes only",
+"How options are presented",
+"Market prices"
+],
+"correct_answer": "How options are presented",
+"difficulty": 2,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Different presentations of equivalent information can lead to different decisions.",
+"hint": "Think presentation matters.",
+"metadata": {
+"topic": "framing",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-117",
+"question_text": "Explain how behavioural insights can inform public policy.",
+"type": "short_answer",
+"correct_answer": "By designing policies that account for actual human behaviour.",
+"difficulty": 4,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Policies such as default options or nudges can improve outcomes without restricting choice.",
+"hint": "Think nudges.",
+"metadata": {
+"topic": "behavioural policy",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-118",
+"question_text": "Which policy tool is most closely associated with behavioural economics?",
+"type": "multiple_choice",
+"choices": [
+"Price controls",
+"Nudges",
+"Tariffs"
+],
+"correct_answer": "Nudges",
+"difficulty": 2,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Nudges subtly alter choice architecture while preserving freedom of choice.",
+"hint": "Think non-coercive intervention.",
+"metadata": {
+"topic": "nudging",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-119",
+"question_text": "Evaluate one criticism of behavioural economics.",
+"type": "short_answer",
+"correct_answer": "It may lack predictive power compared to standard models.",
+"difficulty": 4,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "While descriptive accuracy improves, integrating diverse biases into unified predictive models remains challenging.",
+"hint": "Think model consistency.",
+"metadata": {
+"topic": "criticisms",
+"estimated_time_seconds": 80
+}
+}
+
+{
+"id": "temp-ECON_MICRO-120",
+"question_text": "Assess whether behavioural economics complements or replaces standard economic theory.",
+"type": "short_answer",
+"correct_answer": "It complements standard theory by relaxing strict assumptions.",
+"difficulty": 5,
+"skill_ids": ["econ_behavioral_economics_17"],
+"solution_explanation": "Behavioural economics extends traditional models by improving realism while retaining core analytical frameworks.",
+"hint": "Think integration rather than replacement.",
+"metadata": {
+"topic": "theoretical synthesis",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-ECON_MICRO-121",
+"question_text": "Define international trade from a microeconomic perspective.",
+"type": "short_answer",
+"correct_answer": "International trade refers to the exchange of goods and services across national borders.",
+"difficulty": 1,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "From a microeconomic viewpoint, international trade extends market exchange beyond domestic boundaries, allowing specialisation and gains from trade.",
+"hint": "Think cross-border exchange.",
+"metadata": {
+"topic": "international trade",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-122",
+"question_text": "Which principle explains why countries benefit from trade even if one is more productive in all goods?",
+"type": "multiple_choice",
+"choices": [
+"Absolute advantage",
+"Comparative advantage",
+"Economies of scale"
+],
+"correct_answer": "Comparative advantage",
+"difficulty": 2,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Comparative advantage shows that gains from trade arise from specialisation based on relative opportunity costs, not absolute productivity.",
+"hint": "Think opportunity cost.",
+"metadata": {
+"topic": "comparative advantage",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-ECON_MICRO-123",
+"question_text": "Define comparative advantage.",
+"type": "short_answer",
+"correct_answer": "Comparative advantage is the ability to produce a good at a lower opportunity cost than others.",
+"difficulty": 1,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "It focuses on relative costs and underpins the theoretical justification for trade specialisation.",
+"hint": "Think relative efficiency.",
+"metadata": {
+"topic": "comparative advantage definition",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-124",
+"question_text": "If a country specialises according to comparative advantage, what is the expected effect on total output?",
+"type": "multiple_choice",
+"choices": [
+"Total output decreases",
+"Total output increases",
+"Total output remains unchanged"
+],
+"correct_answer": "Total output increases",
+"difficulty": 2,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Specialisation reallocates resources toward more efficient uses, raising overall production.",
+"hint": "Think efficiency gains.",
+"metadata": {
+"topic": "gains from trade",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-125",
+"question_text": "Explain the concept of opportunity cost in the context of trade.",
+"type": "short_answer",
+"correct_answer": "Opportunity cost is the value of the next best alternative forgone when producing a good.",
+"difficulty": 3,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Comparative advantage is determined by comparing opportunity costs across goods and countries.",
+"hint": "Think trade-offs.",
+"metadata": {
+"topic": "opportunity cost",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-ECON_MICRO-126",
+"question_text": "Which group within a country is most likely to lose from free trade?",
+"type": "multiple_choice",
+"choices": [
+"Consumers",
+"Export-oriented producers",
+"Import-competing producers"
+],
+"correct_answer": "Import-competing producers",
+"difficulty": 3,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Increased foreign competition can reduce prices and market share for domestic producers in import-competing industries.",
+"hint": "Think competition from abroad.",
+"metadata": {
+"topic": "distributional effects of trade",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ECON_MICRO-127",
+"question_text": "Define a tariff.",
+"type": "short_answer",
+"correct_answer": "A tariff is a tax imposed on imported goods.",
+"difficulty": 1,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Tariffs raise the domestic price of imported goods, affecting consumers and producers.",
+"hint": "Think import tax.",
+"metadata": {
+"topic": "trade policy",
+"estimated_time_seconds": 25
+}
+}
+
+{
+"id": "temp-ECON_MICRO-128",
+"question_text": "Which effect is most directly caused by a tariff?",
+"type": "multiple_choice",
+"choices": [
+"Lower domestic prices",
+"Higher government revenue",
+"Increased world prices"
+],
+"correct_answer": "Higher government revenue",
+"difficulty": 2,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Tariffs generate tax revenue for the government on imported units.",
+"hint": "Think fiscal effect.",
+"metadata": {
+"topic": "effects of tariffs",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-ECON_MICRO-129",
+"question_text": "Explain why tariffs create deadweight loss.",
+"type": "short_answer",
+"correct_answer": "Because they distort prices and reduce mutually beneficial trade.",
+"difficulty": 4,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Higher prices lead to inefficient production and consumption, reducing total surplus.",
+"hint": "Think lost gains from trade.",
+"metadata": {
+"topic": "welfare effects of trade policy",
+"estimated_time_seconds": 75
+}
+}
+
+{
+"id": "temp-ECON_MICRO-130",
+"question_text": "Which argument is commonly used to justify protectionism?",
+"type": "multiple_choice",
+"choices": [
+"Comparative advantage",
+"Infant industry argument",
+"Consumer surplus maximisation"
+],
+"correct_answer": "Infant industry argument",
+"difficulty": 3,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "The infant industry argument claims temporary protection allows new industries to develop and become competitive.",
+"hint": "Think young industries.",
+"metadata": {
+"topic": "protectionist arguments",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-ECON_MICRO-131",
+"question_text": "Evaluate one potential risk of protectionist trade policies.",
+"type": "short_answer",
+"correct_answer": "They may reduce efficiency and provoke retaliation.",
+"difficulty": 4,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "Protection can sustain inefficient industries and trigger trade wars, harming overall welfare.",
+"hint": "Think long-run effects.",
+"metadata": {
+"topic": "trade policy risks",
+"estimated_time_seconds": 80
+}
+}
+
+{
+"id": "temp-ECON_MICRO-132",
+"question_text": "Assess whether free trade maximises global welfare.",
+"type": "short_answer",
+"correct_answer": "In theory, free trade maximises global welfare by allowing specialisation based on comparative advantage.",
+"difficulty": 5,
+"skill_ids": ["econ_international_trade_basics_18"],
+"solution_explanation": "While distributional effects exist, the aggregate gains from trade typically exceed losses, increasing total global surplus.",
+"hint": "Think aggregate versus distribution.",
+"metadata": {
+"topic": "global welfare",
+"estimated_time_seconds": 90
+}
+}
+
+

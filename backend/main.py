@@ -31,6 +31,7 @@ from routes import estimates as estimates_route
 from routes import topics as topics_route
 from routes import analytics as analytics_route
 from routes import exercises as exercises_route
+from routes import stats as stats_route
 from routes import push as push_route
 from routes import microquest as microquest_route
 from routes import leaderboard as leaderboard_route
@@ -95,6 +96,7 @@ api_router.include_router(microquest_route.router)
 api_router.include_router(leaderboard_route.router)
 api_router.include_router(analytics_route.router)
 api_router.include_router(exercises_route.router)
+api_router.include_router(stats_route.router)
 
 app.include_router(health_route.router)
 from routes import auth as auth_route

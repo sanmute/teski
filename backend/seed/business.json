@@ -1,0 +1,2305 @@
+{
+"id": "temp-BUS_FND-001",
+"question_text": "Which of the following best defines a business firm in economic and managerial theory?",
+"type": "multiple_choice",
+"choices": [
+"An organisation created solely to provide public services",
+"An entity that transforms inputs into outputs with the objective of value creation",
+"A non-profit institution operating without market exchange"
+],
+"correct_answer": "An entity that transforms inputs into outputs with the objective of value creation",
+"difficulty": 1,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "In business theory, a firm is defined as an organisation that coordinates resources (inputs) to produce goods or services (outputs) with the aim of creating value, typically measured through profit or surplus.",
+"hint": "Focus on the role of firms in production and value creation.",
+"metadata": {
+"topic": "Definition of the firm",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-002",
+"question_text": "Which characteristic most clearly distinguishes a sole proprietorship from other forms of business ownership?",
+"type": "multiple_choice",
+"choices": [
+"Limited liability for the owner",
+"Separate legal personality from the owner",
+"Unlimited personal liability of the owner"
+],
+"correct_answer": "Unlimited personal liability of the owner",
+"difficulty": 1,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "A sole proprietorship does not have a legal identity separate from its owner, meaning the owner is personally liable for all business debts and obligations.",
+"hint": "Consider how legal responsibility is assigned in different business forms.",
+"metadata": {
+"topic": "Sole proprietorships",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-003",
+"question_text": "Identify one key advantage of partnerships compared to sole proprietorships.",
+"type": "short_answer",
+"correct_answer": "Partnerships allow shared ownership and pooling of capital and skills.",
+"difficulty": 2,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Partnerships involve two or more owners, which enables the pooling of financial resources, expertise, and managerial responsibilities, potentially improving decision-making and capacity.",
+"hint": "Think about how having multiple owners affects resources and management.",
+"metadata": {
+"topic": "Partnerships",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-BUS_FND-004",
+"question_text": "Which form of business organisation is characterised by limited liability and transferable shares?",
+"type": "multiple_choice",
+"choices": [
+"Sole proprietorship",
+"Partnership",
+"Corporation"
+],
+"correct_answer": "Corporation",
+"difficulty": 2,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Corporations are legal entities separate from their owners, offering limited liability and allowing ownership interests to be transferred through shares.",
+"hint": "Recall which form has a separate legal personality.",
+"metadata": {
+"topic": "Corporations",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-005",
+"question_text": "Explain why limited liability is considered important for encouraging investment.",
+"type": "short_answer",
+"correct_answer": "It limits investors’ losses to their invested capital, reducing personal financial risk.",
+"difficulty": 3,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Limited liability ensures that investors are not personally responsible for a firm's debts beyond their investment, making equity participation less risky and more attractive.",
+"hint": "Link risk exposure to willingness to invest.",
+"metadata": {
+"topic": "Limited liability",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-006",
+"question_text": "Which business form typically faces the greatest difficulty in raising large amounts of capital?",
+"type": "multiple_choice",
+"choices": [
+"Corporation",
+"Sole proprietorship",
+"Public limited company"
+],
+"correct_answer": "Sole proprietorship",
+"difficulty": 2,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Sole proprietorships rely primarily on the owner's personal funds and borrowing capacity, limiting their ability to raise substantial capital compared to corporations.",
+"hint": "Consider access to financial markets.",
+"metadata": {
+"topic": "Capital acquisition",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-007",
+"question_text": "Compare partnerships and corporations in terms of ownership transferability.",
+"type": "short_answer",
+"correct_answer": "Ownership transfer is generally restricted in partnerships but freely transferable through shares in corporations.",
+"difficulty": 3,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Partnership agreements often limit ownership changes to protect existing partners, whereas corporations allow shares to be bought and sold without affecting operations.",
+"hint": "Think about how ownership changes affect continuity.",
+"metadata": {
+"topic": "Ownership transfer",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-008",
+"question_text": "Which organisational form is most likely to experience separation of ownership and control?",
+"type": "multiple_choice",
+"choices": [
+"Sole proprietorship",
+"Partnership",
+"Large corporation"
+],
+"correct_answer": "Large corporation",
+"difficulty": 3,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "In large corporations, shareholders own the firm while professional managers control daily operations, leading to a separation between ownership and control.",
+"hint": "Consider who owns the firm versus who manages it.",
+"metadata": {
+"topic": "Corporate governance",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-009",
+"question_text": "Why might entrepreneurs choose a sole proprietorship despite its disadvantages?",
+"type": "short_answer",
+"correct_answer": "It offers simplicity, full control, and minimal regulatory requirements.",
+"difficulty": 4,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Entrepreneurs may prioritise autonomy and ease of formation over liability protection, particularly for small-scale or low-risk ventures.",
+"hint": "Balance control against risk.",
+"metadata": {
+"topic": "Entrepreneurial choice",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-010",
+"question_text": "Which factor most strongly explains the prevalence of corporations in capital-intensive industries?",
+"type": "multiple_choice",
+"choices": [
+"Lower taxation rates",
+"Ability to raise large-scale finance and limit investor risk",
+"Reduced managerial oversight requirements"
+],
+"correct_answer": "Ability to raise large-scale finance and limit investor risk",
+"difficulty": 4,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Capital-intensive industries require substantial investment, which corporations can attract through equity markets while protecting investors via limited liability.",
+"hint": "Link industry needs to organisational features.",
+"metadata": {
+"topic": "Industry structure",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-011",
+"question_text": "Assess one potential disadvantage of the separation of ownership and control in corporations.",
+"type": "short_answer",
+"correct_answer": "Managers may pursue personal objectives rather than shareholder interests.",
+"difficulty": 5,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Agency problems can arise when managers’ incentives diverge from those of owners, potentially leading to inefficiency unless governance mechanisms are in place.",
+"hint": "Think about incentive alignment.",
+"metadata": {
+"topic": "Agency problems",
+"estimated_time_seconds": 80
+}
+}
+
+{
+"id": "temp-BUS_FND-012",
+"question_text": "From a strategic perspective, why might a growing partnership decide to incorporate?",
+"type": "short_answer",
+"correct_answer": "To access greater capital, limit liability, and ensure continuity beyond the original partners.",
+"difficulty": 5,
+"skill_ids": ["business_firm_types_1"],
+"solution_explanation": "Incorporation allows expansion through external finance, protects personal assets, and provides organisational continuity independent of individual owners.",
+"hint": "Integrate growth, risk, and longevity considerations.",
+"metadata": {
+"topic": "Growth and incorporation",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-BUS_FND-013",
+"question_text": "In business analysis, what is the primary purpose of a mission statement?",
+"type": "multiple_choice",
+"choices": [
+"To define short-term operational targets",
+"To articulate the organisation’s fundamental purpose and scope",
+"To outline detailed financial projections"
+],
+"correct_answer": "To articulate the organisation’s fundamental purpose and scope",
+"difficulty": 1,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "A mission statement clarifies why an organisation exists and what it seeks to achieve, guiding strategic and operational decisions.",
+"hint": "Focus on purpose rather than specific actions.",
+"metadata": {
+"topic": "Mission statements",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-014",
+"question_text": "Which element is most commonly associated with a vision statement?",
+"type": "multiple_choice",
+"choices": [
+"Present operational efficiency",
+"Desired future position of the organisation",
+"Legal structure of the firm"
+],
+"correct_answer": "Desired future position of the organisation",
+"difficulty": 1,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Vision statements describe an aspirational future state, indicating where the organisation aims to be in the long term.",
+"hint": "Think long-term and aspirational.",
+"metadata": {
+"topic": "Vision statements",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-015",
+"question_text": "Differentiate between a mission statement and a vision statement.",
+"type": "short_answer",
+"correct_answer": "A mission defines the organisation’s current purpose, while a vision outlines its desired future state.",
+"difficulty": 2,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "The mission focuses on present identity and activities, whereas the vision projects long-term aspirations and direction.",
+"hint": "Contrast present versus future orientation.",
+"metadata": {
+"topic": "Mission vs vision",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-016",
+"question_text": "Which of the following best represents a strategic goal?",
+"type": "multiple_choice",
+"choices": [
+"Increase quarterly sales by 2%",
+"Achieve market leadership in renewable energy solutions",
+"Reduce weekly inventory errors"
+],
+"correct_answer": "Achieve market leadership in renewable energy solutions",
+"difficulty": 2,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Strategic goals are broad, long-term objectives aligned with the organisation’s mission and vision.",
+"hint": "Look for long-term and organisation-wide scope.",
+"metadata": {
+"topic": "Strategic goals",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-017",
+"question_text": "Explain why clear organisational goals are important for managerial decision-making.",
+"type": "short_answer",
+"correct_answer": "They provide direction, prioritise actions, and serve as benchmarks for evaluating performance.",
+"difficulty": 3,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Clearly defined goals align managerial decisions with organisational priorities and enable systematic performance assessment.",
+"hint": "Consider guidance and evaluation functions.",
+"metadata": {
+"topic": "Role of goals",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-018",
+"question_text": "Which characteristic is essential for effective organisational goals?",
+"type": "multiple_choice",
+"choices": [
+"Ambiguity to allow flexibility",
+"Measurability",
+"Exclusively financial focus"
+],
+"correct_answer": "Measurability",
+"difficulty": 2,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Measurable goals enable objective assessment of progress and outcomes, supporting accountability.",
+"hint": "Think about evaluation.",
+"metadata": {
+"topic": "Goal setting",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-019",
+"question_text": "How do mission statements typically influence organisational culture?",
+"type": "short_answer",
+"correct_answer": "They shape shared values, norms, and expectations guiding employee behaviour.",
+"difficulty": 3,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Mission statements communicate core values and purpose, which over time influence organisational culture and behaviour.",
+"hint": "Link purpose to behaviour.",
+"metadata": {
+"topic": "Culture and mission",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-020",
+"question_text": "Which of the following is most likely an operational goal?",
+"type": "multiple_choice",
+"choices": [
+"Expand internationally within ten years",
+"Reduce production defects by 5% this year",
+"Become an industry innovator"
+],
+"correct_answer": "Reduce production defects by 5% this year",
+"difficulty": 3,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Operational goals are specific, short-term targets that support broader strategic objectives.",
+"hint": "Focus on short-term specificity.",
+"metadata": {
+"topic": "Operational goals",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-021",
+"question_text": "Why might vague mission statements reduce organisational effectiveness?",
+"type": "short_answer",
+"correct_answer": "They fail to provide clear guidance for decision-making and employee alignment.",
+"difficulty": 4,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Ambiguous missions weaken strategic coherence, making it difficult for employees to align actions with organisational intent.",
+"hint": "Consider clarity and alignment.",
+"metadata": {
+"topic": "Mission clarity",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-022",
+"question_text": "Which statement best explains the relationship between vision and strategy?",
+"type": "multiple_choice",
+"choices": [
+"Vision replaces the need for strategy",
+"Strategy operationalises the vision",
+"Vision is derived from daily operations"
+],
+"correct_answer": "Strategy operationalises the vision",
+"difficulty": 4,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Vision sets the desired future state, while strategy defines the actions and resource allocations needed to achieve it.",
+"hint": "Think execution.",
+"metadata": {
+"topic": "Vision and strategy",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-023",
+"question_text": "Assess one risk of misalignment between organisational goals and mission.",
+"type": "short_answer",
+"correct_answer": "Resources may be allocated to activities that do not support the organisation’s core purpose.",
+"difficulty": 5,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Misalignment can lead to strategic drift, inefficiency, and reduced organisational coherence.",
+"hint": "Consider resource use and direction.",
+"metadata": {
+"topic": "Strategic alignment",
+"estimated_time_seconds": 80
+}
+}
+
+{
+"id": "temp-BUS_FND-024",
+"question_text": "From a managerial perspective, why should mission and vision statements be periodically reviewed?",
+"type": "short_answer",
+"correct_answer": "To ensure continued relevance in changing competitive and environmental conditions.",
+"difficulty": 5,
+"skill_ids": ["business_mission_vision_goals_1"],
+"solution_explanation": "Environmental shifts may render existing statements outdated, requiring revision to maintain strategic relevance.",
+"hint": "Think environmental change.",
+"metadata": {
+"topic": "Review and adaptation",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-025",
+"question_text": "In strategic management, what is meant by the external business environment?",
+"type": "multiple_choice",
+"choices": [
+"Internal organisational culture",
+"Factors outside the firm that influence performance",
+"Daily operational processes"
+],
+"correct_answer": "Factors outside the firm that influence performance",
+"difficulty": 1,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "The external environment consists of forces beyond organisational control that affect strategy and outcomes.",
+"hint": "Focus outside the firm.",
+"metadata": {
+"topic": "External environment",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-026",
+"question_text": "Which factor is typically classified as part of the macro-environment?",
+"type": "multiple_choice",
+"choices": [
+"Supplier bargaining power",
+"Technological change",
+"Employee motivation"
+],
+"correct_answer": "Technological change",
+"difficulty": 1,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Macro-environmental factors include broad forces such as technological, political, economic, social, and legal changes.",
+"hint": "Think broad and societal.",
+"metadata": {
+"topic": "Macro-environment",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-027",
+"question_text": "What is the primary purpose of external environment analysis?",
+"type": "short_answer",
+"correct_answer": "To identify opportunities and threats affecting organisational strategy.",
+"difficulty": 2,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Analysing the external environment enables firms to adapt strategies to external opportunities and mitigate threats.",
+"hint": "Opportunities versus threats.",
+"metadata": {
+"topic": "Purpose of analysis",
+"estimated_time_seconds": 45
+}
+}
+
+{
+"id": "temp-BUS_FND-028",
+"question_text": "Which framework is commonly used to analyse macro-environmental factors?",
+"type": "multiple_choice",
+"choices": [
+"SWOT analysis",
+"PESTLE analysis",
+"Value chain analysis"
+],
+"correct_answer": "PESTLE analysis",
+"difficulty": 2,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "PESTLE examines Political, Economic, Social, Technological, Legal, and Environmental factors affecting firms.",
+"hint": "Think acronym for macro factors.",
+"metadata": {
+"topic": "Analytical frameworks",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-029",
+"question_text": "Explain how economic conditions can influence business strategy.",
+"type": "short_answer",
+"correct_answer": "They affect consumer demand, costs, investment decisions, and risk tolerance.",
+"difficulty": 3,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Economic cycles and indicators shape purchasing power and operational costs, influencing strategic choices.",
+"hint": "Think demand and costs.",
+"metadata": {
+"topic": "Economic factors",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-030",
+"question_text": "Which external force most directly affects industry competition?",
+"type": "multiple_choice",
+"choices": [
+"Political ideology",
+"Competitive rivalry",
+"Demographic trends"
+],
+"correct_answer": "Competitive rivalry",
+"difficulty": 2,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Industry competition is shaped by the intensity of rivalry among existing firms.",
+"hint": "Think industry-level forces.",
+"metadata": {
+"topic": "Industry environment",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-031",
+"question_text": "Why is technological change considered a strategic uncertainty?",
+"type": "short_answer",
+"correct_answer": "Because it can rapidly alter products, processes, and competitive positions.",
+"difficulty": 3,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Technological shifts can disrupt existing business models, creating uncertainty for long-term planning.",
+"hint": "Think disruption.",
+"metadata": {
+"topic": "Technology and strategy",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-032",
+"question_text": "Which external factor is most likely to influence labour market conditions?",
+"type": "multiple_choice",
+"choices": [
+"Social and demographic trends",
+"Supplier concentration",
+"Product differentiation"
+],
+"correct_answer": "Social and demographic trends",
+"difficulty": 3,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Population age, education, and social norms directly affect workforce availability and skills.",
+"hint": "Think population characteristics.",
+"metadata": {
+"topic": "Social factors",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-033",
+"question_text": "How can legal changes pose a threat to existing firms?",
+"type": "short_answer",
+"correct_answer": "They may increase compliance costs or restrict certain business practices.",
+"difficulty": 4,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "New regulations can alter cost structures and constrain strategic options, disadvantaging some firms.",
+"hint": "Consider regulation.",
+"metadata": {
+"topic": "Legal environment",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-034",
+"question_text": "Which statement best explains the difference between macro- and micro-environmental analysis?",
+"type": "multiple_choice",
+"choices": [
+"Macro focuses on internal resources, micro on culture",
+"Macro examines broad external forces, micro examines industry and competitive forces",
+"Macro is short-term, micro is long-term"
+],
+"correct_answer": "Macro examines broad external forces, micro examines industry and competitive forces",
+"difficulty": 4,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Macro-analysis considers general external trends, while micro-analysis focuses on industry structure and competition.",
+"hint": "Broad versus industry-specific.",
+"metadata": {
+"topic": "Levels of analysis",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-035",
+"question_text": "Evaluate why continuous external environment scanning is necessary for strategic management.",
+"type": "short_answer",
+"correct_answer": "Because external conditions evolve, affecting risks, opportunities, and strategic relevance.",
+"difficulty": 5,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Ongoing scanning allows organisations to anticipate change, adapt strategies, and maintain competitiveness.",
+"hint": "Think change over time.",
+"metadata": {
+"topic": "Environmental scanning",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-036",
+"question_text": "From a strategic viewpoint, how can firms respond to external threats identified through analysis?",
+"type": "short_answer",
+"correct_answer": "By adapting strategies, reallocating resources, or developing new capabilities.",
+"difficulty": 5,
+"skill_ids": ["business_external_environment_analysis_1"],
+"solution_explanation": "Effective responses involve strategic adjustment to mitigate risk and exploit organisational strengths.",
+"hint": "Think strategic adaptation.",
+"metadata": {
+"topic": "Strategic response",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-BUS_FND-037",
+"question_text": "In strategic management, what are internal resources?",
+"type": "multiple_choice",
+"choices": [
+"External market conditions",
+"Assets and capabilities controlled by the firm",
+"Government regulations affecting the firm"
+],
+"correct_answer": "Assets and capabilities controlled by the firm",
+"difficulty": 1,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Internal resources consist of assets, skills, and capabilities that an organisation owns or controls and can deploy strategically.",
+"hint": "Focus on what the firm possesses internally.",
+"metadata": {
+"topic": "Internal environment",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-038",
+"question_text": "Which of the following is an example of a tangible resource?",
+"type": "multiple_choice",
+"choices": [
+"Brand reputation",
+"Manufacturing equipment",
+"Organisational culture"
+],
+"correct_answer": "Manufacturing equipment",
+"difficulty": 1,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Tangible resources are physical assets such as machinery, buildings, and financial capital.",
+"hint": "Look for physical assets.",
+"metadata": {
+"topic": "Tangible resources",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-039",
+"question_text": "Identify one example of an intangible resource.",
+"type": "short_answer",
+"correct_answer": "Brand reputation.",
+"difficulty": 2,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Intangible resources lack physical form and include reputation, intellectual property, and organisational knowledge.",
+"hint": "Think non-physical assets.",
+"metadata": {
+"topic": "Intangible resources",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-040",
+"question_text": "Which concept evaluates whether a firm’s resources can provide competitive advantage?",
+"type": "multiple_choice",
+"choices": [
+"PESTLE analysis",
+"VRIO framework",
+"Break-even analysis"
+],
+"correct_answer": "VRIO framework",
+"difficulty": 2,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "The VRIO framework assesses whether resources are Valuable, Rare, Inimitable, and Organised to capture value.",
+"hint": "Think resource-based evaluation.",
+"metadata": {
+"topic": "VRIO framework",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-041",
+"question_text": "Explain why valuable resources alone may not generate sustained competitive advantage.",
+"type": "short_answer",
+"correct_answer": "Because competitors may easily imitate or substitute them.",
+"difficulty": 3,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "For advantage to persist, resources must also be rare and difficult to imitate or substitute.",
+"hint": "Consider imitation.",
+"metadata": {
+"topic": "Competitive advantage",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-042",
+"question_text": "Which resource characteristic most directly prevents competitors from copying it?",
+"type": "multiple_choice",
+"choices": [
+"Value",
+"Imitability",
+"Tangibility"
+],
+"correct_answer": "Imitability",
+"difficulty": 2,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Resources that are difficult to imitate help protect competitive advantage from rivals.",
+"hint": "Think difficulty of replication.",
+"metadata": {
+"topic": "Resource protection",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-043",
+"question_text": "How does organisational capability differ from a resource?",
+"type": "short_answer",
+"correct_answer": "Capabilities refer to how resources are combined and used effectively.",
+"difficulty": 3,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Capabilities reflect coordinated skills and processes rather than individual assets.",
+"hint": "Think usage, not possession.",
+"metadata": {
+"topic": "Capabilities",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-044",
+"question_text": "Which internal factor most strongly influences a firm’s operational efficiency?",
+"type": "multiple_choice",
+"choices": [
+"Political environment",
+"Organisational processes",
+"Industry rivalry"
+],
+"correct_answer": "Organisational processes",
+"difficulty": 3,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Efficient internal processes determine how well resources are transformed into outputs.",
+"hint": "Focus inside operations.",
+"metadata": {
+"topic": "Operational efficiency",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-045",
+"question_text": "Why are human resources often considered a strategic asset?",
+"type": "short_answer",
+"correct_answer": "Because skills and knowledge are difficult to replicate and can drive innovation.",
+"difficulty": 4,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Human capital contributes to learning, adaptability, and innovation, supporting sustained advantage.",
+"hint": "Think skills and learning.",
+"metadata": {
+"topic": "Human resources",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-046",
+"question_text": "Which internal weakness is most likely to undermine strategy execution?",
+"type": "multiple_choice",
+"choices": [
+"Strong brand equity",
+"Poor coordination between departments",
+"High customer loyalty"
+],
+"correct_answer": "Poor coordination between departments",
+"difficulty": 4,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Lack of coordination reduces efficiency and weakens strategic implementation.",
+"hint": "Think internal alignment.",
+"metadata": {
+"topic": "Internal weaknesses",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-047",
+"question_text": "Assess why internal analysis must complement external analysis in strategy formulation.",
+"type": "short_answer",
+"correct_answer": "Because strategy must align external opportunities with internal capabilities.",
+"difficulty": 5,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Effective strategies exploit opportunities while remaining feasible given internal strengths and limitations.",
+"hint": "Think fit.",
+"metadata": {
+"topic": "Strategic fit",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-048",
+"question_text": "From a resource-based view, why might firms in the same industry perform differently?",
+"type": "short_answer",
+"correct_answer": "Because they possess different resources and capabilities.",
+"difficulty": 5,
+"skill_ids": ["business_internal_environment_resources_1"],
+"solution_explanation": "Heterogeneity in internal resources leads to variation in efficiency and competitive advantage.",
+"hint": "Think differences inside firms.",
+"metadata": {
+"topic": "Performance differences",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-049",
+"question_text": "What is the primary objective of business strategy?",
+"type": "multiple_choice",
+"choices": [
+"Maximising short-term operational efficiency",
+"Achieving sustainable competitive advantage",
+"Complying with legal requirements"
+],
+"correct_answer": "Achieving sustainable competitive advantage",
+"difficulty": 1,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Strategy aims to position the firm in a way that allows long-term value creation relative to competitors.",
+"hint": "Think long-term success.",
+"metadata": {
+"topic": "Strategy fundamentals",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-050",
+"question_text": "Which term describes a firm’s ability to outperform competitors over time?",
+"type": "multiple_choice",
+"choices": [
+"Operational effectiveness",
+"Competitive advantage",
+"Market saturation"
+],
+"correct_answer": "Competitive advantage",
+"difficulty": 1,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Competitive advantage refers to superior performance relative to rivals.",
+"hint": "Think outperforming rivals.",
+"metadata": {
+"topic": "Competitive advantage",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-051",
+"question_text": "Identify one source of competitive advantage.",
+"type": "short_answer",
+"correct_answer": "Cost leadership.",
+"difficulty": 2,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Lower costs enable firms to offer competitive prices or achieve higher margins.",
+"hint": "Think cost or differentiation.",
+"metadata": {
+"topic": "Sources of advantage",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-052",
+"question_text": "Which strategy focuses on offering unique products valued by customers?",
+"type": "multiple_choice",
+"choices": [
+"Cost leadership",
+"Differentiation",
+"Market exit"
+],
+"correct_answer": "Differentiation",
+"difficulty": 2,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Differentiation creates value through uniqueness perceived by customers.",
+"hint": "Think uniqueness.",
+"metadata": {
+"topic": "Generic strategies",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-053",
+"question_text": "Explain why competitive advantage must be difficult to imitate.",
+"type": "short_answer",
+"correct_answer": "To prevent competitors from eroding superior performance.",
+"difficulty": 3,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Imitation reduces differentiation and profitability, eliminating advantage.",
+"hint": "Think sustainability.",
+"metadata": {
+"topic": "Sustainability",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-054",
+"question_text": "Which strategic position involves serving a narrow market segment?",
+"type": "multiple_choice",
+"choices": [
+"Focus strategy",
+"Cost leadership",
+"Diversification"
+],
+"correct_answer": "Focus strategy",
+"difficulty": 2,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Focus strategies target specific market niches rather than the entire market.",
+"hint": "Think niche.",
+"metadata": {
+"topic": "Market scope",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-055",
+"question_text": "How can innovation contribute to competitive advantage?",
+"type": "short_answer",
+"correct_answer": "By creating new value propositions or lowering costs.",
+"difficulty": 3,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Innovation enables differentiation and efficiency gains.",
+"hint": "Think newness.",
+"metadata": {
+"topic": "Innovation",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-056",
+"question_text": "Which risk arises when a firm is ‘stuck in the middle’?",
+"type": "multiple_choice",
+"choices": [
+"Excessive focus",
+"Lack of clear competitive position",
+"Over-specialisation"
+],
+"correct_answer": "Lack of clear competitive position",
+"difficulty": 4,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Firms that fail to pursue a clear strategy risk underperforming competitors.",
+"hint": "Think unclear positioning.",
+"metadata": {
+"topic": "Strategic risk",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-057",
+"question_text": "Why might cost leadership be difficult to sustain?",
+"type": "short_answer",
+"correct_answer": "Because competitors may replicate cost efficiencies.",
+"difficulty": 4,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Cost advantages can erode as technologies diffuse and rivals improve efficiency.",
+"hint": "Think imitation.",
+"metadata": {
+"topic": "Cost strategy limits",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-058",
+"question_text": "Which strategic action best protects differentiation advantages?",
+"type": "multiple_choice",
+"choices": [
+"Standardising offerings",
+"Continuous innovation",
+"Reducing customer service"
+],
+"correct_answer": "Continuous innovation",
+"difficulty": 4,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Ongoing innovation renews uniqueness and sustains customer value.",
+"hint": "Think renewal.",
+"metadata": {
+"topic": "Protecting differentiation",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-059",
+"question_text": "Evaluate why competitive advantage is relative rather than absolute.",
+"type": "short_answer",
+"correct_answer": "Because it depends on performance compared to competitors.",
+"difficulty": 5,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Advantage only exists in relation to rivals’ capabilities and positions.",
+"hint": "Think comparison.",
+"metadata": {
+"topic": "Relative performance",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-060",
+"question_text": "From a strategic perspective, why must firms continually renew competitive advantage?",
+"type": "short_answer",
+"correct_answer": "Because competitive conditions and rival actions change over time.",
+"difficulty": 5,
+"skill_ids": ["business_strategy_competitive_advantage_1"],
+"solution_explanation": "Dynamic environments erode existing advantages, requiring ongoing strategic adaptation.",
+"hint": "Think change.",
+"metadata": {
+"topic": "Dynamic strategy",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-BUS_FND-061",
+"question_text": "What is the primary purpose of a SWOT analysis?",
+"type": "multiple_choice",
+"choices": [
+"To analyse accounting performance",
+"To integrate internal and external strategic factors",
+"To forecast financial returns"
+],
+"correct_answer": "To integrate internal and external strategic factors",
+"difficulty": 1,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "SWOT analysis combines internal strengths and weaknesses with external opportunities and threats to support strategic decision-making.",
+"hint": "Think integration of internal and external factors.",
+"metadata": {
+"topic": "SWOT fundamentals",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-062",
+"question_text": "Which element of SWOT analysis refers to favourable external conditions?",
+"type": "multiple_choice",
+"choices": [
+"Strengths",
+"Opportunities",
+"Threats"
+],
+"correct_answer": "Opportunities",
+"difficulty": 1,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Opportunities are external trends or conditions that a firm can exploit to improve performance.",
+"hint": "Think external and positive.",
+"metadata": {
+"topic": "SWOT components",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-063",
+"question_text": "Identify one example of a weakness in SWOT analysis.",
+"type": "short_answer",
+"correct_answer": "Limited financial resources.",
+"difficulty": 2,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Weaknesses are internal limitations that reduce organisational effectiveness or competitiveness.",
+"hint": "Think internal limitations.",
+"metadata": {
+"topic": "Weaknesses",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-064",
+"question_text": "Which SWOT element is most closely linked to internal capabilities?",
+"type": "multiple_choice",
+"choices": [
+"Threats",
+"Strengths",
+"Opportunities"
+],
+"correct_answer": "Strengths",
+"difficulty": 2,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Strengths represent internal resources and capabilities that support competitive advantage.",
+"hint": "Think what the firm does well.",
+"metadata": {
+"topic": "Strengths",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-065",
+"question_text": "Explain why SWOT analysis alone may be insufficient for strategy formulation.",
+"type": "short_answer",
+"correct_answer": "It provides a static snapshot and lacks prioritisation or causal analysis.",
+"difficulty": 3,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "SWOT does not indicate how factors interact or which are most critical, requiring complementary analyses.",
+"hint": "Think limitations.",
+"metadata": {
+"topic": "SWOT limitations",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-066",
+"question_text": "Which strategic use of SWOT focuses on leveraging strengths to exploit opportunities?",
+"type": "multiple_choice",
+"choices": [
+"Defensive strategy",
+"SO strategy",
+"WT strategy"
+],
+"correct_answer": "SO strategy",
+"difficulty": 3,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "SO strategies match strengths with opportunities to maximise competitive potential.",
+"hint": "Think strengths plus opportunities.",
+"metadata": {
+"topic": "SWOT strategies",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-067",
+"question_text": "How can threats identified in SWOT analysis affect strategic choices?",
+"type": "short_answer",
+"correct_answer": "They may require risk mitigation or defensive strategic actions.",
+"difficulty": 3,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Threats highlight external risks that can undermine performance if not addressed strategically.",
+"hint": "Think risk response.",
+"metadata": {
+"topic": "Threats",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-068",
+"question_text": "Which SWOT element reflects internal inefficiencies?",
+"type": "multiple_choice",
+"choices": [
+"Weaknesses",
+"Threats",
+"Opportunities"
+],
+"correct_answer": "Weaknesses",
+"difficulty": 2,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Weaknesses represent internal deficiencies that reduce effectiveness.",
+"hint": "Think internal negatives.",
+"metadata": {
+"topic": "Internal analysis",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-069",
+"question_text": "Why should SWOT factors be prioritised rather than listed exhaustively?",
+"type": "short_answer",
+"correct_answer": "Because not all factors have equal strategic importance.",
+"difficulty": 4,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Strategic focus requires identifying the most impactful factors to guide decision-making.",
+"hint": "Think relevance.",
+"metadata": {
+"topic": "Prioritisation",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-070",
+"question_text": "Which analytical weakness of SWOT can lead to managerial bias?",
+"type": "multiple_choice",
+"choices": [
+"Quantitative precision",
+"Subjectivity in factor identification",
+"Excessive complexity"
+],
+"correct_answer": "Subjectivity in factor identification",
+"difficulty": 4,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "SWOT relies on managerial judgement, which may introduce bias or inconsistency.",
+"hint": "Think judgement.",
+"metadata": {
+"topic": "Bias",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-071",
+"question_text": "Evaluate the strategic value of combining SWOT with other analytical frameworks.",
+"type": "short_answer",
+"correct_answer": "It enhances depth, objectivity, and strategic insight.",
+"difficulty": 5,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Complementary frameworks address SWOT’s limitations and improve decision quality.",
+"hint": "Think complementarity.",
+"metadata": {
+"topic": "Integrated analysis",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-072",
+"question_text": "From a strategic perspective, why must SWOT analysis be revisited over time?",
+"type": "short_answer",
+"correct_answer": "Because internal capabilities and external conditions evolve.",
+"difficulty": 5,
+"skill_ids": ["business_swot_analysis_1"],
+"solution_explanation": "Dynamic environments require periodic reassessment to maintain strategic relevance.",
+"hint": "Think change.",
+"metadata": {
+"topic": "Dynamic strategy",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-BUS_FND-073",
+"question_text": "What is corporate-level strategy primarily concerned with?",
+"type": "multiple_choice",
+"choices": [
+"How a firm competes within a single market",
+"Which businesses and markets a firm should operate in",
+"Day-to-day operational efficiency"
+],
+"correct_answer": "Which businesses and markets a firm should operate in",
+"difficulty": 1,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Corporate-level strategy focuses on the overall scope of the organisation, including decisions about diversification, growth, and portfolio composition.",
+"hint": "Think scope and portfolio.",
+"metadata": {
+"topic": "Corporate strategy",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-074",
+"question_text": "Which growth strategy involves expanding existing products into new markets?",
+"type": "multiple_choice",
+"choices": [
+"Market penetration",
+"Market development",
+"Product development"
+],
+"correct_answer": "Market development",
+"difficulty": 1,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Market development seeks growth by introducing current products to new customer segments or geographic markets.",
+"hint": "Same product, new market.",
+"metadata": {
+"topic": "Growth strategies",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-075",
+"question_text": "Identify one reason firms pursue diversification.",
+"type": "short_answer",
+"correct_answer": "To reduce risk by spreading activities across different markets.",
+"difficulty": 2,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Diversification can stabilise returns by reducing dependence on a single product or market.",
+"hint": "Think risk spreading.",
+"metadata": {
+"topic": "Diversification",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-076",
+"question_text": "Which type of diversification involves entering related industries?",
+"type": "multiple_choice",
+"choices": [
+"Conglomerate diversification",
+"Related diversification",
+"Market penetration"
+],
+"correct_answer": "Related diversification",
+"difficulty": 2,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Related diversification leverages similarities in markets, technologies, or capabilities.",
+"hint": "Think similarity.",
+"metadata": {
+"topic": "Types of diversification",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-077",
+"question_text": "Explain why excessive diversification may reduce firm performance.",
+"type": "short_answer",
+"correct_answer": "Because managerial complexity and coordination costs increase.",
+"difficulty": 3,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Over-diversification can dilute managerial focus and strain organisational resources.",
+"hint": "Think complexity.",
+"metadata": {
+"topic": "Limits of diversification",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-078",
+"question_text": "Which strategy focuses on increasing sales within existing markets using existing products?",
+"type": "multiple_choice",
+"choices": [
+"Market penetration",
+"Product diversification",
+"Vertical integration"
+],
+"correct_answer": "Market penetration",
+"difficulty": 2,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Market penetration aims to grow market share through pricing, promotion, or increased usage.",
+"hint": "Same product, same market.",
+"metadata": {
+"topic": "Growth options",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-079",
+"question_text": "How does vertical integration differ from diversification?",
+"type": "short_answer",
+"correct_answer": "It involves expanding along the value chain rather than into new industries.",
+"difficulty": 3,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Vertical integration extends control over inputs or distribution instead of broadening business scope.",
+"hint": "Think value chain.",
+"metadata": {
+"topic": "Vertical integration",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-080",
+"question_text": "Which potential benefit is associated with related diversification?",
+"type": "multiple_choice",
+"choices": [
+"Elimination of competition",
+"Economies of scope",
+"Guaranteed profitability"
+],
+"correct_answer": "Economies of scope",
+"difficulty": 3,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Related diversification allows sharing resources and capabilities across businesses.",
+"hint": "Think shared resources.",
+"metadata": {
+"topic": "Synergies",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-081",
+"question_text": "Why might firms divest certain business units?",
+"type": "short_answer",
+"correct_answer": "To refocus on core activities or improve overall performance.",
+"difficulty": 4,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Divestment can free resources and reduce complexity when units underperform or lack strategic fit.",
+"hint": "Think focus.",
+"metadata": {
+"topic": "Divestment",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-082",
+"question_text": "Which risk is most associated with conglomerate diversification?",
+"type": "multiple_choice",
+"choices": [
+"Operational dependence",
+"Lack of strategic coherence",
+"Supplier bargaining power"
+],
+"correct_answer": "Lack of strategic coherence",
+"difficulty": 4,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Unrelated diversification can create coordination difficulties and weak strategic fit.",
+"hint": "Think unrelated activities.",
+"metadata": {
+"topic": "Conglomerates",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-083",
+"question_text": "Evaluate why corporate strategy decisions are typically irreversible in the short term.",
+"type": "short_answer",
+"correct_answer": "Because they involve large investments and structural commitments.",
+"difficulty": 5,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Corporate-level moves require significant resources and cannot be easily reversed without cost.",
+"hint": "Think commitment.",
+"metadata": {
+"topic": "Strategic commitment",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-084",
+"question_text": "From a long-term perspective, why must corporate growth strategies be aligned with core capabilities?",
+"type": "short_answer",
+"correct_answer": "To ensure sustainable value creation and avoid strategic overreach.",
+"difficulty": 5,
+"skill_ids": ["business_corporate_strategy_growth_1"],
+"solution_explanation": "Growth that exceeds a firm’s capabilities increases risk and reduces performance.",
+"hint": "Think capability fit.",
+"metadata": {
+"topic": "Strategic fit",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-085",
+"question_text": "What is corporate governance primarily concerned with?",
+"type": "multiple_choice",
+"choices": [
+"Operational efficiency",
+"How organisations are directed and controlled",
+"Marketing strategy design"
+],
+"correct_answer": "How organisations are directed and controlled",
+"difficulty": 1,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Corporate governance addresses the systems and relationships that guide managerial decision-making and accountability.",
+"hint": "Think control and oversight.",
+"metadata": {
+"topic": "Corporate governance",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-086",
+"question_text": "Which group is primarily responsible for overseeing top management?",
+"type": "multiple_choice",
+"choices": [
+"Employees",
+"Board of directors",
+"Customers"
+],
+"correct_answer": "Board of directors",
+"difficulty": 1,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "The board represents shareholders and monitors executive management.",
+"hint": "Think oversight body.",
+"metadata": {
+"topic": "Board roles",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-087",
+"question_text": "Identify one responsibility of the board of directors.",
+"type": "short_answer",
+"correct_answer": "Monitoring executive performance.",
+"difficulty": 2,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Boards ensure management acts in the best interests of the organisation and its owners.",
+"hint": "Think monitoring.",
+"metadata": {
+"topic": "Board responsibilities",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-088",
+"question_text": "Which governance issue arises from separation of ownership and control?",
+"type": "multiple_choice",
+"choices": [
+"Economies of scale",
+"Agency problem",
+"Market segmentation"
+],
+"correct_answer": "Agency problem",
+"difficulty": 2,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Agency problems occur when managers’ interests diverge from those of owners.",
+"hint": "Think incentives.",
+"metadata": {
+"topic": "Agency theory",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-089",
+"question_text": "Explain how executive compensation can address agency problems.",
+"type": "short_answer",
+"correct_answer": "By aligning managerial incentives with shareholder performance.",
+"difficulty": 3,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Performance-based pay links managerial rewards to organisational outcomes.",
+"hint": "Think incentives.",
+"metadata": {
+"topic": "Incentive alignment",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-090",
+"question_text": "Which governance mechanism provides external discipline on firms?",
+"type": "multiple_choice",
+"choices": [
+"Internal audits",
+"Market for corporate control",
+"Organisational culture"
+],
+"correct_answer": "Market for corporate control",
+"difficulty": 3,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Poorly governed firms may become takeover targets, disciplining management.",
+"hint": "Think takeovers.",
+"metadata": {
+"topic": "External governance",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-091",
+"question_text": "Why is transparency important in corporate governance?",
+"type": "short_answer",
+"correct_answer": "It reduces information asymmetry between managers and stakeholders.",
+"difficulty": 3,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Transparency enables monitoring and builds trust among stakeholders.",
+"hint": "Think information.",
+"metadata": {
+"topic": "Transparency",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-092",
+"question_text": "Which stakeholder group is most directly protected by corporate governance mechanisms?",
+"type": "multiple_choice",
+"choices": [
+"Suppliers",
+"Shareholders",
+"Competitors"
+],
+"correct_answer": "Shareholders",
+"difficulty": 2,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Governance systems are designed primarily to protect owners’ interests.",
+"hint": "Think owners.",
+"metadata": {
+"topic": "Stakeholders",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-093",
+"question_text": "How can ineffective governance harm firm performance?",
+"type": "short_answer",
+"correct_answer": "By allowing managerial opportunism and poor strategic decisions.",
+"difficulty": 4,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Weak oversight increases risk of inefficiency and value destruction.",
+"hint": "Think misuse of power.",
+"metadata": {
+"topic": "Governance failure",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-094",
+"question_text": "Which board characteristic is most associated with effective monitoring?",
+"type": "multiple_choice",
+"choices": [
+"Managerial dominance",
+"Independence of directors",
+"Large board size"
+],
+"correct_answer": "Independence of directors",
+"difficulty": 4,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Independent directors are better positioned to challenge management objectively.",
+"hint": "Think independence.",
+"metadata": {
+"topic": "Board effectiveness",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-095",
+"question_text": "Evaluate why governance systems vary across countries.",
+"type": "short_answer",
+"correct_answer": "Because of differences in legal, cultural, and institutional frameworks.",
+"difficulty": 5,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "National institutions shape ownership structures and governance practices.",
+"hint": "Think institutions.",
+"metadata": {
+"topic": "Comparative governance",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-096",
+"question_text": "From a strategic viewpoint, why is corporate governance critical for long-term value creation?",
+"type": "short_answer",
+"correct_answer": "It ensures accountability and supports sound strategic decision-making.",
+"difficulty": 5,
+"skill_ids": ["business_corporate_governance_structure_1"],
+"solution_explanation": "Effective governance aligns interests and safeguards sustainable performance.",
+"hint": "Think long-term control.",
+"metadata": {
+"topic": "Value creation",
+"estimated_time_seconds": 90
+}
+}
+{
+"id": "temp-BUS_FND-097",
+"question_text": "What is the primary objective of marketing within a business organisation?",
+"type": "multiple_choice",
+"choices": [
+"Maximising short-term sales volume",
+"Creating, communicating, and delivering value to customers",
+"Reducing production costs"
+],
+"correct_answer": "Creating, communicating, and delivering value to customers",
+"difficulty": 1,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Marketing focuses on identifying customer needs and delivering value in ways that support organisational objectives.",
+"hint": "Think value and customers.",
+"metadata": {
+"topic": "Marketing fundamentals",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-098",
+"question_text": "Which concept refers to dividing a market into distinct customer groups?",
+"type": "multiple_choice",
+"choices": [
+"Market penetration",
+"Market segmentation",
+"Product differentiation"
+],
+"correct_answer": "Market segmentation",
+"difficulty": 1,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Market segmentation categorises customers based on shared characteristics to improve targeting.",
+"hint": "Think grouping customers.",
+"metadata": {
+"topic": "Segmentation",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-099",
+"question_text": "Identify one basis commonly used for market segmentation.",
+"type": "short_answer",
+"correct_answer": "Demographic characteristics.",
+"difficulty": 2,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Markets are often segmented by demographics such as age, income, or education.",
+"hint": "Think customer characteristics.",
+"metadata": {
+"topic": "Segmentation bases",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-100",
+"question_text": "Which element of the marketing mix concerns pricing decisions?",
+"type": "multiple_choice",
+"choices": [
+"Product",
+"Price",
+"Promotion"
+],
+"correct_answer": "Price",
+"difficulty": 1,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Price refers to the amount customers pay and directly influences revenue and positioning.",
+"hint": "Think cost to customer.",
+"metadata": {
+"topic": "Marketing mix",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-101",
+"question_text": "Explain why targeting is important after market segmentation.",
+"type": "short_answer",
+"correct_answer": "It allows firms to focus resources on the most attractive customer segments.",
+"difficulty": 3,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Targeting ensures marketing efforts are aligned with segments that best support strategic goals.",
+"hint": "Think resource focus.",
+"metadata": {
+"topic": "Targeting",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-102",
+"question_text": "Which marketing activity is most closely associated with promotion?",
+"type": "multiple_choice",
+"choices": [
+"Advertising",
+"Inventory management",
+"Supplier negotiation"
+],
+"correct_answer": "Advertising",
+"difficulty": 2,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Promotion involves communication activities such as advertising and sales promotion.",
+"hint": "Think communication.",
+"metadata": {
+"topic": "Promotion",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-103",
+"question_text": "How does positioning influence consumer perception?",
+"type": "short_answer",
+"correct_answer": "It shapes how customers perceive a product relative to competitors.",
+"difficulty": 3,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Positioning communicates distinctive value attributes in the customer’s mind.",
+"hint": "Think perception.",
+"metadata": {
+"topic": "Positioning",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-104",
+"question_text": "Which factor most strongly affects consumer buying behaviour?",
+"type": "multiple_choice",
+"choices": [
+"Organisational structure",
+"Consumer needs and preferences",
+"Accounting practices"
+],
+"correct_answer": "Consumer needs and preferences",
+"difficulty": 2,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Marketing decisions are shaped by understanding what customers value and desire.",
+"hint": "Think customer-driven.",
+"metadata": {
+"topic": "Consumer behaviour",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-105",
+"question_text": "Why is brand equity considered a strategic marketing asset?",
+"type": "short_answer",
+"correct_answer": "Because it enhances customer loyalty and allows premium pricing.",
+"difficulty": 4,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Strong brands create trust and differentiation, supporting long-term value.",
+"hint": "Think loyalty and value.",
+"metadata": {
+"topic": "Branding",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-106",
+"question_text": "Which marketing challenge is most associated with mature markets?",
+"type": "multiple_choice",
+"choices": [
+"Low competition",
+"Slowing demand growth",
+"High innovation uncertainty"
+],
+"correct_answer": "Slowing demand growth",
+"difficulty": 4,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Mature markets often face saturation, intensifying competition.",
+"hint": "Think saturation.",
+"metadata": {
+"topic": "Market maturity",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-107",
+"question_text": "Evaluate why marketing strategy must align with overall business strategy.",
+"type": "short_answer",
+"correct_answer": "To ensure consistent value creation and efficient resource use.",
+"difficulty": 5,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Strategic alignment prevents conflicting priorities and supports competitive advantage.",
+"hint": "Think alignment.",
+"metadata": {
+"topic": "Strategic alignment",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-108",
+"question_text": "From a strategic perspective, why must firms continuously monitor customer needs?",
+"type": "short_answer",
+"correct_answer": "Because customer preferences evolve over time.",
+"difficulty": 5,
+"skill_ids": ["business_marketing_fundamentals_1"],
+"solution_explanation": "Ongoing market research enables adaptation and sustained relevance.",
+"hint": "Think change.",
+"metadata": {
+"topic": "Market dynamics",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-109",
+"question_text": "What is the primary purpose of operations management?",
+"type": "multiple_choice",
+"choices": [
+"Designing promotional campaigns",
+"Transforming inputs into outputs efficiently",
+"Managing financial investments"
+],
+"correct_answer": "Transforming inputs into outputs efficiently",
+"difficulty": 1,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Operations management focuses on designing and controlling production processes.",
+"hint": "Think production efficiency.",
+"metadata": {
+"topic": "Operations management",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-110",
+"question_text": "Which factor most directly affects operational capacity?",
+"type": "multiple_choice",
+"choices": [
+"Available resources",
+"Brand image",
+"Market segmentation"
+],
+"correct_answer": "Available resources",
+"difficulty": 1,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Capacity depends on labour, machinery, and facilities.",
+"hint": "Think inputs.",
+"metadata": {
+"topic": "Capacity",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-111",
+"question_text": "Identify one objective of inventory management.",
+"type": "short_answer",
+"correct_answer": "Balancing availability with holding costs.",
+"difficulty": 2,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Effective inventory management minimises costs while ensuring supply continuity.",
+"hint": "Think balance.",
+"metadata": {
+"topic": "Inventory",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-112",
+"question_text": "Which operations strategy focuses on minimising waste?",
+"type": "multiple_choice",
+"choices": [
+"Lean operations",
+"Mass customisation",
+"Vertical integration"
+],
+"correct_answer": "Lean operations",
+"difficulty": 2,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Lean systems emphasise waste reduction and continuous improvement.",
+"hint": "Think efficiency.",
+"metadata": {
+"topic": "Lean operations",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-113",
+"question_text": "Explain how process standardisation can improve efficiency.",
+"type": "short_answer",
+"correct_answer": "By reducing variability and errors.",
+"difficulty": 3,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Standard processes improve predictability and control.",
+"hint": "Think consistency.",
+"metadata": {
+"topic": "Process design",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-114",
+"question_text": "Which performance objective focuses on meeting delivery schedules?",
+"type": "multiple_choice",
+"choices": [
+"Quality",
+"Dependability",
+"Flexibility"
+],
+"correct_answer": "Dependability",
+"difficulty": 2,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Dependability measures reliability in meeting commitments.",
+"hint": "Think reliability.",
+"metadata": {
+"topic": "Performance objectives",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-115",
+"question_text": "Why is flexibility important in operations management?",
+"type": "short_answer",
+"correct_answer": "It enables adaptation to changes in demand or product requirements.",
+"difficulty": 3,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Flexible operations respond more effectively to uncertainty.",
+"hint": "Think adaptability.",
+"metadata": {
+"topic": "Flexibility",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-116",
+"question_text": "Which operational issue is most likely to increase unit costs?",
+"type": "multiple_choice",
+"choices": [
+"High defect rates",
+"High capacity utilisation",
+"Process automation"
+],
+"correct_answer": "High defect rates",
+"difficulty": 3,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Defects create rework and waste, raising costs.",
+"hint": "Think errors.",
+"metadata": {
+"topic": "Cost drivers",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-117",
+"question_text": "How can operations strategy support competitive advantage?",
+"type": "short_answer",
+"correct_answer": "By delivering superior quality, cost efficiency, or reliability.",
+"difficulty": 4,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Operations capabilities underpin strategic positioning.",
+"hint": "Think execution.",
+"metadata": {
+"topic": "Operations strategy",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-118",
+"question_text": "Which trade-off often arises in operations management?",
+"type": "multiple_choice",
+"choices": [
+"Quality versus cost",
+"Marketing versus finance",
+"Ownership versus control"
+],
+"correct_answer": "Quality versus cost",
+"difficulty": 4,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Improving quality may require additional resources, increasing costs.",
+"hint": "Think trade-offs.",
+"metadata": {
+"topic": "Operational trade-offs",
+"estimated_time_seconds": 50
+}
+}
+
+{
+"id": "temp-BUS_FND-119",
+"question_text": "Evaluate why operations decisions have long-term strategic implications.",
+"type": "short_answer",
+"correct_answer": "Because they involve capacity, technology, and process commitments.",
+"difficulty": 5,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Operations investments shape cost structures and capabilities over time.",
+"hint": "Think commitment.",
+"metadata": {
+"topic": "Strategic impact",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-120",
+"question_text": "From a strategic viewpoint, why must operations align with market requirements?",
+"type": "short_answer",
+"correct_answer": "To ensure efficient delivery of customer value.",
+"difficulty": 5,
+"skill_ids": ["business_operations_management_1"],
+"solution_explanation": "Misalignment reduces competitiveness and customer satisfaction.",
+"hint": "Think fit.",
+"metadata": {
+"topic": "Market alignment",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-121",
+"question_text": "What is the primary role of human resource management?",
+"type": "multiple_choice",
+"choices": [
+"Managing financial capital",
+"Managing people to achieve organisational goals",
+"Controlling production technology"
+],
+"correct_answer": "Managing people to achieve organisational goals",
+"difficulty": 1,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "HRM focuses on recruitment, development, and retention of employees.",
+"hint": "Think people management.",
+"metadata": {
+"topic": "HRM fundamentals",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-122",
+"question_text": "Which HR activity is most closely associated with employee development?",
+"type": "multiple_choice",
+"choices": [
+"Training",
+"Recruitment",
+"Compensation"
+],
+"correct_answer": "Training",
+"difficulty": 1,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Training enhances employee skills and knowledge.",
+"hint": "Think learning.",
+"metadata": {
+"topic": "Training",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-123",
+"question_text": "Identify one objective of performance appraisal systems.",
+"type": "short_answer",
+"correct_answer": "Evaluating employee performance against set criteria.",
+"difficulty": 2,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Appraisals provide feedback and inform development and reward decisions.",
+"hint": "Think evaluation.",
+"metadata": {
+"topic": "Performance management",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-124",
+"question_text": "Which HR practice aims to attract qualified job candidates?",
+"type": "multiple_choice",
+"choices": [
+"Selection",
+"Recruitment",
+"Job evaluation"
+],
+"correct_answer": "Recruitment",
+"difficulty": 1,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Recruitment generates a pool of potential employees.",
+"hint": "Think attracting candidates.",
+"metadata": {
+"topic": "Recruitment",
+"estimated_time_seconds": 30
+}
+}
+
+{
+"id": "temp-BUS_FND-125",
+"question_text": "Explain why employee motivation is important for organisational performance.",
+"type": "short_answer",
+"correct_answer": "Motivated employees are more productive and engaged.",
+"difficulty": 3,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Motivation influences effort, commitment, and retention.",
+"hint": "Think engagement.",
+"metadata": {
+"topic": "Motivation",
+"estimated_time_seconds": 60
+}
+}
+
+{
+"id": "temp-BUS_FND-126",
+"question_text": "Which reward type is non-financial?",
+"type": "multiple_choice",
+"choices": [
+"Salary",
+"Bonus",
+"Recognition"
+],
+"correct_answer": "Recognition",
+"difficulty": 2,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Non-financial rewards address intrinsic motivation.",
+"hint": "Think non-monetary.",
+"metadata": {
+"topic": "Rewards",
+"estimated_time_seconds": 35
+}
+}
+
+{
+"id": "temp-BUS_FND-127",
+"question_text": "How does effective HRM support competitive advantage?",
+"type": "short_answer",
+"correct_answer": "By developing skills and capabilities that are difficult to imitate.",
+"difficulty": 4,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Human capital contributes to sustained performance differences.",
+"hint": "Think capabilities.",
+"metadata": {
+"topic": "HR strategy",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-128",
+"question_text": "Which HR challenge is most associated with workforce diversity?",
+"type": "multiple_choice",
+"choices": [
+"Innovation potential",
+"Managing inclusion and equity",
+"Reducing labour costs"
+],
+"correct_answer": "Managing inclusion and equity",
+"difficulty": 3,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Diverse workforces require inclusive management practices.",
+"hint": "Think fairness.",
+"metadata": {
+"topic": "Diversity",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-129",
+"question_text": "Why can high employee turnover be problematic for firms?",
+"type": "short_answer",
+"correct_answer": "It increases recruitment costs and reduces organisational knowledge.",
+"difficulty": 4,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Turnover disrupts continuity and performance.",
+"hint": "Think costs and knowledge.",
+"metadata": {
+"topic": "Turnover",
+"estimated_time_seconds": 70
+}
+}
+
+{
+"id": "temp-BUS_FND-130",
+"question_text": "Which HR policy most directly influences employee retention?",
+"type": "multiple_choice",
+"choices": [
+"Compensation and benefits",
+"Marketing communications",
+"Supplier contracts"
+],
+"correct_answer": "Compensation and benefits",
+"difficulty": 3,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Rewards influence satisfaction and retention.",
+"hint": "Think incentives.",
+"metadata": {
+"topic": "Retention",
+"estimated_time_seconds": 40
+}
+}
+
+{
+"id": "temp-BUS_FND-131",
+"question_text": "Evaluate why HR decisions have long-term strategic consequences.",
+"type": "short_answer",
+"correct_answer": "Because skills, culture, and employment relationships evolve over time.",
+"difficulty": 5,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "HR investments shape future capabilities and performance.",
+"hint": "Think long-term.",
+"metadata": {
+"topic": "Strategic impact",
+"estimated_time_seconds": 90
+}
+}
+
+{
+"id": "temp-BUS_FND-132",
+"question_text": "From a strategic perspective, why must HR strategy align with business strategy?",
+"type": "short_answer",
+"correct_answer": "To ensure people capabilities support organisational objectives.",
+"difficulty": 5,
+"skill_ids": ["business_human_resource_management_1"],
+"solution_explanation": "Alignment ensures effective execution of strategy through people.",
+"hint": "Think alignment.",
+"metadata": {
+"topic": "Strategic alignment",
+"estimated_time_seconds": 90
+}
+}
+

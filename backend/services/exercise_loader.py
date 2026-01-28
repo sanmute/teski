@@ -27,7 +27,7 @@ class ExerciseSpec(BaseModel):
     @field_validator("type")
     @classmethod
     def _validate_type(cls, v: str) -> str:
-        allowed = {"multiple_choice", "short_answer"}
+        allowed = {"multiple_choice", "short_answer", "numeric"}
         if v not in allowed:
             raise ValueError(f"type must be one of {sorted(allowed)}")
         return v
@@ -58,12 +58,61 @@ def load_exercise_specs_from_dir(path: str | Path) -> Tuple[List[ExerciseSpec], 
         return [], [f"Path not found: {base}"]
 
     for json_path in sorted(base.rglob("*.json")):
+        name_lc = json_path.name.lower()
+        if name_lc.startswith("tasks"):
+            # ignore planner/task seed files
+            continue
+        raw = json_path.read_text(encoding="utf-8").replace("\r\n", "\n")
+        raw = raw.replace("}\n{", "}\n\n{")
         try:
-            data = json.loads(json_path.read_text(encoding="utf-8"))
-            spec = ExerciseSpec.model_validate(data)
-            specs.append(spec)
-        except (json.JSONDecodeError, ValidationError, Exception) as exc:  # noqa: B902
-            errors.append(f"{json_path}: {exc}")
+            parsed = json.loads(raw)
+            parsed_list = parsed if isinstance(parsed, list) else [parsed]
+        except json.JSONDecodeError:
+            parsed_list = []
+            # Try combining multiple objects into an array
+            combined = "[" + raw.replace("}\r\n\r\n{", "},{").replace("}\n\n{", "},{") + "]"
+            try:
+                parsed = json.loads(combined)
+                parsed_list = parsed if isinstance(parsed, list) else [parsed]
+            except Exception:
+                pass
+            # Fallback for files containing multiple JSON objects separated by blank lines
+            chunks = [c.strip() for c in raw.split("\n\n") if c.strip()]
+            try:
+                for chunk in chunks:
+                    chunk_stripped = chunk.strip()
+                    if not (chunk_stripped.startswith("{") and chunk_stripped.endswith("}")):
+                        # skip non-JSON chunks such as headers/markdown
+                        continue
+                    try:
+                        parsed_list.append(json.loads(chunk_stripped))
+                    except Exception:
+                        # Last-resort sanitizer: escape inner quotes in string values
+                        fixed_lines = []
+                        for line in chunk_stripped.splitlines():
+                            if '": "' in line:
+                                key, val = line.split('": "', 1)
+                                # keep trailing comma if present
+                                trailing_comma = "," if val.rstrip().endswith(",") else ""
+                                val_body = val.rstrip().rstrip(",")
+                                if val_body.endswith('"'):
+                                    val_body = val_body[:-1]
+                                val_body_escaped = val_body.replace('"', '\\"')
+                                line = f'{key}": "{val_body_escaped}"{trailing_comma}'
+                            fixed_lines.append(line)
+                        fixed_chunk = "\n".join(fixed_lines)
+                        parsed_list.append(json.loads(fixed_chunk))
+            except Exception as exc:  # pragma: no cover
+                errors.append(f"{json_path}: {exc}")
+                continue
+        for obj in parsed_list:
+            try:
+                spec = ExerciseSpec.model_validate(obj)
+                specs.append(spec)
+            except ValidationError as exc:
+                errors.append(f"{json_path}: {exc}")
+            except Exception as exc:  # noqa: B902
+                errors.append(f"{json_path}: {exc}")
     return specs, errors
 
 

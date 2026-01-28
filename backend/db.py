@@ -157,6 +157,7 @@ def init_db():
         from models_institution import Course, Institution, Module, UserInstitutionRole, UserCourseRole
         from models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
         from models_exercise import Exercise
+        from models_analytics import AnalyticsEvent
 
         _ = (Course, Institution, Module, UserInstitutionRole, UserCourseRole, MicroQuest, MicroQuestAnswer, MicroQuestExercise, Exercise)
         SQLModel.metadata.create_all(engine)
