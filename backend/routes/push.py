@@ -8,7 +8,7 @@ import json
 from db import get_session
 from models_push import PushSubscription
 
-router = APIRouter(prefix="/api/push", tags=["push"])
+router = APIRouter(prefix="/push", tags=["push"])
 
 VAPID_PUBLIC_KEY = getenv("VAPID_PUBLIC_KEY")
 VAPID_PRIVATE_PEM = getenv("VAPID_PRIVATE_PEM")

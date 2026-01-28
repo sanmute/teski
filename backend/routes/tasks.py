@@ -14,7 +14,7 @@ from services.scoring import score
 from settings import DEFAULT_TIMEZONE
 from sqlalchemy.exc import IntegrityError
 
-router = APIRouter(prefix="/api/tasks", tags=["tasks"])
+router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 class TaskSimpleIn(BaseModel):
     title: str

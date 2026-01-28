@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from services.topic_matcher import match_topics, merge_resources, merge_practice_prompts
 
-router = APIRouter(prefix="/api/topics", tags=["topics"])
+router = APIRouter(prefix="/topics", tags=["topics"])
 
 @router.get("/suggest")
 def suggest_topics(title: str = Query(...), notes: str = ""):

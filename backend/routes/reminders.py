@@ -12,7 +12,7 @@ from services.scoring import score, script_hint
 from services.reminder_engine import run_sweep, maybe_create_reminder_for_task  # <-- add this module
 from settings import DEFAULT_TIMEZONE
 
-router = APIRouter(prefix="/api/reminders", tags=["reminders"])
+router = APIRouter(prefix="/reminders", tags=["reminders"])
 
 
 # ---------------------------

@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from settings import DEFAULT_TIMEZONE
 import json
 
-router = APIRouter(prefix="/api/study-pack", tags=["study-pack"])
+router = APIRouter(prefix="/study-pack", tags=["study-pack"])
 
 class BuildStudyPackRequest(BaseModel):
     taskId: str

@@ -9,7 +9,7 @@ from routes.deps import get_current_user
 from schemas_memory import LogMistakeIn, NextTasksOut, PlanBuildIn
 from services.memory import build_resurface_plan, fetch_next_resurfaced_instances, log_mistake
 
-router = APIRouter(prefix="/api/v1/memory", tags=["memory"])
+router = APIRouter(prefix="/memory", tags=["memory"])
 
 
 @router.post("/log", response_model=dict)

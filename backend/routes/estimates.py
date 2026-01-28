@@ -8,7 +8,7 @@ from models import Task
 from services.effort import analyze_assignment as analyze
 from settings import DEFAULT_TIMEZONE
 
-router = APIRouter(prefix="/api/tasks", tags=["tasks"])
+router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 @router.post("/{task_id}/estimate")
 def estimate_task(task_id: str, session: Session = Depends(get_session)):

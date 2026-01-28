@@ -28,7 +28,9 @@ try:  # pragma: no cover - optional dependency
     from app.scheduler import review as scheduler_review, schedule_from_mistake
     from app.xp import award as award_xp
     from app.badges import check_nemesis
-except ModuleNotFoundError:  # pragma: no cover
+except (ModuleNotFoundError, ImportError):  # pragma: no cover
+    # If the newer \"app\" package isn't present (e.g., slim Fly image) or is
+    # partially installed, fall back to legacy-only behavior.
     get_app_session = None
     LegacyTaskMap = LegacyUserMap = MemoryItem = Mistake = NewTask = NewUser = None
     scheduler_review = schedule_from_mistake = award_xp = check_nemesis = None
