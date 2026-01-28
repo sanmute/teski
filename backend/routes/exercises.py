@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional
 from uuid import UUID
 import os
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Header
+from fastapi import APIRouter, Depends, HTTPException, Query, Header, Body
 from pydantic import BaseModel, Field
 from sqlmodel import Session, select
 
@@ -168,18 +168,14 @@ def get_exercise(id: str = Query(...), session: Session = Depends(get_session)):
     return _to_out(ex, include_answer=True)
 
 
-@router.post("/answer", response_model=GradeOut)
-@router.post("/submit", response_model=GradeOut)  # legacy alias for frontend
-def answer_exercise(payload: GradeIn, session: Session = Depends(get_session)):
-    ex = session.get(Exercise, payload.exercise_id)
+def _grade_and_respond(session: Session, *, user_id: str, exercise_id: str, raw_answer: Any) -> GradeOut:
+    ex = session.get(Exercise, exercise_id)
     if not ex:
         raise HTTPException(status_code=404, detail="exercise_not_found")
 
     mistake: Optional[MistakeOut] = None
     is_correct = False
 
-    # Extract raw answer value
-    raw_answer = payload.answer
     if isinstance(raw_answer, dict) and "choice" in raw_answer:
         raw_answer = raw_answer.get("choice")
     elif isinstance(raw_answer, dict) and "value" in raw_answer:
@@ -187,7 +183,6 @@ def answer_exercise(payload: GradeIn, session: Session = Depends(get_session)):
     elif isinstance(raw_answer, dict) and "text" in raw_answer:
         raw_answer = raw_answer.get("text")
 
-    # Multiple choice grading
     if ex.type == "multiple_choice":
         if raw_answer is None or raw_answer == "":
             mistake = MistakeOut(family="behavioral", subtype="blank", label="behavioral:blank")
@@ -198,24 +193,22 @@ def answer_exercise(payload: GradeIn, session: Session = Depends(get_session)):
             if not is_correct:
                 mistake = MistakeOut(family="behavioral", subtype="wrong_choice", label="behavioral:wrong_choice")
     else:
-        # Placeholder for future types
         raise HTTPException(status_code=400, detail=f"unsupported exercise type: {ex.type}")
 
     diff = ex.difficulty or 1
     xp_delta = max(5, 10 - diff) if is_correct else 2
 
-    # Log analytics events
     try:
         session.add(
             AnalyticsEvent(
-                user_id=payload.user_id,
+                user_id=user_id,
                 event_type="exercise_answer",
                 meta={"exercise_id": ex.id, "skill_ids": ex.skill_ids, "difficulty": ex.difficulty},
             )
         )
         session.add(
             AnalyticsEvent(
-                user_id=payload.user_id,
+                user_id=user_id,
                 event_type="exercise_correct" if is_correct else "exercise_incorrect",
                 meta={"exercise_id": ex.id, "skill_ids": ex.skill_ids, "difficulty": ex.difficulty},
             )
@@ -223,9 +216,7 @@ def answer_exercise(payload: GradeIn, session: Session = Depends(get_session)):
         session.commit()
     except Exception:
         session.rollback()
-        # don't block response on logging errors
 
-    # Align with legacy frontend field names
     return GradeOut(
         ok=True,
         exercise_id=ex.id,
@@ -242,6 +233,47 @@ def answer_exercise(payload: GradeIn, session: Session = Depends(get_session)):
         persona_reaction=None,
         next_recommendation=None,
     )
+
+
+@router.post("/answer", response_model=GradeOut)
+@router.post("/submit", response_model=GradeOut)  # legacy alias for frontend
+def answer_exercise(
+    payload: Dict[str, Any] | None = Body(default=None),
+    session: Session = Depends(get_session),
+    user_id_q: Optional[str] = Query(default=None, alias="user_id"),
+    exercise_id_q: Optional[str] = Query(default=None, alias="id"),
+    answer_q: Optional[Any] = Query(default=None, alias="answer"),
+):
+    """
+    Compatibility: allow frontend to send user_id/exercise id via query params and
+    optional answer via query when no JSON body is provided.
+    """
+    user_id = (
+        payload.get("user_id")
+        if isinstance(payload, dict) and "user_id" in payload
+        else payload.user_id
+        if payload and hasattr(payload, "user_id")
+        else user_id_q
+    )
+    exercise_id = (
+        payload.get("exercise_id")
+        if isinstance(payload, dict) and "exercise_id" in payload
+        else payload.exercise_id
+        if payload and hasattr(payload, "exercise_id")
+        else exercise_id_q
+    )
+    raw_answer = (
+        payload.get("answer")
+        if isinstance(payload, dict) and "answer" in payload
+        else payload.answer if payload and hasattr(payload, "answer") else answer_q
+    )
+
+    if not user_id or not exercise_id:
+        raise HTTPException(status_code=400, detail="user_id and id are required")
+    if raw_answer in (None, ""):
+        raise HTTPException(status_code=400, detail="missing_answer")
+
+    return _grade_and_respond(session, user_id=user_id, exercise_id=exercise_id, raw_answer=raw_answer)
 
 
 @router.post("/seed", response_model=SeedResult)

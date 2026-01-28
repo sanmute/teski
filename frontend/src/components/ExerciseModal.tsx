@@ -115,7 +115,11 @@ export function ExerciseModal({
       if (Number.isNaN(index)) {
         throw new Error("Select an option");
       }
-      return { choice: index };
+      const choiceText = exercise.choices?.[index]?.text ?? exercise.choices?.[index] ?? "";
+      if (!choiceText) {
+        throw new Error("Select an option");
+      }
+      return { answer: choiceText };
     }
     if (exercise.type === "NUMERIC") {
       const trimmed = answer.trim();
@@ -123,13 +127,13 @@ export function ExerciseModal({
       if (Number.isNaN(value)) {
         throw new Error("Enter a number");
       }
-      return { value };
+      return { answer: value };
     }
     const text = answer.trim();
     if (!text) {
       throw new Error("Enter your answer");
     }
-    return { text };
+    return { answer: text };
   };
 
   const handleSubmit = async () => {
