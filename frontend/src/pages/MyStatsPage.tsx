@@ -18,6 +18,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import {
   ResponsiveContainer,
   BarChart,
@@ -36,16 +38,15 @@ export const MyStatsPage = () => {
   const [courses, setCourses] = useState<CourseBreakdownItem[]>([]);
   const [insights, setInsights] = useState<Insight[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [hasData, setHasData] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
     async function load() {
       setLoading(true);
-      setError(null);
       try {
-        const [summaryRes, dailyRes, coursesRes, insightsRes] = await Promise.all([
+        const [summaryRes, dailyRes, coursesRes, insightsRes] = await Promise.allSettled([
           fetchMySummary(),
           fetchMyDaily(MIN_DAILY_DAYS),
           fetchMyCourseBreakdown(COURSE_RANGE_DAYS),
@@ -53,14 +54,27 @@ export const MyStatsPage = () => {
         ]);
 
         if (!isMounted) return;
-        setSummary(summaryRes);
-        setDaily(dailyRes.days ?? []);
-        setCourses(coursesRes.items ?? []);
-        setInsights(insightsRes.insights ?? []);
-      } catch (err) {
-        console.error(err);
-        if (isMounted) {
-          setError("Failed to load stats");
+
+        const summaryOk = summaryRes.status === "fulfilled" ? summaryRes.value : null;
+        const dailyOk = dailyRes.status === "fulfilled" ? dailyRes.value : null;
+        const coursesOk = coursesRes.status === "fulfilled" ? coursesRes.value : null;
+        const insightsOk = insightsRes.status === "fulfilled" ? insightsRes.value : null;
+
+        setSummary(summaryOk);
+        setDaily(dailyOk?.days ?? []);
+        setCourses(coursesOk?.items ?? []);
+        setInsights(insightsOk?.insights ?? []);
+
+        const anyData =
+          !!(summaryOk && (summaryOk as any).ok !== false) ||
+          (dailyOk?.days ?? []).length > 0 ||
+          (coursesOk?.items ?? []).length > 0 ||
+          (insightsOk?.insights ?? []).length > 0;
+        setHasData(anyData);
+
+        if (import.meta.env.DEV && (!summaryOk || !dailyOk || !coursesOk || !insightsOk)) {
+          // eslint-disable-next-line no-console
+          console.warn("[stats] Stats API incomplete/missing; rendering empty state.");
         }
       } finally {
         if (isMounted) {
@@ -104,13 +118,7 @@ export const MyStatsPage = () => {
         </div>
       )}
 
-      {!loading && error && (
-        <div className="rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          {error}
-        </div>
-      )}
-
-      {!loading && !error && summary && (
+      {!loading && hasData && summary && (
         <>
           <section className="grid gap-4 md:grid-cols-3">
             <Card>
@@ -341,6 +349,53 @@ export const MyStatsPage = () => {
           </section>
         </>
       )}
+
+      {!loading && !hasData && <EmptyStateStatsView />}
+    </div>
+  );
+};
+
+const EmptyStateStatsView = () => {
+  return (
+    <div className="space-y-6">
+      <section className="grid gap-4 md:grid-cols-3">
+        {["Streak", "Accuracy", "Exercises completed"].map((label) => (
+          <Card key={label}>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xs font-medium text-muted-foreground">{label}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-semibold">—</p>
+              <p className="text-xs text-muted-foreground">Data will appear after a few exercises.</p>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
+
+      <section className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center">
+        <p className="text-sm font-semibold text-slate-800">Stats will appear as you practice</p>
+        <p className="mt-2 text-sm text-slate-600">
+          Complete a few exercises to unlock your trends and insights.
+        </p>
+        <div className="mt-4 h-40 rounded-lg border border-slate-200 bg-white" aria-label="Placeholder chart" />
+        <p className="mt-2 text-xs text-muted-foreground">
+          Complete a few exercises to see your trend.
+        </p>
+      </section>
+
+      <section className="rounded-xl border bg-white p-4">
+        <h3 className="text-sm font-semibold text-slate-900">How this works</h3>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600">
+          <li>We track exercises answered and accuracy over time.</li>
+          <li>Your most practiced topics surface in the course breakdown.</li>
+          <li>Insights update automatically as you keep practicing.</li>
+        </ul>
+        <div className="mt-4">
+          <Button asChild>
+            <Link to="/practice">Start practicing</Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };
