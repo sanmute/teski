@@ -71,6 +71,26 @@ def _ensure_user_auth_columns(conn: sqlite3.Connection) -> None:
         conn.commit()
 
 
+def _ensure_external_user_id(conn: sqlite3.Connection) -> None:
+    cur = conn.cursor()
+    cur.execute("PRAGMA table_info(user);")
+    cols = {row[1] for row in cur.fetchall()}
+    if "external_user_id" not in cols:
+        cur.execute("ALTER TABLE user ADD COLUMN external_user_id TEXT")
+        # populate with random UUID strings
+        import uuid
+        cur.execute("SELECT id FROM user WHERE external_user_id IS NULL")
+        rows = cur.fetchall()
+        for (uid,) in rows:
+            cur.execute(
+                "UPDATE user SET external_user_id = ? WHERE id = ?",
+                (str(uuid.uuid4()), uid),
+            )
+        conn.commit()
+        cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS uq_user_external_id ON user(external_user_id)")
+        conn.commit()
+
+
 def _ensure_help_library_tables(conn: sqlite3.Connection) -> str:
     """Create FTS-backed or fallback tables. Returns 'fts5' or 'fallback'."""
     cur = conn.cursor()
@@ -175,6 +195,7 @@ def init_db():
         _ensure_task_columns(conn)
         _ensure_user_role_column(conn)
         _ensure_user_auth_columns(conn)
+        _ensure_external_user_id(conn)
 
         mode = _ensure_help_library_tables(conn)
         print(f"[DB] Help Library tables ensured (mode={mode})", file=sys.stderr)

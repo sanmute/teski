@@ -101,6 +101,7 @@ api_router.include_router(stats_route.router)
 app.include_router(health_route.router)
 from routes import auth as auth_route
 app.include_router(auth_route.router)
+api_router.include_router(auth_route.router)
 
 from routes import users as users_route
 app.include_router(users_route.router)

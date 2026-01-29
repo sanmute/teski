@@ -30,7 +30,3 @@ export function logout() {
   setAuthToken(null);
   setClientUserId("00000000-0000-0000-0000-000000000000");
 }
-  });
-  setAuthToken(data.access_token);
-  return data;
-}
