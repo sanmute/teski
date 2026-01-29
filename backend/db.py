@@ -71,6 +71,22 @@ def _ensure_user_auth_columns(conn: sqlite3.Connection) -> None:
         conn.commit()
 
 
+def _ensure_onboarded_columns(conn: sqlite3.Connection) -> None:
+    """Add onboarding-related columns to the user table if they don't exist."""
+    cur = conn.cursor()
+    cur.execute("PRAGMA table_info(user);")
+    cols = {row[1] for row in cur.fetchall()}
+    altered = False
+    if "onboarded" not in cols:
+        cur.execute("ALTER TABLE user ADD COLUMN onboarded INTEGER DEFAULT 0")
+        altered = True
+    if "onboarded_at" not in cols:
+        cur.execute("ALTER TABLE user ADD COLUMN onboarded_at TEXT")
+        altered = True
+    if altered:
+        conn.commit()
+
+
 def _ensure_external_user_id(conn: sqlite3.Connection) -> None:
     cur = conn.cursor()
     cur.execute("PRAGMA table_info(user);")
@@ -155,7 +171,7 @@ def init_db():
 
     # 1) ORM tables
     try:
-        from models import Task, Reminder
+        from models import Task, Reminder, User
         from models_studypack import StudyPack
         from models_integrations import MoodleFeed
         from models_leaderboard import Leaderboard, LeaderboardMember, PointsEvent, WeeklyScore
@@ -178,8 +194,9 @@ def init_db():
         from models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
         from models_exercise import Exercise
         from models_analytics import AnalyticsEvent
+        from models_onboarding import UserOnboarding
 
-        _ = (Course, Institution, Module, UserInstitutionRole, UserCourseRole, MicroQuest, MicroQuestAnswer, MicroQuestExercise, Exercise)
+        _ = (Course, Institution, Module, UserInstitutionRole, UserCourseRole, MicroQuest, MicroQuestAnswer, MicroQuestExercise, Exercise, UserOnboarding)
         SQLModel.metadata.create_all(engine)
         print("[DB] ORM tables ensured (Task, Reminder, StudyPack)", file=sys.stderr)
     except Exception as e:
@@ -196,6 +213,7 @@ def init_db():
         _ensure_user_role_column(conn)
         _ensure_user_auth_columns(conn)
         _ensure_external_user_id(conn)
+        _ensure_onboarded_columns(conn)
 
         mode = _ensure_help_library_tables(conn)
         print(f"[DB] Help Library tables ensured (mode={mode})", file=sys.stderr)

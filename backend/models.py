@@ -44,6 +44,8 @@ else:
         hashed_password: str = Field(default="")
         role: UserRole = Field(default=UserRole.STUDENT, index=True)
         created_at: datetime = Field(default_factory=lambda: datetime.now(DEFAULT_TIMEZONE))
+        onboarded: bool = Field(default=False)
+        onboarded_at: Optional[datetime] = None
 
 
     # >>> LEADERBOARD END USER MODEL

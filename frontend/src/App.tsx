@@ -35,6 +35,7 @@ import MicroQuestSummaryLitePage from "./pages/MicroQuestSummaryLitePage";
 import SkillTreePage from "./pages/SkillTreePage";
 import FeedbackViewerPage from "./pages/FeedbackViewerPage";
 import { RequireAuth } from "./components/RequireAuth";
+import OnboardingPage from "./pages/OnboardingPage";
 
 const queryClient = new QueryClient();
 
@@ -102,6 +103,14 @@ const App = () => {
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route element={<AppLayout />}>
+                <Route
+                  path="/onboarding"
+                  element={
+                    <RequireAuth allowNotOnboarded>
+                      <OnboardingPage />
+                    </RequireAuth>
+                  }
+                />
                 <Route
                   path="/today"
                   element={

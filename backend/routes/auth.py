@@ -39,7 +39,8 @@ def signup(
     payload: SignupRequest,
     session: Session = Depends(get_session),
 ):
-    existing = session.exec(select(User).where(User.email == payload.email)).first()
+    email_normalized = payload.email.strip().lower()
+    existing = session.exec(select(User).where(User.email == email_normalized)).first()
     if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -47,7 +48,7 @@ def signup(
         )
 
     user = User(
-        email=payload.email,
+        email=email_normalized,
         display_name=payload.display_name,
         hashed_password=hash_password(payload.password),
     )
@@ -65,7 +66,8 @@ def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     session: Session = Depends(get_session),
 ):
-    user = session.exec(select(User).where(User.email == form_data.username)).first()
+    email_normalized = form_data.username.strip().lower()
+    user = session.exec(select(User).where(User.email == email_normalized)).first()
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -83,7 +85,8 @@ def login_json(
     payload: LoginRequest,
     session: Session = Depends(get_session),
 ):
-    user = session.exec(select(User).where(User.email == payload.email)).first()
+    email_normalized = payload.email.strip().lower()
+    user = session.exec(select(User).where(User.email == email_normalized)).first()
     if not user or not verify_password(payload.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -103,15 +106,3 @@ def me(current_user: User = Depends(get_current_user)):
         "user_id": current_user.external_user_id,
         "email": current_user.email,
     }
-
-@router.get("/me")
-def me(current_user: User = Depends(lambda: None), session: Session = Depends(get_session)):
-    """
-    Returns the current authenticated user. Uses Authorization Bearer token.
-    Fallback: if no token, returns 401.
-    """
-    try:
-        from routes.deps import get_current_user
-        current_user = get_current_user(token=Depends())  # type: ignore
-    except Exception:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
