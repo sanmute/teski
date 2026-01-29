@@ -31,10 +31,12 @@ export default function MicroQuestSummaryLitePage() {
     setFeedbackError(null);
     try {
       await submitFeedback({
+        kind: "feedback",
+        severity: undefined,
         message: feedbackMessage.trim(),
-        rating: feedbackRating,
-        page: `/practice/micro-quest/${microquestId}/summary`,
-        context: "microquest_summary",
+        page_url: `/practice/micro-quest/${microquestId}/summary`,
+        app_version: import.meta.env.VITE_APP_VERSION as string | undefined,
+        metadata: { rating: feedbackRating, context: "microquest_summary" },
       });
       setFeedbackStatus("sent");
     } catch (err: any) {

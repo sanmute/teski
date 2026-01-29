@@ -16,7 +16,7 @@ export default function FeedbackViewerPage() {
       try {
         const data = await getAllFeedback();
         if (cancelled) return;
-        setItems(data);
+        setItems(data.items);
         setState("loaded");
       } catch (err: any) {
         if (cancelled) return;
@@ -82,7 +82,8 @@ export default function FeedbackViewerPage() {
             <tr>
               <th style={thStyle}>Created</th>
               <th style={thStyle}>User</th>
-              <th style={thStyle}>Rating</th>
+              <th style={thStyle}>Kind</th>
+              <th style={thStyle}>Severity</th>
               <th style={thStyle}>Context</th>
               <th style={thStyle}>Message</th>
             </tr>
@@ -92,19 +93,27 @@ export default function FeedbackViewerPage() {
               <tr key={fb.id}>
                 <td style={tdStyle}>{new Date(fb.created_at).toLocaleString()}</td>
                 <td style={tdStyle}>
-                  <code>{fb.user_id}</code>
-                </td>
-                <td style={tdStyle}>{fb.rating != null ? fb.rating : "-"}</td>
-                <td style={tdStyle}>
-                  <div>
-                    {fb.context && (
+                  <div className="flex flex-col gap-1">
+                    {fb.user_email && <div>{fb.user_email}</div>}
+                    {fb.user_id && (
                       <div>
-                        <strong>Context:</strong> {fb.context}
+                        <code>{fb.user_id}</code>
                       </div>
                     )}
-                    {fb.page && (
+                  </div>
+                </td>
+                <td style={tdStyle}>{fb.kind}</td>
+                <td style={tdStyle}>{fb.severity || "-"}</td>
+                <td style={tdStyle}>
+                  <div>
+                    {fb.page_url && (
                       <div>
-                        <strong>Page:</strong> {fb.page}
+                        <strong>Page:</strong> {fb.page_url}
+                      </div>
+                    )}
+                    {fb.user_agent && (
+                      <div className="text-xs text-gray-500">
+                        <strong>UA:</strong> {fb.user_agent}
                       </div>
                     )}
                   </div>

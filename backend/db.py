@@ -194,9 +194,10 @@ def init_db():
         from models_microquest import MicroQuest, MicroQuestAnswer, MicroQuestExercise
         from models_exercise import Exercise
         from models_analytics import AnalyticsEvent
+        from models_feedback import FeedbackItem
         from models_onboarding import UserOnboarding
 
-        _ = (Course, Institution, Module, UserInstitutionRole, UserCourseRole, MicroQuest, MicroQuestAnswer, MicroQuestExercise, Exercise, UserOnboarding)
+        _ = (Course, Institution, Module, UserInstitutionRole, UserCourseRole, MicroQuest, MicroQuestAnswer, MicroQuestExercise, Exercise, UserOnboarding, FeedbackItem)
         SQLModel.metadata.create_all(engine)
         print("[DB] ORM tables ensured (Task, Reminder, StudyPack)", file=sys.stderr)
     except Exception as e:

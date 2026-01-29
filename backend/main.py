@@ -36,6 +36,7 @@ from routes import push as push_route
 from routes import microquest as microquest_route
 from routes import leaderboard as leaderboard_route
 from routes import onboarding as onboarding_route
+from routes import feedback as feedback_route
 from db import init_db, get_session
 from sqlmodel import Session
 from services.seeder import load_seed
@@ -99,6 +100,7 @@ api_router.include_router(analytics_route.router)
 api_router.include_router(exercises_route.router)
 api_router.include_router(stats_route.router)
 api_router.include_router(onboarding_route.router)
+api_router.include_router(feedback_route.router)
 
 app.include_router(health_route.router)
 from routes import auth as auth_route

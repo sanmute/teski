@@ -8,6 +8,8 @@ type FeedbackButtonProps = {
 export function FeedbackButton({ userId }: FeedbackButtonProps) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [kind, setKind] = useState<"feedback" | "bug" | "idea">("feedback");
+  const [severity, setSeverity] = useState<"low" | "medium" | "high">("medium");
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,9 +20,17 @@ export function FeedbackButton({ userId }: FeedbackButtonProps) {
     setError(null);
     try {
       await submitFeedback({
+        kind,
+        severity: kind === "bug" ? severity : undefined,
         message: message.trim(),
-        context: "floating_feedback",
-        page: window.location.pathname,
+        page_url: window.location.href,
+        user_agent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+        app_version: import.meta.env.VITE_APP_VERSION as string | undefined,
+        metadata: {
+          source: "floating_feedback",
+          route: window.location.pathname,
+          user_id: userId,
+        },
       });
       setSent(true);
       setTimeout(() => {
@@ -50,7 +60,33 @@ export function FeedbackButton({ userId }: FeedbackButtonProps) {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 w-72 rounded-2xl border bg-white p-4 shadow-2xl">
+    <div className="fixed bottom-4 right-4 z-40 w-80 rounded-2xl border bg-white p-4 shadow-2xl">
+      <div className="mb-2 flex gap-2">
+        {(["feedback", "bug", "idea"] as const).map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setKind(k)}
+            className={`flex-1 rounded border px-2 py-1 text-sm ${kind === k ? "border-black bg-black text-white" : "border-gray-300"}`}
+          >
+            {k[0].toUpperCase() + k.slice(1)}
+          </button>
+        ))}
+      </div>
+      {kind === "bug" && (
+        <div className="mb-2 flex items-center justify-between text-xs text-gray-600">
+          <span>Severity</span>
+          <select
+            value={severity}
+            onChange={(e) => setSeverity(e.target.value as typeof severity)}
+            className="rounded border px-2 py-1 text-xs"
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+      )}
       <textarea
         className="w-full rounded border p-2 text-sm"
         rows={3}
