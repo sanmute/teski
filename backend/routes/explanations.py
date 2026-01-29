@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Optional, Union
+import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import SQLModel, Session, select
@@ -8,7 +9,9 @@ from sqlmodel import SQLModel, Session, select
 from db import get_session
 from models_exercise import Exercise
 
-router = APIRouter(prefix="/api/explanations", tags=["explanations"])
+router_api = APIRouter(prefix="/api/explanations", tags=["explanations"])
+router_compat = APIRouter(prefix="/explanations", tags=["explanations-compat"])
+logger = logging.getLogger("explanations")
 
 
 class ExplanationRequest(SQLModel):
@@ -22,8 +25,7 @@ class ExplanationResponse(SQLModel):
     hint: Optional[str] = None
 
 
-@router.post("/generate", response_model=ExplanationResponse)
-def generate_explanation(payload: ExplanationRequest, session: Session = Depends(get_session)):
+def _generate(payload: ExplanationRequest, session: Session) -> ExplanationResponse:
     exercise = session.exec(select(Exercise).where(Exercise.id == payload.exercise_id)).first()
     if not exercise:
         raise HTTPException(
@@ -37,8 +39,20 @@ def generate_explanation(payload: ExplanationRequest, session: Session = Depends
 
     explanation_text = exercise.solution_explanation or "No explanation available."
 
+    logger.info("explanations.generate id=%s correct=%s", payload.exercise_id, is_correct)
+
     return ExplanationResponse(
         correct=is_correct,
         explanation=explanation_text,
         hint=exercise.hint,
     )
+
+
+@router_api.post("/generate", response_model=ExplanationResponse)
+def generate_explanation_api(payload: ExplanationRequest, session: Session = Depends(get_session)):
+    return _generate(payload, session)
+
+
+@router_compat.post("/generate", response_model=ExplanationResponse)
+def generate_explanation_compat(payload: ExplanationRequest, session: Session = Depends(get_session)):
+    return _generate(payload, session)

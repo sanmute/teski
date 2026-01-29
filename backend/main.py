@@ -102,12 +102,14 @@ api_router.include_router(exercises_route.router)
 api_router.include_router(stats_route.router)
 api_router.include_router(onboarding_route.router)
 api_router.include_router(feedback_route.router)
+api_router.include_router(explanations_route.router_api)
 
 app.include_router(health_route.router)
 from routes import auth as auth_route
 app.include_router(auth_route.router)
 api_router.include_router(auth_route.router)
 app.include_router(explanations_route.router)
+app.include_router(explanations_route.router_compat)
 
 from routes import users as users_route
 app.include_router(users_route.router)
