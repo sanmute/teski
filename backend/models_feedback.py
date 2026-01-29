@@ -20,5 +20,5 @@ class FeedbackItem(SQLModel, table=True):
     page_url: Optional[str] = None
     user_agent: Optional[str] = None
     app_version: Optional[str] = None
-    metadata: Dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON))
+    metadata_json: Dict[str, Any] = Field(default_factory=dict, sa_column=Column("metadata", JSON))
     created_at: datetime = Field(default_factory=datetime.utcnow, index=True)

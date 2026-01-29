@@ -11,7 +11,7 @@ export type FeedbackPayload = {
 };
 
 export async function submitFeedback(payload: FeedbackPayload): Promise<{ ok: boolean; id: number }> {
-  return api.post<{ ok: boolean; id: number }>("/feedback/submit", payload);
+  return api.post<{ ok: boolean; id: number }>("/api/feedback/submit", payload);
 }
 
 export type FeedbackItem = {
@@ -29,5 +29,5 @@ export type FeedbackItem = {
 };
 
 export async function getAllFeedback(limit = 50): Promise<{ ok: boolean; items: FeedbackItem[]; total: number }> {
-  return api.get<{ ok: boolean; items: FeedbackItem[]; total: number }>(`/feedback/list?limit=${limit}`);
+  return api.get<{ ok: boolean; items: FeedbackItem[]; total: number }>(`/api/feedback/list?limit=${limit}`);
 }

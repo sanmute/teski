@@ -79,7 +79,7 @@ async def submit_feedback(
         page_url=payload.page_url,
         user_agent=payload.user_agent or request.headers.get("user-agent"),
         app_version=payload.app_version,
-        metadata=payload.metadata or {},
+        metadata_json=payload.metadata or {},
         user_id=current_user.external_user_id if current_user else None,
         user_email=current_user.email if current_user else None,
     )
@@ -99,7 +99,7 @@ async def submit_feedback(
                 f"Page: {item.page_url or '-'}",
                 f"User-Agent: {item.user_agent or '-'}",
                 f"App version: {item.app_version or '-'}",
-                f"Metadata: {json.dumps(item.metadata) if item.metadata else '{}'}",
+                f"Metadata: {json.dumps(item.metadata_json) if item.metadata_json else '{}'}",
                 f"Created: {item.created_at.isoformat()}",
                 f"Email mode: {'disabled' if DISABLED_REASON else 'enabled'}",
             ]
