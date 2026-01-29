@@ -26,7 +26,7 @@ class FeedbackIn(SQLModel):
     page_url: Optional[str] = None
     user_agent: Optional[str] = None
     app_version: Optional[str] = None
-    metadata: Optional[Dict[str, Any]] = None
+    metadata_json: Optional[Dict[str, Any]] = None
 
 
 def _get_admin_emails() -> set[str]:
@@ -79,7 +79,7 @@ async def submit_feedback(
         page_url=payload.page_url,
         user_agent=payload.user_agent or request.headers.get("user-agent"),
         app_version=payload.app_version,
-        metadata_json=payload.metadata or {},
+        metadata_json=payload.metadata_json or {},
         user_id=current_user.external_user_id if current_user else None,
         user_email=current_user.email if current_user else None,
     )

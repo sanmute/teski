@@ -43,23 +43,36 @@ from sqlmodel import Session
 from services.seeder import load_seed
 from schemas import MockLoadResp
 
-ALLOW_ORIGINS = [
+DEFAULT_ORIGINS = [
     "https://teski.app",
+    "https://www.teski.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:4173",
     "http://127.0.0.1:4173",
 ]
 
+def parse_allowed_origins(env_val: str | None) -> list[str]:
+    if not env_val:
+        return DEFAULT_ORIGINS
+    return [o.strip() for o in env_val.split(",") if o.strip()]
+
+ALLOW_ORIGINS = parse_allowed_origins(os.getenv("TESKI_ALLOWED_ORIGINS"))
+ALLOW_ORIGIN_REGEX = r"^https://.*\\.vercel\\.app$"
+
 init_db()
 app = FastAPI(title="Deadline Agent Backend", version="0.1.0")
+app.state.allowed_origins = ALLOW_ORIGINS
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOW_ORIGINS,
+    allow_origin_regex=ALLOW_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=86400,
 )
 
 @app.middleware("http")
@@ -73,7 +86,15 @@ async def ensure_cors_on_error(request: Request, call_next):
         response = await call_next(request)
     except Exception as exc:  # pragma: no cover - last-resort guard
         response = JSONResponse({"detail": "Internal Server Error"}, status_code=500)
-    if origin in ALLOW_ORIGINS and "access-control-allow-origin" not in response.headers:
+    def _origin_allowed(o: str | None) -> bool:
+        if not o:
+            return False
+        if o in ALLOW_ORIGINS:
+            return True
+        import re
+        return bool(re.match(ALLOW_ORIGIN_REGEX, o))
+
+    if _origin_allowed(origin) and "access-control-allow-origin" not in response.headers:
         response.headers["access-control-allow-origin"] = origin
         response.headers["access-control-allow-credentials"] = "true"
     return response
