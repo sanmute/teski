@@ -42,3 +42,10 @@ export function getClientUserId(): string {
   window.localStorage.setItem(USER_ID_STORAGE_KEY, fresh);
   return fresh;
 }
+
+export function setClientUserId(userId: string) {
+  if (typeof window === "undefined") return;
+  if (isValidUuid(userId)) {
+    window.localStorage.setItem(USER_ID_STORAGE_KEY, userId);
+  }
+}

@@ -13,6 +13,7 @@ else:
     from datetime import datetime
     from enum import Enum
     from typing import Optional, Dict, Any
+    from uuid import uuid4
 
     from sqlalchemy import Column
     from sqlalchemy.types import JSON
@@ -30,9 +31,14 @@ else:
 
     # >>> LEADERBOARD START USER MODEL
     class User(SQLModel, table=True):
-        """Minimal user model used for leaderboard membership."""
+        """User model with external UUID used across the app."""
 
         id: Optional[int] = Field(default=None, primary_key=True)
+        external_user_id: str = Field(
+            default_factory=lambda: str(uuid4()),
+            index=True,
+            sa_column_kwargs={"unique": True},
+        )
         email: str = Field(index=True, sa_column_kwargs={"unique": True})
         display_name: Optional[str] = None
         hashed_password: str = Field(default="")
