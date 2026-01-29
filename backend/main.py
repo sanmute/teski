@@ -38,6 +38,9 @@ from routes import leaderboard as leaderboard_route
 from routes import onboarding as onboarding_route
 from routes import feedback as feedback_route
 from routes import explanations as explanations_route
+# Backward-compat: ensure explanations_route.router exists even if older code references it
+if not hasattr(explanations_route, "router"):
+    explanations_route.router = explanations_route.router_api
 from db import init_db, get_session
 from sqlmodel import Session
 from services.seeder import load_seed
@@ -62,6 +65,7 @@ ALLOW_ORIGIN_REGEX = r"^https://.*\\.vercel\\.app$"
 
 init_db()
 app = FastAPI(title="Deadline Agent Backend", version="0.1.0")
+print("[startup] FastAPI app created; CORS will be applied; binding via uvicorn main:app on 0.0.0.0:8080", file=sys.stderr)
 app.state.allowed_origins = ALLOW_ORIGINS
 
 app.add_middleware(
@@ -129,7 +133,6 @@ app.include_router(health_route.router)
 from routes import auth as auth_route
 app.include_router(auth_route.router)
 api_router.include_router(auth_route.router)
-app.include_router(explanations_route.router)
 app.include_router(explanations_route.router_compat)
 
 from routes import users as users_route
