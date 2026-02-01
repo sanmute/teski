@@ -38,3 +38,6 @@ ssh.txt.pub
 
 .gitignore
 .gitignore
+
+node_modules
+/data/

@@ -38,6 +38,27 @@ Makefile        Convenience commands (setup, dev, lint)
 ```
 
 ## Setup
+
+### 🐳 Docker (Recommended for Development)
+
+**Quick Start:**
+```bash
+# macOS/Linux
+make docker-up
+
+# Windows
+.\docker.ps1 up
+```
+
+**Full guides:**
+- [DOCKER_QUICKSTART.md](DOCKER_QUICKSTART.md) - Quick reference for all platforms
+- [DOCKER_SETUP.md](DOCKER_SETUP.md) - Detailed setup (macOS/Linux)
+- [DOCKER_WINDOWS.md](DOCKER_WINDOWS.md) - Windows-specific guide
+
+---
+
+### 💻 Local Development (Alternative)
+
 1) Clone & enter repo
 ```bash
 git clone https://github.com/sanmute/teski.git

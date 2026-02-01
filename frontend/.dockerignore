@@ -1,0 +1,31 @@
+# Node modules (handled by named volume)
+node_modules
+
+# Build output
+dist
+build
+
+# Cache directories  
+.cache
+.vite
+.turbo
+.vercel
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Lock files (use container's version during build)
+# Commented out as we need to sync this with host
+# package-lock.json

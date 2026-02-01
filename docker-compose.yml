@@ -1,0 +1,59 @@
+services:
+  # Main API (app/main.py) - port 8000
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: teski-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount entire project for proper relative path resolution
+      - .:/app:cached
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --reload-dir /app/app
+    working_dir: /app
+
+  # Legacy backend (backend/main.py) - port 8100
+  # legacy:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   container_name: teski-legacy
+  #   ports:
+  #     - "8100:8100"
+  #   volumes:
+  #     # Mount entire project for proper relative path resolution
+  #     - .:/app:cached
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #     - PYTHONDONTWRITEBYTECODE=1
+  #   command: uvicorn backend.main:app --reload --host 0.0.0.0 --port 8100 --reload-dir /app/backend
+  #   working_dir: /app
+
+  # Frontend (Vite React) - port 5173
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: teski-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      # Mount entire frontend directory for proper path resolution
+      - ./frontend:/app:cached
+      # Use named volume for node_modules to preserve container's clean dependencies
+      - frontend_node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    # Copy docker config and start dev server
+    command: sh -c "if [ -f vite.config.docker.ts ]; then cp vite.config.docker.ts vite.config.ts; fi && npm run dev -- --host 0.0.0.0 --port 5173"
+    depends_on:
+      - api
+      # - legacy
+
+volumes:
+  frontend_node_modules:

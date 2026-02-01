@@ -1,0 +1,37 @@
+# Development Dockerfile for Python backends
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /app
+
+# Install system dependencies for WeasyPrint and other packages
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        libffi-dev \
+        # WeasyPrint dependencies
+        libpango-1.0-0 \
+        libpangoft2-1.0-0 \
+        libharfbuzz0b \
+        libfribidi0 \
+        libgdk-pixbuf-2.0-0 \
+        # For shared MIME info
+        shared-mime-info \
+        # For faster-whisper audio processing
+        ffmpeg \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt ./
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy application code (will be overridden by volume mounts in dev)
+COPY . .
+
+# Default command (overridden in docker-compose.yml)
+CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
