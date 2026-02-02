@@ -230,18 +230,29 @@ from db import get_session, engine
 from sqlmodel import Session
 from services.reminder_engine import run_sweep
 
-scheduler = BackgroundScheduler()
-def job():
-    with Session(engine) as s:
-        run_sweep(s, persona="teacher")
-scheduler.add_job(job, "interval", minutes=15)
-scheduler.start()
+ENABLE_SCHEDULER = os.getenv("ENABLE_SCHEDULER", "true").lower() == "true"
+if ENABLE_SCHEDULER:
+    scheduler = BackgroundScheduler()
+    def job():
+        with Session(engine) as s:
+            run_sweep(s, persona="teacher")
+    scheduler.add_job(job, "interval", minutes=15)
+    scheduler.start()
+else:
+    logger.info("[startup] Scheduler disabled (ENABLE_SCHEDULER=false)")
 
 # >>> SEED EXERCISES START
 from seed.exercises_intro_python import seed_intro_python_exercises
 
+ENABLE_STARTUP_SEED = os.getenv("ENABLE_STARTUP_SEED", "false").lower() == "true"
+ENABLE_SCHEDULER = os.getenv("ENABLE_SCHEDULER", "true").lower() == "true"
+
 @app.on_event("startup")
 def seed_intro_python():
+    if not ENABLE_STARTUP_SEED:
+        logger.info("[startup] Skipping seed_intro_python (ENABLE_STARTUP_SEED=false)")
+        return
+    logger.info("[startup] Seeding intro python exercises...")
     with Session(engine) as session:
         seed_intro_python_exercises(session)
 # --- debug: log key API routes at startup so we know they are mounted in prod ---
