@@ -58,12 +58,18 @@ function buildApiUrl(path: string): string {
   return `${API_BASE_URL}/${path}`;
 }
 
-function withAuthHeaders(options: RequestInit = {}): RequestInit {
+function withAuthHeaders(options: RequestInit = {}, requireAuth = false): RequestInit {
   const headers = new Headers(options.headers || {});
   // Pull latest token lazily to avoid stale module-scoped value when page reloads.
   const token = authToken ?? (typeof localStorage !== "undefined" ? localStorage.getItem("teski_token") : null);
   if (token && !headers.has("Authorization")) {
     headers.set("Authorization", `Bearer ${token}`);
+  }
+  if (requireAuth && !headers.has("Authorization")) {
+    if (import.meta.env.DEV) {
+      console.warn("[apiFetch] missing auth token for protected request", { path: options?.['__path'] ?? "" });
+    }
+    throw new Error("Missing auth token for protected request");
   }
   return { ...options, headers };
 }
@@ -84,10 +90,12 @@ function maybeStringifyBody(body: unknown, headers: Headers): BodyInit | undefin
   return JSON.stringify(body);
 }
 
-export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}): Promise<T> {
+type ApiFetchConfig = { auth?: boolean };
+
+export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}, config: ApiFetchConfig = {}): Promise<T> {
   const headers = new Headers(init.headers || {});
   const body = maybeStringifyBody(init.body as unknown, headers);
-  const requestInit = withAuthHeaders({ ...init, headers, body });
+  const requestInit = withAuthHeaders({ ...init, headers, body, __path: path } as RequestInit, config.auth === true);
   if (import.meta.env.DEV) {
     const hasAuth = (requestInit.headers as Headers).has("Authorization");
     const method = (requestInit.method || "GET").toUpperCase();

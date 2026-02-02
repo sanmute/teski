@@ -29,7 +29,7 @@ export default function Profile() {
         if (!token) {
           return;
         }
-        const data = await apiFetch<StudyProfile>("/onboarding/profile");
+        const data = await apiFetch<StudyProfile>("/onboarding/profile", { method: "GET" }, { auth: true });
         setProfile(data ?? null);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load profile");

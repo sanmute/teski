@@ -1,4 +1,4 @@
-import { api, getAuthToken } from "./client";
+import { apiFetch } from "./client";
 
 export type OnboardingStatus = { ok: boolean; onboarded: boolean };
 
@@ -14,18 +14,17 @@ export type OnboardingAnswers = {
 };
 
 export function getOnboardingStatus() {
-  return api.get<OnboardingStatus>("/onboarding/status");
+  return apiFetch<OnboardingStatus>("/onboarding/status", { method: "GET" }, { auth: true });
 }
 
 export function submitOnboarding(answers: OnboardingAnswers) {
-  return api.post<{ ok: boolean; onboarded: boolean }>("/onboarding/submit", answers);
+  return apiFetch<{ ok: boolean; onboarded: boolean }>("/onboarding/submit", { method: "POST", body: answers }, { auth: true });
 }
 
 export function getOnboardingAnswers() {
-  return api.get<{ ok: boolean; onboarded: boolean; answers: Record<string, unknown> | null; skipped: boolean }>(
+  return apiFetch<{ ok: boolean; onboarded: boolean; answers: Record<string, unknown> | null; skipped: boolean }>(
     "/onboarding/me",
-    {
-      headers: { Authorization: `Bearer ${getAuthToken() ?? ""}` },
-    },
+    { method: "GET" },
+    { auth: true },
   );
 }
