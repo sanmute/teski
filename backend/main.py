@@ -166,6 +166,9 @@ app.include_router(memory_v1_route.router)
 # Mount aggregated API routes after all potential inclusions.
 app.include_router(api_router)
 
+# Expose onboarding routes also without the /api prefix to match legacy/front-end callers.
+app.include_router(onboarding_route.router)
+
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
 
