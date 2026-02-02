@@ -1,4 +1,4 @@
-const CACHE_VERSION = "teski-static-v2"; // bump to force update
+const CACHE_VERSION = "teski-static-v3"; // bump to force update
 const PRECACHE_URLS = [
   "/",
   "/index.html",
@@ -33,10 +33,12 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   const url = new URL(event.request.url);
+  const hasAuthHeader = event.request.headers.has("authorization");
 
-  // Passthrough for API calls to avoid stripping headers (auth) and avoid caching
-  const isApi =
+  // Passthrough for cross-origin, API-like paths, fly.dev, or any request with Authorization
+  const isApiLike =
     url.origin !== self.location.origin ||
+    url.hostname.includes("fly.dev") ||
     url.pathname.startsWith("/api/") ||
     url.pathname.startsWith("/onboarding/") ||
     url.pathname.startsWith("/analytics/") ||
@@ -57,9 +59,9 @@ self.addEventListener("fetch", (event) => {
     url.pathname.includes("/leaderboards") ||
     url.pathname.includes("/memory");
 
-  if (isApi) {
+  if (isApiLike || hasAuthHeader) {
     if (DEBUG_SW) {
-      console.debug("[SW] passthrough", event.request.method, event.request.url);
+      console.debug("[SW] passthrough", event.request.method, event.request.url, { hasAuthHeader });
     }
     event.respondWith(fetch(event.request));
     return;
