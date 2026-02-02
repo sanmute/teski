@@ -119,25 +119,22 @@ async def ensure_cors_on_error(request: Request, call_next):
 
 # Inject request_id on every request
 @app.middleware("http")
-async def add_request_id(request: Request, call_next):
-    request.state.request_id = request.headers.get("x-request-id") or str(uuid4())
-    response = await call_next(request)
-    response.headers["X-Request-ID"] = request.state.request_id
-    return response
-
-# Catch-all exception logger with traceback to stdout
-@app.middleware("http")
-async def catch_all_exceptions(request: Request, call_next):
-    request_id = getattr(request.state, "request_id", None) or str(uuid4())
+async def request_id_and_exceptions(request: Request, call_next):
+    request_id = request.headers.get("x-request-id") or str(uuid4())
+    request.state.request_id = request_id
     try:
-        return await call_next(request)
+        response = await call_next(request)
+        response.headers["X-Request-ID"] = request_id
+        return response
     except Exception:
+        tb = traceback.format_exc()
         print(f"[EXC] request_id={request_id} {request.method} {request.url.path}", file=sys.stderr)
-        print(traceback.format_exc(), file=sys.stderr)
-        return JSONResponse(
-            status_code=500,
-            content={"detail": "Internal Server Error", "request_id": request_id},
-        )
+        print(tb, file=sys.stderr)
+        debug = request.headers.get("x-teski-debug", "")
+        body = {"detail": "Internal Server Error", "request_id": request_id}
+        if debug == "trace":
+            body["traceback"] = tb
+        return JSONResponse(status_code=500, content=body, headers={"X-Request-ID": request_id})
 
 # Simple request logging (method, path, status)
 @app.middleware("http")
