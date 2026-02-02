@@ -1,5 +1,8 @@
-import { API_BASE } from "./api/client";
-export { API_BASE_URL, apiFetch, API_BASE, getAuthToken } from "./api/client";
+import { API_BASE, apiFetch } from "./api/client";
+export { API_BASE_URL, apiFetch, API_BASE, getAuthToken, setAuthToken, loadAuthTokenFromStorage } from "./api/client";
+
+// Convenience wrapper to mirror other callers; keeps single source of truth.
+export const apiRequest = apiFetch;
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {

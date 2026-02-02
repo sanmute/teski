@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getClientUserId } from "@/lib/user";
-import { apiFetch, getAuthToken } from "@/api";
+import { apiRequest as apiFetch, getAuthToken } from "@/api";
 
 interface StudyProfile {
   goals?: string | null;

@@ -60,8 +60,10 @@ function buildApiUrl(path: string): string {
 
 function withAuthHeaders(options: RequestInit = {}): RequestInit {
   const headers = new Headers(options.headers || {});
-  if (authToken && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${authToken}`);
+  // Pull latest token lazily to avoid stale module-scoped value when page reloads.
+  const token = authToken ?? (typeof localStorage !== "undefined" ? localStorage.getItem("teski_token") : null);
+  if (token && !headers.has("Authorization")) {
+    headers.set("Authorization", `Bearer ${token}`);
   }
   return { ...options, headers };
 }
@@ -88,7 +90,8 @@ export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}
   const requestInit = withAuthHeaders({ ...init, headers, body });
   if (import.meta.env.DEV) {
     const hasAuth = (requestInit.headers as Headers).has("Authorization");
-    console.debug("[apiFetch]", path, { hasAuth });
+    const method = (requestInit.method || "GET").toUpperCase();
+    console.debug("[apiFetch]", method, path, { hasAuth });
   }
   const response = await fetch(buildApiUrl(path), requestInit);
   const text = await response.text();
