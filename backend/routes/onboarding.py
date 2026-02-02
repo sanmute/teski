@@ -150,14 +150,8 @@ def get_study_profile(
             extra={"request_id": rid, "user_id": getattr(current_user, "id", None), "external_user_id": getattr(current_user, "external_user_id", None)},
         )
         if request.headers.get("x-teski-debug") == "trace":
-            return JSONResponse(
-                status_code=500,
-                content={
-                    "detail": "Internal Server Error",
-                    "request_id": rid,
-                    "traceback": traceback.format_exc(),
-                },
-            )
+            # Let the global middleware surface full traceback and headers
+            raise
         return JSONResponse(
             status_code=500,
             content={"detail": "Internal Server Error", "request_id": rid},
