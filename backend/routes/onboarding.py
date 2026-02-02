@@ -143,11 +143,25 @@ def get_study_profile(
             updated_at=now,
         )
     except Exception:
+        import traceback
+
         logging.exception(
             "onboarding.profile failed",
             extra={"request_id": rid, "user_id": getattr(current_user, "id", None), "external_user_id": getattr(current_user, "external_user_id", None)},
         )
-        raise
+        if request.headers.get("x-teski-debug") == "trace":
+            return JSONResponse(
+                status_code=500,
+                content={
+                    "detail": "Internal Server Error",
+                    "request_id": rid,
+                    "traceback": traceback.format_exc(),
+                },
+            )
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Internal Server Error", "request_id": rid},
+        )
 
 
 @router.post("/profile", response_model=StudyProfileOut)
