@@ -1,4 +1,4 @@
-const CACHE_VERSION = "teski-static-v1";
+const CACHE_VERSION = "teski-static-v2"; // bump to force update
 const PRECACHE_URLS = [
   "/",
   "/index.html",
@@ -29,14 +29,44 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") {
+  // Always pass through non-GET requests
+  if (event.request.method !== "GET") return;
+
+  const url = new URL(event.request.url);
+
+  // Passthrough for API calls to avoid stripping headers (auth) and avoid caching
+  const isApi =
+    url.origin !== self.location.origin ||
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/onboarding/") ||
+    url.pathname.startsWith("/analytics/") ||
+    url.pathname.startsWith("/ex") ||
+    url.pathname.startsWith("/tasks") ||
+    url.pathname.startsWith("/integrations/") ||
+    url.pathname.startsWith("/memory") ||
+    url.pathname.startsWith("/study") ||
+    url.pathname.startsWith("/push") ||
+    url.pathname.includes("/onboarding/") ||
+    url.pathname.includes("/analytics/") ||
+    url.pathname.includes("/auth") ||
+    url.pathname.includes("/persona") ||
+    url.pathname.includes("/feedback") ||
+    url.pathname.includes("/exercises") ||
+    url.pathname.includes("/estimates") ||
+    url.pathname.includes("/reminders") ||
+    url.pathname.includes("/leaderboards") ||
+    url.pathname.includes("/memory");
+
+  if (isApi) {
+    if (DEBUG_SW) {
+      console.debug("[SW] passthrough", event.request.method, event.request.url);
+    }
+    event.respondWith(fetch(event.request));
     return;
   }
 
-  const requestURL = new URL(event.request.url);
-  if (requestURL.origin !== self.location.origin) {
-    return;
-  }
+  // Static asset caching for same-origin GET requests only
+  if (url.origin !== self.location.origin) return;
 
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
@@ -62,6 +92,9 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+// Simple toggle for dev logging in SW (set via replace at build if needed)
+const DEBUG_SW = false;
 
 function updateCache(request) {
   return fetch(request)
