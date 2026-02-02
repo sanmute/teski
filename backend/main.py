@@ -23,6 +23,7 @@ from fastapi.responses import JSONResponse
 import logging
 import os
 from uuid import uuid4
+import traceback
 DEBUG_AUTH = os.getenv("DEBUG_AUTH", "false").lower() == "true"
 
 from routes import tasks as tasks_route
@@ -69,6 +70,7 @@ ALLOW_ORIGIN_REGEX = r"^https://.*\\.vercel\\.app$"
 
 init_db()
 app = FastAPI(title="Deadline Agent Backend", version="0.1.0")
+print("[BOOT] using app from main:app", file=sys.stderr)
 print("[startup] FastAPI app created; CORS will be applied; binding via uvicorn main:app on 0.0.0.0:8080", file=sys.stderr)
 app.state.allowed_origins = ALLOW_ORIGINS
 
@@ -123,19 +125,19 @@ async def add_request_id(request: Request, call_next):
     response.headers["X-Request-ID"] = request.state.request_id
     return response
 
-# Global error catcher to surface tracebacks in logs with request_id
+# Catch-all exception logger with traceback to stdout
 @app.middleware("http")
-async def log_exceptions(request: Request, call_next):
+async def catch_all_exceptions(request: Request, call_next):
+    request_id = getattr(request.state, "request_id", None) or str(uuid4())
     try:
-        response = await call_next(request)
+        return await call_next(request)
     except Exception:
-        rid = getattr(request.state, "request_id", "n/a")
-        logging.exception(
-            "Unhandled exception during request",
-            extra={"path": request.url.path, "method": request.method, "request_id": rid},
+        print(f"[EXC] request_id={request_id} {request.method} {request.url.path}", file=sys.stderr)
+        print(traceback.format_exc(), file=sys.stderr)
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Internal Server Error", "request_id": request_id},
         )
-        return JSONResponse({"detail": "Internal Server Error", "request_id": rid}, status_code=500)
-    return response
 
 # Simple request logging (method, path, status)
 @app.middleware("http")
