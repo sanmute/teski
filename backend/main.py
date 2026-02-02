@@ -24,6 +24,7 @@ import logging
 import os
 from uuid import uuid4
 import traceback
+from typing import Callable
 DEBUG_AUTH = os.getenv("DEBUG_AUTH", "false").lower() == "true"
 
 from routes import tasks as tasks_route
@@ -77,6 +78,10 @@ app.state.allowed_origins = ALLOW_ORIGINS
 # Basic logging configuration
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 logger = logging.getLogger("teski")
+
+# Log middleware stack fingerprint on boot
+print("[BOOT] middleware_stack=", [m.cls.__name__ for m in app.user_middleware], file=sys.stderr)
+print("[BOOT] fingerprint=TESKI_MW_V1", file=sys.stderr)
 
 app.add_middleware(
     CORSMiddleware,
@@ -134,7 +139,31 @@ async def request_id_and_exceptions(request: Request, call_next):
         body = {"detail": "Internal Server Error", "request_id": request_id}
         if debug == "trace":
             body["traceback"] = tb
-        return JSONResponse(status_code=500, content=body, headers={"X-Request-ID": request_id})
+        resp = JSONResponse(status_code=500, content=body)
+        resp.headers["X-Request-ID"] = request_id
+        resp.headers["x-teski-fingerprint"] = "TESKI_MW_V1"
+        resp.headers["x-teski-mw-present"] = "1"
+        return resp
+
+# Fingerprint middleware to prove execution
+@app.middleware("http")
+async def _fingerprint(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["x-teski-fingerprint"] = "TESKI_MW_V1"
+    response.headers["x-teski-mw-present"] = "1"
+    return response
+
+# Exception handler fallback that also sets fingerprint headers
+async def global_exception_handler(request: Request, exc: Exception):
+    request_id = getattr(request.state, "request_id", str(uuid4()))
+    body = {"detail": "Internal Server Error", "fingerprint": "TESKI_MW_V1", "request_id": request_id}
+    resp = JSONResponse(status_code=500, content=body)
+    resp.headers["x-teski-fingerprint"] = "TESKI_MW_V1"
+    resp.headers["x-teski-mw-present"] = "1"
+    resp.headers["X-Request-ID"] = request_id
+    return resp
+
+app.add_exception_handler(Exception, global_exception_handler)
 
 # Simple request logging (method, path, status)
 @app.middleware("http")
