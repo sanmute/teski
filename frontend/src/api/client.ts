@@ -85,7 +85,12 @@ function maybeStringifyBody(body: unknown, headers: Headers): BodyInit | undefin
 export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers || {});
   const body = maybeStringifyBody(init.body as unknown, headers);
-  const response = await fetch(buildApiUrl(path), withAuthHeaders({ ...init, headers, body }));
+  const requestInit = withAuthHeaders({ ...init, headers, body });
+  if (import.meta.env.DEV) {
+    const hasAuth = (requestInit.headers as Headers).has("Authorization");
+    console.debug("[apiFetch]", path, { hasAuth });
+  }
+  const response = await fetch(buildApiUrl(path), requestInit);
   const text = await response.text();
   const parsed = text ? (() => { try { return JSON.parse(text); } catch { return text as unknown; } })() : undefined;
 
