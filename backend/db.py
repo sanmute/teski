@@ -212,7 +212,7 @@ def init_db():
         from models_exercise import Exercise
         from models_analytics import AnalyticsEvent
         from models_feedback import FeedbackItem
-        from models_onboarding import UserOnboarding, StudyProfile
+        from models_onboarding import UserOnboarding, StudyProfile, StudyProfileV1
 
         _ = (
             Course,
@@ -225,6 +225,7 @@ def init_db():
             MicroQuestExercise,
             Exercise,
             UserOnboarding,
+            StudyProfileV1,
             StudyProfile,
             FeedbackItem,
         )

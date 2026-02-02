@@ -3,7 +3,8 @@ from __future__ import annotations
 from fastapi import Depends, Header, HTTPException, status, Query, Request
 import logging
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, ExpiredSignatureError, JWTClaimsError
+from jose import JWTError, ExpiredSignatureError
+from jose.exceptions import JWTClaimsError
 from sqlmodel import Session
 
 import settings

@@ -6,6 +6,7 @@ from typing import Optional, Dict, Any
 from sqlalchemy import Column
 from sqlalchemy.types import JSON
 from sqlmodel import SQLModel, Field
+from typing import List
 
 
 class UserOnboarding(SQLModel, table=True):
@@ -26,5 +27,17 @@ class StudyProfile(SQLModel, table=True):
     user_id: str = Field(index=True)
     # Arbitrary profile payload (e.g., goals, availability, weak_areas, preferences, etc.)
     data: Dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON))
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)
+    updated_at: datetime = Field(default_factory=datetime.utcnow, index=True)
+
+
+class StudyProfileV1(SQLModel, table=True):
+    __tablename__ = "user_study_profile_v1"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: str = Field(index=True)
+    profile_version: int = Field(default=1, index=True)
+    profile_json: Dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON))
+    completed_at: Optional[datetime] = Field(default=None, index=True)
     created_at: datetime = Field(default_factory=datetime.utcnow, index=True)
     updated_at: datetime = Field(default_factory=datetime.utcnow, index=True)
