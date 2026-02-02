@@ -16,7 +16,7 @@ parent_str = str(PROJECT_ROOT.parent)
 if parent_str not in sys.path:
     sys.path.insert(1, parent_str)
 # Fallback for app package settings in environments missing secrets (keeps imports from failing)
-os.environ.setdefault("TESKI_SECRET_KEY", "dev-placeholder-secret")
+os.environ.setdefault("SECRET_KEY", "dev-placeholder-secret")
 from fastapi import FastAPI, Depends, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse

@@ -81,7 +81,7 @@ make dev      # runs uvicorn app.main + npm run dev simultaneously
 ```
 
 ### Auth (beta)
-- Backend env: `TESKI_SECRET_KEY` (used for JWT signing)
+- Backend env: `SECRET_KEY` (used for JWT signing)
 - Signup: `curl -X POST http://localhost:8000/api/auth/signup -H "Content-Type: application/json" -d '{"email":"a@b.com","password":"pw"}'`
 - Login (JSON): `curl -X POST http://localhost:8000/api/auth/login-json -H "Content-Type: application/json" -d '{"email":"a@b.com","password":"pw"}'`
 - Me: `curl -H "Authorization: Bearer <token>" http://localhost:8000/api/auth/me`
