@@ -71,6 +71,10 @@ app = FastAPI(title="Deadline Agent Backend", version="0.1.0")
 print("[startup] FastAPI app created; CORS will be applied; binding via uvicorn main:app on 0.0.0.0:8080", file=sys.stderr)
 app.state.allowed_origins = ALLOW_ORIGINS
 
+# Basic logging configuration
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
+logger = logging.getLogger("teski")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOW_ORIGINS,
@@ -108,6 +112,23 @@ async def ensure_cors_on_error(request: Request, call_next):
     if _origin_allowed(origin) and "access-control-allow-origin" not in response.headers:
         response.headers["access-control-allow-origin"] = origin
         response.headers["access-control-allow-credentials"] = "true"
+    return response
+
+# Global error catcher to surface tracebacks in logs
+@app.middleware("http")
+async def log_exceptions(request: Request, call_next):
+    try:
+        response = await call_next(request)
+    except Exception:
+        logging.exception("Unhandled exception during request", extra={"path": request.url.path, "method": request.method})
+        return JSONResponse({"detail": "Internal Server Error"}, status_code=500)
+    return response
+
+# Simple request logging (method, path, status)
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    response = await call_next(request)
+    logging.info("%s %s -> %s", request.method, request.url.path, response.status_code)
     return response
 
 from routes import debug_db as debug_db_route
