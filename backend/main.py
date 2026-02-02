@@ -210,6 +210,7 @@ app.include_router(api_router)
 
 # Expose onboarding routes also without the /api prefix to match legacy/front-end callers.
 app.include_router(onboarding_route.router)
+app.include_router(analytics_route.router)
 
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
@@ -245,8 +246,12 @@ def seed_intro_python():
 @app.on_event("startup")
 def log_key_routes():
     logger = logging.getLogger("startup.routes")
-    targets = [r.path for r in app.router.routes if r.path.startswith("/api/")]
-    logger.warning("Mounted /api routes (%d): %s", len(targets), sorted(set(targets)))
+    routes = []
+    for r in app.router.routes:
+        methods = getattr(r, "methods", None) or []
+        for m in methods:
+            routes.append(f"{m} {r.path}")
+    logger.warning("Mounted routes (%d): %s", len(routes), sorted(set(routes)))
 # <<< SEED EXERCISES END
 
 # Backward compatibility: allow legacy clients hitting /tasks/upcoming without /api prefix

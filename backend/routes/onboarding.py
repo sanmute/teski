@@ -42,9 +42,13 @@ class StudyProfileOut(StudyProfileIn):
 
 @router.get("/status")
 def onboarding_status(current_user: User = Depends(get_current_user), session: Session = Depends(get_session)):
-    # Refresh from DB to avoid stale value
-    user = session.get(User, current_user.id)
-    return {"ok": True, "onboarded": bool(user.onboarded)}
+    try:
+        user = session.get(User, current_user.id)
+        onboarded = bool(user.onboarded) if user else False
+        return {"ok": True, "onboarded": onboarded, "user_id": current_user.id}
+    except Exception as e:
+        # Launch-safe: never bubble 500 for status
+        return {"ok": False, "onboarded": False, "error": str(e), "user_id": current_user.id}
 
 
 @router.get("/me")

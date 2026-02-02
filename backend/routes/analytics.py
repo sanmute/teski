@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Query
 
-router = APIRouter(prefix="", tags=["analytics"])
+# Provide endpoints under /analytics/me/*
+router = APIRouter(prefix="/analytics/me", tags=["analytics"])
 
 
 @router.get("/summary")
@@ -27,4 +28,3 @@ def by_course(days: int = Query(default=7, ge=1, le=90)):
 def insights():
     """Stub insights analytics."""
     return {"ok": True, "items": []}
-
