@@ -1,4 +1,4 @@
-import { api } from "./client";
+import { api, getAuthToken } from "./client";
 
 export type OnboardingStatus = { ok: boolean; onboarded: boolean };
 
@@ -23,6 +23,9 @@ export function submitOnboarding(answers: OnboardingAnswers) {
 
 export function getOnboardingAnswers() {
   return api.get<{ ok: boolean; onboarded: boolean; answers: Record<string, unknown> | null; skipped: boolean }>(
-    "/onboarding/me"
+    "/onboarding/me",
+    {
+      headers: { Authorization: `Bearer ${getAuthToken() ?? ""}` },
+    },
   );
 }

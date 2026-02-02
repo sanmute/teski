@@ -44,6 +44,14 @@ export function loadAuthTokenFromStorage() {
   return token;
 }
 
+// For callers that need to read the current token (e.g., to force-attach headers).
+export function getAuthToken(): string | null {
+  if (authToken) return authToken;
+  const stored = typeof localStorage !== "undefined" ? localStorage.getItem("teski_token") : null;
+  authToken = stored;
+  return stored;
+}
+
 function buildApiUrl(path: string): string {
   if (/^https?:\/\//i.test(path)) return path;
   if (path.startsWith("/")) return `${API_BASE_URL}${path}`;
