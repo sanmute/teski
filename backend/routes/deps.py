@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from fastapi import Depends, Header, HTTPException, status, Query
+from fastapi import Depends, Header, HTTPException, status, Query, Request
 import logging
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
@@ -20,11 +20,16 @@ logger = logging.getLogger("auth")
 
 
 async def get_current_user(
+    request: Request,
     token: str | None = Depends(oauth2_scheme),
     x_user_id: str | None = Header(default=None, alias="X-User-Id"),
     user_id_q: str | None = Query(default=None, alias="user_id"),
     session: Session = Depends(get_session),
 ) -> User:
+    if request.method.upper() == "OPTIONS":
+        logger.debug("auth skip OPTIONS", extra={"path": request.url.path, "origin": request.headers.get("origin")})
+        # Return a lightweight placeholder user to satisfy dependency chain for CORS preflight
+        return User(id=0, external_user_id="options-preflight", email="options@teski.app", hashed_password="")
     user_id = None
     if token:
         credentials_exception = HTTPException(

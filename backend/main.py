@@ -81,7 +81,7 @@ app.add_middleware(
     allow_origin_regex=ALLOW_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"] ,
     expose_headers=["*"],
     max_age=86400,
 )
@@ -127,6 +127,8 @@ async def log_exceptions(request: Request, call_next):
 # Simple request logging (method, path, status)
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
+    if request.method == "OPTIONS":
+        logging.debug("OPTIONS preflight", extra={"path": request.url.path, "origin": request.headers.get("origin")})
     response = await call_next(request)
     logging.info("%s %s -> %s", request.method, request.url.path, response.status_code)
     return response

@@ -22,6 +22,12 @@ export default function Profile() {
         const token = getAuthToken();
         if (import.meta.env.DEV) {
           console.debug("[profile] requesting /onboarding/profile", { tokenPresent: Boolean(token) });
+          if (!token) {
+            console.warn("[profile] aborting fetch until token is available");
+          }
+        }
+        if (!token) {
+          return;
         }
         const data = await apiFetch<StudyProfile>("/onboarding/profile");
         setProfile(data ?? null);

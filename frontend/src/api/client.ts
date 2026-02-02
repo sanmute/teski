@@ -91,7 +91,11 @@ export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}
   if (import.meta.env.DEV) {
     const hasAuth = (requestInit.headers as Headers).has("Authorization");
     const method = (requestInit.method || "GET").toUpperCase();
+    const isProtected = /^(\/api)?\/(onboarding|analytics|tasks|study|memory|push|reminders|ex|exercises|feedback)/.test(path);
     console.debug("[apiFetch]", method, path, { hasAuth });
+    if (!hasAuth && isProtected) {
+      console.warn("[apiFetch] missing Authorization for protected call", { path, method });
+    }
   }
   const response = await fetch(buildApiUrl(path), requestInit);
   const text = await response.text();
