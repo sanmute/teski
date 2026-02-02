@@ -22,6 +22,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import logging
 import os
+from uuid import uuid4
 DEBUG_AUTH = os.getenv("DEBUG_AUTH", "false").lower() == "true"
 
 from routes import tasks as tasks_route
@@ -114,14 +115,26 @@ async def ensure_cors_on_error(request: Request, call_next):
         response.headers["access-control-allow-credentials"] = "true"
     return response
 
-# Global error catcher to surface tracebacks in logs
+# Inject request_id on every request
+@app.middleware("http")
+async def add_request_id(request: Request, call_next):
+    request.state.request_id = request.headers.get("x-request-id") or str(uuid4())
+    response = await call_next(request)
+    response.headers["X-Request-ID"] = request.state.request_id
+    return response
+
+# Global error catcher to surface tracebacks in logs with request_id
 @app.middleware("http")
 async def log_exceptions(request: Request, call_next):
     try:
         response = await call_next(request)
     except Exception:
-        logging.exception("Unhandled exception during request", extra={"path": request.url.path, "method": request.method})
-        return JSONResponse({"detail": "Internal Server Error"}, status_code=500)
+        rid = getattr(request.state, "request_id", "n/a")
+        logging.exception(
+            "Unhandled exception during request",
+            extra={"path": request.url.path, "method": request.method, "request_id": rid},
+        )
+        return JSONResponse({"detail": "Internal Server Error", "request_id": rid}, status_code=500)
     return response
 
 # Simple request logging (method, path, status)

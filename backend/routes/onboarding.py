@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import List, Optional, Literal, Dict, Any
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlmodel import Session, SQLModel, select
 
 from db import get_session
@@ -119,23 +119,35 @@ def _serialize_profile(profile: StudyProfile) -> StudyProfileOut:
 
 
 @router.get("/profile", response_model=StudyProfileOut)
-def get_study_profile(current_user: User = Depends(get_current_user), session: Session = Depends(get_session)):
-    profile = _load_study_profile(session, current_user.external_user_id)
-    if profile:
-        return _serialize_profile(profile)
-    # defaults
-    now = datetime.utcnow()
-    return StudyProfileOut(
-        user_id=current_user.external_user_id,
-        has_profile=False,
-        goals=None,
-        availability=None,
-        weak_areas=None,
-        preferences=None,
-        raw_json=None,
-        created_at=now,
-        updated_at=now,
-    )
+def get_study_profile(
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    rid = getattr(request.state, "request_id", "n/a")
+    try:
+        profile = _load_study_profile(session, current_user.external_user_id)
+        if profile:
+            return _serialize_profile(profile)
+        # defaults
+        now = datetime.utcnow()
+        return StudyProfileOut(
+            user_id=current_user.external_user_id,
+            has_profile=False,
+            goals=None,
+            availability=None,
+            weak_areas=None,
+            preferences=None,
+            raw_json=None,
+            created_at=now,
+            updated_at=now,
+        )
+    except Exception:
+        logging.exception(
+            "onboarding.profile failed",
+            extra={"request_id": rid, "user_id": getattr(current_user, "id", None), "external_user_id": getattr(current_user, "external_user_id", None)},
+        )
+        raise
 
 
 @router.post("/profile", response_model=StudyProfileOut)
