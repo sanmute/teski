@@ -1,5 +1,5 @@
 import { API_BASE } from "./api/client";
-export { API_BASE_URL, apiFetch, API_BASE } from "./api/client";
+export { API_BASE_URL, apiFetch, API_BASE, getAuthToken } from "./api/client";
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
