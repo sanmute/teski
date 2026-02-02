@@ -21,4 +21,7 @@ class FeedbackItem(SQLModel, table=True):
     user_agent: Optional[str] = None
     app_version: Optional[str] = None
     metadata_json: Dict[str, Any] = Field(default_factory=dict, sa_column=Column("metadata", JSON))
+    raffle_opt_in: bool = Field(default=False, index=True)
+    raffle_name: Optional[str] = None
+    raffle_email: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow, index=True)

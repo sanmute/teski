@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { submitFeedback } from "../api/feedback";
+import { collectFeedbackContext } from "@/lib/feedback";
 
 type FeedbackButtonProps = {
   userId?: string;
@@ -13,29 +14,44 @@ export function FeedbackButton({ userId }: FeedbackButtonProps) {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [raffleOptIn, setRaffleOptIn] = useState(false);
+  const [raffleName, setRaffleName] = useState("");
+  const [raffleEmail, setRaffleEmail] = useState("");
 
   async function send() {
     if (!message.trim()) return;
+    if (raffleOptIn && !raffleName.trim()) {
+      setError("Please add your name to join the raffle.");
+      return;
+    }
     setSending(true);
     setError(null);
     try {
+      const context = collectFeedbackContext("floating_feedback", {
+        route: typeof window !== "undefined" ? window.location.pathname : undefined,
+        user_id: userId,
+        source: "floating_feedback",
+      });
       await submitFeedback({
         kind,
         severity: kind === "bug" ? severity : undefined,
         message: message.trim(),
-        page_url: window.location.href,
+        page: context.page,
+        page_url: context.page, // backward-compatible field
         user_agent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
-        app_version: import.meta.env.VITE_APP_VERSION as string | undefined,
-        metadata: {
-          source: "floating_feedback",
-          route: window.location.pathname,
-          user_id: userId,
-        },
+        app_version: context.app_version,
+        metadata: context.metadata,
+        raffle_opt_in: raffleOptIn,
+        raffle_name: raffleOptIn ? raffleName.trim() : null,
+        raffle_email: raffleOptIn && raffleEmail.trim() ? raffleEmail.trim() : null,
       });
       setSent(true);
       setTimeout(() => {
         setOpen(false);
         setMessage("");
+        setRaffleOptIn(false);
+        setRaffleName("");
+        setRaffleEmail("");
         setSent(false);
       }, 1200);
     } catch (err: any) {
@@ -94,6 +110,43 @@ export function FeedbackButton({ userId }: FeedbackButtonProps) {
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
+      <div className="mt-3 flex items-center gap-2 text-sm">
+        <input
+          id="raffle-opt-in"
+          type="checkbox"
+          checked={raffleOptIn}
+          onChange={(e) => setRaffleOptIn(e.target.checked)}
+          className="h-4 w-4"
+        />
+        <label htmlFor="raffle-opt-in" className="cursor-pointer">
+          I want to participate in the feedback raffle
+        </label>
+      </div>
+      {raffleOptIn && (
+        <div className="mt-2 space-y-2 text-sm">
+          <div>
+            <label className="mb-1 block">Name (required)</label>
+            <input
+              type="text"
+              value={raffleName}
+              onChange={(e) => setRaffleName(e.target.value)}
+              className="w-full rounded border px-2 py-1"
+              placeholder="Your name"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block">Email (optional)</label>
+            <input
+              type="email"
+              value={raffleEmail}
+              onChange={(e) => setRaffleEmail(e.target.value)}
+              className="w-full rounded border px-2 py-1"
+              placeholder="you@example.com"
+            />
+          </div>
+          <p className="text-xs text-gray-600">Raffle info is used only to contact winners and is not shared.</p>
+        </div>
+      )}
       {error && <div className="mt-1 text-xs text-red-600">{error}</div>}
       <div className="mt-2 flex gap-2">
         <button

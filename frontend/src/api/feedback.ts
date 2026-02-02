@@ -4,10 +4,14 @@ export type FeedbackPayload = {
   kind: "feedback" | "bug" | "idea";
   message: string;
   severity?: "low" | "medium" | "high";
+  page?: string;
   page_url?: string;
   user_agent?: string;
   app_version?: string;
   metadata?: Record<string, unknown>;
+  raffle_opt_in?: boolean;
+  raffle_name?: string | null;
+  raffle_email?: string | null;
 };
 
 export async function submitFeedback(payload: FeedbackPayload): Promise<{ ok: boolean; id: number }> {
@@ -25,6 +29,9 @@ export type FeedbackItem = {
   user_agent: string | null;
   app_version: string | null;
   metadata: Record<string, unknown> | null;
+   raffle_opt_in: boolean;
+   raffle_name: string | null;
+   raffle_email: string | null;
   created_at: string;
 };
 

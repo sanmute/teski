@@ -106,6 +106,23 @@ def _ensure_external_user_id(conn: sqlite3.Connection) -> None:
         cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS uq_user_external_id ON user(external_user_id)")
         conn.commit()
 
+def _ensure_feedback_raffle_columns(conn: sqlite3.Connection) -> None:
+    """Add raffle-related columns to feedback_items if missing."""
+    cur = conn.cursor()
+    cur.execute("PRAGMA table_info(feedback_items);")
+    cols = {row[1] for row in cur.fetchall()}
+    alters = []
+    if "raffle_opt_in" not in cols:
+        alters.append("ALTER TABLE feedback_items ADD COLUMN raffle_opt_in INTEGER DEFAULT 0")
+    if "raffle_name" not in cols:
+        alters.append("ALTER TABLE feedback_items ADD COLUMN raffle_name TEXT")
+    if "raffle_email" not in cols:
+        alters.append("ALTER TABLE feedback_items ADD COLUMN raffle_email TEXT")
+    for stmt in alters:
+        cur.execute(stmt)
+    if alters:
+        conn.commit()
+
 
 def _ensure_help_library_tables(conn: sqlite3.Connection) -> str:
     """Create FTS-backed or fallback tables. Returns 'fts5' or 'fallback'."""
@@ -215,6 +232,7 @@ def init_db():
         _ensure_user_auth_columns(conn)
         _ensure_external_user_id(conn)
         _ensure_onboarded_columns(conn)
+        _ensure_feedback_raffle_columns(conn)
 
         mode = _ensure_help_library_tables(conn)
         print(f"[DB] Help Library tables ensured (mode={mode})", file=sys.stderr)

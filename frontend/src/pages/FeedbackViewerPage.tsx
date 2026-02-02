@@ -84,6 +84,7 @@ export default function FeedbackViewerPage() {
               <th style={thStyle}>User</th>
               <th style={thStyle}>Kind</th>
               <th style={thStyle}>Severity</th>
+              <th style={thStyle}>Raffle</th>
               <th style={thStyle}>Context</th>
               <th style={thStyle}>Message</th>
             </tr>
@@ -104,6 +105,19 @@ export default function FeedbackViewerPage() {
                 </td>
                 <td style={tdStyle}>{fb.kind}</td>
                 <td style={tdStyle}>{fb.severity || "-"}</td>
+                <td style={tdStyle}>
+                  {fb.raffle_opt_in ? (
+                    <div>
+                      <div>Yes</div>
+                      {fb.raffle_name && <div>Name: {fb.raffle_name}</div>}
+                      {(fb.raffle_email || fb.user_email) && (
+                        <div>Contact: {fb.raffle_email || fb.user_email}</div>
+                      )}
+                    </div>
+                  ) : (
+                    "No"
+                  )}
+                </td>
                 <td style={tdStyle}>
                   <div>
                     {fb.page_url && (

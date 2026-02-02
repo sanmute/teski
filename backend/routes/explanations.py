@@ -57,9 +57,11 @@ except ImportError:  # pragma: no cover
             ]
 
         # default big_picture
+        paraphrase = f"In simple terms: {summary}" if summary else text
+        details = rest if rest != summary else text
         return [
-            ExplanationBlock(style="big_picture", title="High-level summary", content=summary or text),
-            ExplanationBlock(style="big_picture", title="Details", content=rest or text),
+            ExplanationBlock(style="big_picture", title="High-level summary", content=paraphrase),
+            ExplanationBlock(style="big_picture", title="Details", content=details),
         ]
 
 # Optional: call OpenAI directly if key is present and app package is unavailable.

@@ -2,6 +2,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { type MicroQuestCompleteResponse } from "../api/microquest";
 import { submitFeedback } from "../api/feedback";
+import { collectFeedbackContext } from "@/lib/feedback";
 
 type LocationState = { summary?: MicroQuestCompleteResponse };
 
@@ -16,6 +17,9 @@ export default function MicroQuestSummaryLitePage() {
   const [feedbackRating, setFeedbackRating] = useState<number | undefined>(undefined);
   const [feedbackStatus, setFeedbackStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [feedbackError, setFeedbackError] = useState<string | null>(null);
+  const [raffleOptIn, setRaffleOptIn] = useState(false);
+  const [raffleName, setRaffleName] = useState("");
+  const [raffleEmail, setRaffleEmail] = useState("");
 
   if (!summary || !microquestId) {
     return <div style={{ padding: 24 }}>Summary missing. Start a new micro-quest from Today.</div>;
@@ -27,16 +31,30 @@ export default function MicroQuestSummaryLitePage() {
   const handleSendFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!feedbackMessage.trim()) return;
+    if (raffleOptIn && !raffleName.trim()) {
+      setFeedbackError("Name is required to join the raffle.");
+      setFeedbackStatus("error");
+      return;
+    }
     setFeedbackStatus("sending");
     setFeedbackError(null);
     try {
+      const context = collectFeedbackContext("microquest_summary", {
+        rating: feedbackRating,
+        context: "microquest_summary",
+        route: `/practice/micro-quest/${microquestId}/summary`,
+      });
       await submitFeedback({
         kind: "feedback",
         severity: undefined,
         message: feedbackMessage.trim(),
-        page_url: `/practice/micro-quest/${microquestId}/summary`,
-        app_version: import.meta.env.VITE_APP_VERSION as string | undefined,
-        metadata: { rating: feedbackRating, context: "microquest_summary" },
+        page: context.page,
+        page_url: context.page, // backward-compatible field
+        app_version: context.app_version,
+        metadata: context.metadata,
+        raffle_opt_in: raffleOptIn,
+        raffle_name: raffleOptIn ? raffleName.trim() : null,
+        raffle_email: raffleOptIn && raffleEmail.trim() ? raffleEmail.trim() : null,
       });
       setFeedbackStatus("sent");
     } catch (err: any) {
@@ -88,6 +106,43 @@ export default function MicroQuestSummaryLitePage() {
                 </button>
               ))}
             </div>
+          </div>
+          <div style={{ marginBottom: 12 }}>
+            <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <input
+                type="checkbox"
+                checked={raffleOptIn}
+                onChange={(e) => setRaffleOptIn(e.target.checked)}
+              />
+              <span>I want to participate in the feedback raffle</span>
+            </label>
+            {raffleOptIn && (
+              <div style={{ marginTop: 8 }}>
+                <div style={{ marginBottom: 8 }}>
+                  <label style={{ display: "block", marginBottom: 4 }}>Name (required)</label>
+                  <input
+                    type="text"
+                    value={raffleName}
+                    onChange={(e) => setRaffleName(e.target.value)}
+                    placeholder="Your name"
+                    style={{ width: "100%", padding: 8, borderRadius: 8, border: "1px solid #cbd5e1" }}
+                  />
+                </div>
+                <div style={{ marginBottom: 8 }}>
+                  <label style={{ display: "block", marginBottom: 4 }}>Email (optional)</label>
+                  <input
+                    type="email"
+                    value={raffleEmail}
+                    onChange={(e) => setRaffleEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    style={{ width: "100%", padding: 8, borderRadius: 8, border: "1px solid #cbd5e1" }}
+                  />
+                </div>
+                <p style={{ fontSize: 12, color: "#475569" }}>
+                  Raffle info is used only to contact winners and is not shared.
+                </p>
+              </div>
+            )}
           </div>
           {feedbackError && <div style={{ color: "#e11d48", marginBottom: 8 }}>{feedbackError}</div>}
           {feedbackStatus === "sent" ? (
