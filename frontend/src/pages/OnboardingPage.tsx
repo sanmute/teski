@@ -28,12 +28,16 @@ export default function OnboardingPage() {
   };
 
   const handleSubmit = async (skip = false) => {
+    console.log("[onboarding] submit click", { skip, form });
     setSubmitting(true);
     setError(null);
     try {
-      await submitOnboarding({ ...form, skipped: skip });
+      console.log("[onboarding] submitting payload");
+      const resp = await submitOnboarding({ ...form, skipped: skip });
+      console.log("[onboarding] submit success", resp);
       navigate("/today", { replace: true });
     } catch (err) {
+      console.warn("[onboarding] submit failed", err);
       setError(err instanceof Error ? err.message : "Failed to save onboarding");
     } finally {
       setSubmitting(false);
@@ -151,10 +155,10 @@ export default function OnboardingPage() {
       {error && <div className="rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</div>}
 
       <div className="flex flex-wrap gap-3">
-        <Button disabled={submitting} onClick={() => handleSubmit(false)}>
+        <Button type="button" disabled={submitting} onClick={() => handleSubmit(false)}>
           {submitting ? "Saving..." : "Save and continue"}
         </Button>
-        <Button variant="secondary" disabled={submitting} onClick={() => handleSubmit(true)}>
+        <Button type="button" variant="secondary" disabled={submitting} onClick={() => handleSubmit(true)}>
           Skip for now
         </Button>
       </div>
