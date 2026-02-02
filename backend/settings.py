@@ -36,7 +36,9 @@ memory_v1_settings = MemoryV1Settings()
 # <<< MEMORY V1 END
 
 # >>> AUTH START
-SECRET_KEY = getenv("TESKI_SECRET_KEY", "change-me-in-prod")
+# Prefer SECRET_KEY (used in existing .env.backend) and fall back to TESKI_SECRET_KEY.
+_secret_env = getenv("SECRET_KEY") or getenv("TESKI_SECRET_KEY")
+SECRET_KEY = _secret_env or "change-me-in-prod"
 ALGORITHM = getenv("TESKI_JWT_ALG", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(getenv("TESKI_ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
 # <<< AUTH END

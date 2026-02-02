@@ -21,6 +21,9 @@ from fastapi import FastAPI, Depends, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import logging
+import os
+DEBUG_AUTH = os.getenv("DEBUG_AUTH", "false").lower() == "true"
+
 from routes import tasks as tasks_route
 from routes import reminders as reminders_route
 from routes import health as health_route
@@ -79,6 +82,10 @@ app.add_middleware(
     max_age=86400,
 )
 
+if DEBUG_AUTH:
+    logging.getLogger("auth").setLevel(logging.DEBUG)
+    logging.getLogger("auth").warning("DEBUG_AUTH enabled; auth failures will be logged (no tokens)")
+
 @app.middleware("http")
 async def ensure_cors_on_error(request: Request, call_next):
     """
@@ -105,6 +112,20 @@ async def ensure_cors_on_error(request: Request, call_next):
 
 from routes import debug_db as debug_db_route
 app.include_router(debug_db_route.router)
+
+# Optional debug helper to verify auth in environments where DEBUG_AUTH=true
+from fastapi import Depends
+from routes.deps import get_current_user
+
+debug_router = APIRouter()
+
+
+@debug_router.get("/debug/whoami")
+def whoami(user=Depends(get_current_user)):
+    return {"user_id": user.id}
+
+if DEBUG_AUTH:
+    app.include_router(debug_router)
 
 # app/backend/main.py
 from routes import import_ics as import_ics_route

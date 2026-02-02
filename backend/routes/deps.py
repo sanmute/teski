@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from fastapi import Depends, Header, HTTPException, status, Query
+import logging
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
 from sqlmodel import Session
@@ -13,6 +14,9 @@ from security import decode_access_token
 from services.authorization import user_can_edit_course
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login", auto_error=False)
+
+
+logger = logging.getLogger("auth")
 
 
 async def get_current_user(
@@ -33,7 +37,8 @@ async def get_current_user(
             user_id = payload.get("sub")
             if user_id is None:
                 raise credentials_exception
-        except JWTError:
+        except JWTError as e:
+            logger.warning("auth.decode_failed", extra={"err": type(e).__name__, "msg": str(e), "alg": settings.ALGORITHM})
             raise credentials_exception
     elif x_user_id is not None:
         user_id = x_user_id
