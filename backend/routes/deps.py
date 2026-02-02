@@ -3,7 +3,7 @@ from __future__ import annotations
 from fastapi import Depends, Header, HTTPException, status, Query, Request
 import logging
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError
+from jose import JWTError, ExpiredSignatureError, JWTClaimsError
 from sqlmodel import Session
 
 import settings
@@ -42,6 +42,45 @@ async def get_current_user(
             user_id = payload.get("sub")
             if user_id is None:
                 raise credentials_exception
+        except ExpiredSignatureError as e:
+            reason = "expired"
+            try:
+                logger.warning(
+                    "auth.decode_failed",
+                    extra={"err": type(e).__name__, "err_msg": str(e), "alg": settings.ALGORITHM},
+                )
+            except KeyError:
+                logger.warning("auth.decode_failed")
+            if request.headers.get("x-teski-debug") == "trace":
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail={"error": "Could not validate credentials", "reason": reason},
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
+            raise credentials_exception
+        except JWTClaimsError as e:
+            # Audience / issuer errors fall here
+            err_type = type(e).__name__
+            if "audience" in err_type.lower():
+                reason = "wrong_audience"
+            elif "issuer" in err_type.lower():
+                reason = "wrong_issuer"
+            else:
+                reason = f"decode_error:{err_type}"
+            try:
+                logger.warning(
+                    "auth.decode_failed",
+                    extra={"err": err_type, "err_msg": str(e), "alg": settings.ALGORITHM},
+                )
+            except KeyError:
+                logger.warning("auth.decode_failed")
+            if request.headers.get("x-teski-debug") == "trace":
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail={"error": "Could not validate credentials", "reason": reason},
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
+            raise credentials_exception
         except JWTError as e:
             try:
                 logger.warning(
@@ -50,6 +89,12 @@ async def get_current_user(
                 )
             except KeyError:
                 logger.warning("auth.decode_failed")
+            if request.headers.get("x-teski-debug") == "trace":
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail={"error": "Could not validate credentials", "reason": f"decode_error:{type(e).__name__}"},
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
             raise credentials_exception
     elif x_user_id is not None:
         user_id = x_user_id
@@ -70,6 +115,8 @@ async def get_current_user(
 
     user = session.get(User, user_int)
     if not user:
+        if request.headers.get("x-teski-debug") == "trace":
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail={"error": "User not found", "reason": "user_not_found"})
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
     return user
 
