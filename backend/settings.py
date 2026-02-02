@@ -1,5 +1,6 @@
 from __future__ import annotations
 from os import getenv
+import os
 from zoneinfo import ZoneInfo
 
 DEFAULT_TIMEZONE = ZoneInfo("Europe/Helsinki")
@@ -41,4 +42,15 @@ _secret_env = getenv("SECRET_KEY") or getenv("TESKI_SECRET_KEY")
 SECRET_KEY = _secret_env or "change-me-in-prod"
 ALGORITHM = getenv("TESKI_JWT_ALG", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(getenv("TESKI_ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
+# ENV markers
+ENV = getenv("ENV", "dev").lower()
+FLY_APP_NAME = getenv("FLY_APP_NAME")
+
+def _validate_secret():
+    is_prod = ENV in {"prod", "production"} or bool(FLY_APP_NAME)
+    if is_prod:
+        if not SECRET_KEY or len(SECRET_KEY) < 20:
+            raise RuntimeError("SECRET_KEY is missing or too short in production")
+
+_validate_secret()
 # <<< AUTH END
