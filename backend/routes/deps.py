@@ -43,7 +43,13 @@ async def get_current_user(
             if user_id is None:
                 raise credentials_exception
         except JWTError as e:
-            logger.warning("auth.decode_failed", extra={"err": type(e).__name__, "msg": str(e), "alg": settings.ALGORITHM})
+            try:
+                logger.warning(
+                    "auth.decode_failed",
+                    extra={"err": type(e).__name__, "err_msg": str(e), "alg": settings.ALGORITHM},
+                )
+            except KeyError:
+                logger.warning("auth.decode_failed")
             raise credentials_exception
     elif x_user_id is not None:
         user_id = x_user_id

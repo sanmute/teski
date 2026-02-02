@@ -105,10 +105,7 @@ async def ensure_cors_on_error(request: Request, call_next):
     don't mask JSON errors with CORS failures.
     """
     origin = request.headers.get("origin")
-    try:
-        response = await call_next(request)
-    except Exception as exc:  # pragma: no cover - last-resort guard
-        response = JSONResponse({"detail": "Internal Server Error"}, status_code=500)
+    response = await call_next(request)
     def _origin_allowed(o: str | None) -> bool:
         if not o:
             return False
