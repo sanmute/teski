@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getClientUserId } from "@/lib/user";
-import { apiFetch, getAuthToken } from "@/api";
+import { api, getAuthToken } from "@/api";
 
 interface StudyProfile {
   goals?: string | null;
@@ -19,12 +19,11 @@ export default function Profile() {
   useEffect(() => {
     const load = async () => {
       try {
-        const data = await apiFetch<StudyProfile>(`/onboarding/profile`, {
-          headers: { "X-User-Id": getClientUserId(), Authorization: `Bearer ${getAuthToken() ?? ""}` },
-        });
+        const token = getAuthToken();
         if (import.meta.env.DEV) {
-          console.debug("[profile] GET /onboarding/profile with auth", getAuthToken());
+          console.debug("[profile] requesting /onboarding/profile", { tokenPresent: Boolean(token) });
         }
+        const data = await api.get<StudyProfile>("/onboarding/profile");
         setProfile(data ?? null);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load profile");
