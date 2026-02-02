@@ -124,19 +124,21 @@ async def ensure_cors_on_error(request: Request, call_next):
 
 # Inject request_id on every request
 @app.middleware("http")
-async def request_id_and_exceptions(request: Request, call_next):
+async def fingerprint_and_exceptions(request: Request, call_next):
     request_id = request.headers.get("x-request-id") or str(uuid4())
     request.state.request_id = request_id
     try:
         response = await call_next(request)
         response.headers["X-Request-ID"] = request_id
+        response.headers["x-teski-fingerprint"] = "TESKI_MW_V1"
+        response.headers["x-teski-mw-present"] = "1"
         return response
     except Exception:
         tb = traceback.format_exc()
         print(f"[EXC] request_id={request_id} {request.method} {request.url.path}", file=sys.stderr)
         print(tb, file=sys.stderr)
         debug = request.headers.get("x-teski-debug", "")
-        body = {"detail": "Internal Server Error", "request_id": request_id}
+        body = {"detail": "Internal Server Error", "request_id": request_id, "fingerprint": "TESKI_MW_V1"}
         if debug == "trace":
             body["traceback"] = tb
         resp = JSONResponse(status_code=500, content=body)
@@ -144,14 +146,6 @@ async def request_id_and_exceptions(request: Request, call_next):
         resp.headers["x-teski-fingerprint"] = "TESKI_MW_V1"
         resp.headers["x-teski-mw-present"] = "1"
         return resp
-
-# Fingerprint middleware to prove execution
-@app.middleware("http")
-async def _fingerprint(request: Request, call_next):
-    response = await call_next(request)
-    response.headers["x-teski-fingerprint"] = "TESKI_MW_V1"
-    response.headers["x-teski-mw-present"] = "1"
-    return response
 
 # Exception handler fallback that also sets fingerprint headers
 async def global_exception_handler(request: Request, exc: Exception):
