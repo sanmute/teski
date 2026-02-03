@@ -17,6 +17,7 @@ import {
 import { NewTaskForm } from "@/components/NewTaskForm";
 import { useToast } from "@/hooks/use-toast";
 import { MoodleIntegration } from "@/components/MoodleIntegration";
+import { DEMO_MODE } from "@/config/demo";
 
 export default function TasksUpcoming() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -60,6 +61,13 @@ export default function TasksUpcoming() {
   };
 
   const handleStartSession = async (_taskId: number, blockId: number) => {
+    if (DEMO_MODE) {
+      toast({
+        title: "Demo action",
+        description: "Study sessions are simulated here. Imagine a guided block starting now.",
+      });
+      return;
+    }
     try {
       const session = await startStudySession(blockId);
       toast({
@@ -111,12 +119,14 @@ export default function TasksUpcoming() {
           </div>
         )}
 
-        <MoodleIntegration
-          onImported={() => {
-            setRefreshing(true);
-            loadTasks().finally(() => setRefreshing(false));
-          }}
-        />
+        {!DEMO_MODE && (
+          <MoodleIntegration
+            onImported={() => {
+              setRefreshing(true);
+              loadTasks().finally(() => setRefreshing(false));
+            }}
+          />
+        )}
 
         {error && !loading && (
           <div className="flex items-center gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">

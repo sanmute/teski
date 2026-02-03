@@ -15,6 +15,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { DEMO_MODE } from "@/config/demo";
 
 const navItems = [
   { label: "Today", to: "/today", icon: CalendarDays },
@@ -92,6 +93,11 @@ export function AppLayout({ children }: PropsWithChildren) {
         <main className="flex-1 px-4 py-4">
           {children ?? <Outlet />}
         </main>
+        {DEMO_MODE && (
+          <footer className="border-t px-4 py-2 text-center text-[11px] text-muted-foreground">
+            Demo mode — illustrative data
+          </footer>
+        )}
       </div>
     </div>
   );

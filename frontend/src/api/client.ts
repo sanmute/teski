@@ -1,3 +1,17 @@
+import { DEMO_MODE } from "@/config/demo";
+import {
+  getDemoTasksSnapshot,
+  getDemoExercisesList,
+  submitDemoExerciseAnswer,
+  getDemoReviewQueue,
+  getDemoStats,
+  getDemoProfile,
+  updateDemoProfile,
+} from "@/demo/state";
+import { Task } from "@/types/tasks";
+import { SummaryMetrics, DailySeries, CourseBreakdown, InsightList } from "@/types/analytics";
+import { getClientUserId } from "@/lib/user";
+
 let authToken: string | null = null;
 
 const DEFAULT_BASE_URL = import.meta.env.DEV ? "http://localhost:8000" : "https://teski-zj2gsg.fly.dev";
@@ -93,6 +107,9 @@ function maybeStringifyBody(body: unknown, headers: Headers): BodyInit | undefin
 type ApiFetchConfig = { auth?: boolean };
 
 export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}, config: ApiFetchConfig = {}): Promise<T> {
+  if (DEMO_MODE) {
+    throw new Error("Demo mode: network requests are disabled.");
+  }
   const headers = new Headers(init.headers || {});
   const body = maybeStringifyBody(init.body as unknown, headers);
   const requestInit = withAuthHeaders({ ...init, headers, body, __path: path } as RequestInit, config.auth === true);
@@ -119,6 +136,135 @@ export async function apiFetch<T = unknown>(path: string, init: RequestInit = {}
   return parsed as T;
 }
 
+type ExerciseListItemLite = {
+  id: string;
+  concept: string;
+  type: "MCQ" | "NUMERIC" | "SHORT";
+  difficulty: number;
+  tags?: string[];
+};
+
+type ExerciseSubmitPayload = {
+  user_id: string;
+  exercise_id: string;
+  answer: Record<string, unknown>;
+};
+
+type ExerciseSubmitResult = {
+  correct: boolean;
+  xp_awarded: number;
+  explanation?: string;
+  persona_msg?: string;
+};
+
+type ReviewItem = {
+  memory_id: string;
+  concept: string;
+  due_at: string;
+};
+
+type StatsBundle = {
+  summary: SummaryMetrics;
+  daily: DailySeries;
+  courses: CourseBreakdown;
+  insights: InsightList;
+  extras?: Record<string, unknown>;
+};
+
+type OnboardingProfileShape = {
+  goals?: string | null;
+  availability?: string | null;
+  weak_areas?: string | null;
+  preferences?: string | null;
+  has_profile: boolean;
+};
+
+export async function getUpcomingTasks(userId?: string): Promise<Task[]> {
+  if (DEMO_MODE) {
+    return getDemoTasksSnapshot().upcoming;
+  }
+  return apiFetch<Task[]>(`${API_BASE}/tasks/upcoming`, {
+    headers: { "X-User-Id": userId ?? getClientUserId() },
+  });
+}
+
+export async function getExercisesList(params: {
+  user_id?: string;
+  search?: string;
+  type?: string;
+  difficultyMin?: number;
+  difficultyMax?: number;
+}): Promise<ExerciseListItemLite[]> {
+  if (DEMO_MODE) {
+    return getDemoExercisesList();
+  }
+  const qs = new URLSearchParams();
+  qs.set("user_id", params.user_id ?? getClientUserId());
+  if (params.search) qs.set("search", params.search);
+  if (params.type) qs.set("type", params.type);
+  if (typeof params.difficultyMin === "number") qs.set("difficulty_min", params.difficultyMin.toString());
+  if (typeof params.difficultyMax === "number") qs.set("difficulty_max", params.difficultyMax.toString());
+  const res = await apiFetch<{ items: ExerciseListItemLite[] }>(`/api/ex/list?${qs.toString()}`);
+  return res?.items ?? [];
+}
+
+export async function submitExercise(payload: ExerciseSubmitPayload): Promise<ExerciseSubmitResult> {
+  if (DEMO_MODE) {
+    const result = submitDemoExerciseAnswer(payload.exercise_id, payload.answer);
+    return {
+      correct: result.correct,
+      xp_awarded: result.xp_awarded ?? 0,
+      explanation: result.explanation,
+      persona_msg: result.persona_msg,
+    };
+  }
+  const url = new URL(`/api/ex/submit`, API_BASE_URL);
+  url.searchParams.set("id", payload.exercise_id);
+  url.searchParams.set("user_id", payload.user_id ?? getClientUserId());
+  return apiFetch<ExerciseSubmitResult>(url.toString(), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload.answer),
+  });
+}
+
+export async function getReviews(userId?: string): Promise<ReviewItem[]> {
+  if (DEMO_MODE) {
+    return getDemoReviewQueue();
+  }
+  const url = new URL(`/api/memory/next`, API_BASE_URL);
+  url.searchParams.set("user_id", userId ?? getClientUserId());
+  url.searchParams.set("limit", "10");
+  return apiFetch<ReviewItem[]>(url.toString());
+}
+
+export async function getStats(_userId?: string): Promise<StatsBundle> {
+  if (DEMO_MODE) {
+    return getDemoStats();
+  }
+  const [summary, daily, courses, insights] = await Promise.all([
+    apiFetch<SummaryMetrics>("/analytics/me/summary"),
+    apiFetch<DailySeries>("/analytics/me/daily?days=14"),
+    apiFetch<CourseBreakdown>("/analytics/me/by-course?days=7"),
+    apiFetch<InsightList>("/analytics/me/insights"),
+  ]);
+  return { summary, daily, courses, insights };
+}
+
+export async function getOnboardingProfile(): Promise<OnboardingProfileShape> {
+  if (DEMO_MODE) {
+    return getDemoProfile();
+  }
+  return apiFetch<OnboardingProfileShape>("/onboarding/profile", { method: "GET" }, { auth: true });
+}
+
+export async function updateOnboardingProfile(payload: Partial<OnboardingProfileShape>): Promise<OnboardingProfileShape> {
+  if (DEMO_MODE) {
+    return updateDemoProfile(payload);
+  }
+  return apiFetch<OnboardingProfileShape>("/onboarding/profile", { method: "POST", body: payload }, { auth: true });
+}
+
 export const api = {
   get: <T>(path: string, options: RequestInit = {}) => apiFetch<T>(path, { ...options, method: "GET" }),
   post: <T>(path: string, body?: unknown, options: RequestInit = {}) => {
@@ -127,3 +273,8 @@ export const api = {
     return apiFetch<T>(path, { ...options, method: options.method ?? "POST", headers, body: preparedBody });
   },
 };
+import { DEMO_MODE } from "@/config/demo";
+import { getDemoTasksSnapshot, getDemoExercisesList, submitDemoExerciseAnswer, getDemoReviewQueue, getDemoStats, getDemoProfile, updateDemoProfile, getDemoExerciseById } from "@/demo/state";
+import { Task } from "@/types/tasks";
+import { SummaryMetrics, DailySeries, CourseBreakdown, InsightList } from "@/types/analytics";
+import { getClientUserId } from "@/lib/user";

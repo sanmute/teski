@@ -1,5 +1,13 @@
 import { API_BASE, apiFetch } from "./api/client";
 export { API_BASE_URL, apiFetch, API_BASE, getAuthToken, setAuthToken, loadAuthTokenFromStorage } from "./api/client";
+import { DEMO_MODE } from "./config/demo";
+import {
+  getDemoExercisesList,
+  getDemoExerciseById,
+  submitDemoExerciseAnswer,
+  getDemoReviewQueue,
+  gradeDemoReview,
+} from "./demo/state";
 
 // Convenience wrapper to mirror other callers; keeps single source of truth.
 export const apiRequest = apiFetch;
@@ -194,6 +202,10 @@ export type ReviewOut = {
 };
 
 export async function getNextReviews(user_id: string, limit = 10): Promise<MemoryNext[]> {
+  if (DEMO_MODE) {
+    const queue = getDemoReviewQueue();
+    return Promise.resolve(queue.slice(0, limit));
+  }
   const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:5173";
   const url = new URL(`${API_BASE}/memory/next`, origin);
   url.searchParams.set("user_id", user_id);
@@ -207,6 +219,16 @@ export async function postReview(payload: {
   memory_id: string;
   grade: GradeValue;
 }): Promise<ReviewOut> {
+  if (DEMO_MODE) {
+    const result = gradeDemoReview();
+    const remaining = getDemoReviewQueue();
+    const next_due_at = remaining[0]?.due_at ?? new Date(Date.now() + 3_600_000).toISOString();
+    return Promise.resolve({
+      next_due_at,
+      xp_awarded: result.xp_awarded,
+      persona_msg: result.persona_msg,
+    });
+  }
   const res = await fetch(`${API_BASE}/memory/review`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -237,6 +259,9 @@ export async function listExercises(params: {
   difficultyMin?: number;
   difficultyMax?: number;
 }): Promise<ExerciseListItem[]> {
+  if (DEMO_MODE) {
+    return Promise.resolve(getDemoExercisesList());
+  }
   const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:5173";
   const url = new URL(`${API_BASE}/ex/list`, origin);
   url.searchParams.set("user_id", params.user_id);
@@ -291,6 +316,11 @@ export type ExerciseSubmitOut = {
 };
 
 export async function getExercise(user_id: string, id: string): Promise<ExerciseGetOut> {
+  if (DEMO_MODE) {
+    const demo = getDemoExerciseById(id);
+    if (!demo) throw new Error("Exercise not found (demo)");
+    return demo as ExerciseGetOut;
+  }
   const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:5173";
   const url = new URL(`${API_BASE}/ex/get`, origin);
   url.searchParams.set("id", id);
@@ -300,6 +330,19 @@ export async function getExercise(user_id: string, id: string): Promise<Exercise
 }
 
 export async function submitExercise(payload: ExerciseSubmitIn): Promise<ExerciseSubmitOut> {
+  if (DEMO_MODE) {
+    const result = submitDemoExerciseAnswer(payload.exercise_id, payload.answer);
+    const next = getDemoReviewQueue();
+    return {
+      correct: result.correct,
+      xp_awarded: result.xp_awarded ?? 0,
+      explanation: result.explanation,
+      persona_msg: result.persona_msg,
+      mastery_changes: [],
+      persona_reaction: undefined,
+      related_exercise_id: next[0]?.memory_id,
+    };
+  }
   const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:5173";
   const url = new URL(`${API_BASE}/ex/submit`, origin);
   url.searchParams.set("id", payload.exercise_id);

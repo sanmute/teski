@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { login, signup } from "../api/auth";
+import { DEMO_MODE } from "@/config/demo";
+import { demoUser } from "@/demo/demoUser";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -12,6 +14,12 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation() as { state?: { from?: Location } };
   const from = location.state?.from?.pathname || "/today";
+
+  useEffect(() => {
+    if (DEMO_MODE) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +38,25 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  if (DEMO_MODE) {
+    return (
+      <div style={{ maxWidth: 420, margin: "60px auto", padding: "24px", border: "1px solid #e2e8f0", borderRadius: 12 }}>
+        <h1 style={{ fontSize: 28, marginBottom: 8 }}>Teski</h1>
+        <p style={{ marginBottom: 16 }}>Demo mode is active.</p>
+        <p style={{ fontSize: 14, lineHeight: 1.5 }}>
+          You&apos;re already signed in as <strong>{demoUser.name}</strong>. Head to Today or Tasks to explore the
+          demo experience.
+        </p>
+        <button
+          style={{ marginTop: 16, padding: 10, width: "100%", borderRadius: 10, border: "none", background: "#0f172a", color: "white", fontWeight: 600 }}
+          onClick={() => navigate(from, { replace: true })}
+        >
+          Go to app
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div style={{ maxWidth: 420, margin: "60px auto", padding: "24px", border: "1px solid #e2e8f0", borderRadius: 12 }}>

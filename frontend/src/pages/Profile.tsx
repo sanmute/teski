@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { getClientUserId } from "@/lib/user";
-import { apiRequest as apiFetch, getAuthToken } from "@/api";
+import { getOnboardingProfile, updateOnboardingProfile } from "@/api/client";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/sonner";
+import { DEMO_MODE } from "@/config/demo";
 
 interface StudyProfile {
   goals?: string | null;
@@ -13,24 +17,21 @@ interface StudyProfile {
 
 export default function Profile() {
   const [profile, setProfile] = useState<StudyProfile | null>(null);
+  const [draft, setDraft] = useState<Partial<StudyProfile>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const token = getAuthToken();
-        if (import.meta.env.DEV) {
-          console.debug("[profile] requesting /onboarding/profile", { tokenPresent: Boolean(token) });
-          if (!token) {
-            console.warn("[profile] aborting fetch until token is available");
-          }
-        }
-        if (!token) {
-          return;
-        }
-        const data = await apiFetch<StudyProfile>("/onboarding/profile", { method: "GET" }, { auth: true });
+        const data = await getOnboardingProfile();
         setProfile(data ?? null);
+        setDraft({
+          goals: data?.goals ?? "",
+          availability: data?.availability ?? "",
+          weak_areas: data?.weak_areas ?? "",
+          preferences: data?.preferences ?? "",
+        });
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load profile");
       } finally {
@@ -40,12 +41,15 @@ export default function Profile() {
     load();
   }, []);
 
-  const renderField = (label: string, value?: string | null) => (
-    <div className="flex flex-col">
-      <span className="text-xs uppercase tracking-wide text-muted-foreground">{label}</span>
-      <span className="text-sm font-medium">{value || "Not set"}</span>
-    </div>
-  );
+  const handleSave = async () => {
+    try {
+      const updated = await updateOnboardingProfile(draft);
+      setProfile(updated);
+      toast.success(DEMO_MODE ? "Saved (demo)" : "Preferences saved");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not save profile");
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -64,22 +68,47 @@ export default function Profile() {
       )}
 
       {!loading && profile && profile.has_profile && (
-        <div className="grid gap-4 rounded-lg border p-4 sm:grid-cols-2">
-          {renderField("Goals", profile.goals)}
-          {renderField("Availability", profile.availability)}
-          {renderField("Weak areas", profile.weak_areas)}
-          {renderField("Preferences", profile.preferences)}
+        <div className="grid gap-4 rounded-lg border p-4">
+          <div className="space-y-2">
+            <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Goals</label>
+            <Textarea
+              value={draft.goals ?? ""}
+              onChange={(e) => setDraft((prev) => ({ ...prev, goals: e.target.value }))}
+              placeholder="e.g., Ace Circuits II midterm"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Availability</label>
+            <Input
+              value={draft.availability ?? ""}
+              onChange={(e) => setDraft((prev) => ({ ...prev, availability: e.target.value }))}
+              placeholder="Mon–Thu evenings"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Weak areas</label>
+            <Textarea
+              value={draft.weak_areas ?? ""}
+              onChange={(e) => setDraft((prev) => ({ ...prev, weak_areas: e.target.value }))}
+              placeholder="Topics you want Teski to emphasize"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Preferences</label>
+            <Textarea
+              value={draft.preferences ?? ""}
+              onChange={(e) => setDraft((prev) => ({ ...prev, preferences: e.target.value }))}
+              placeholder="Block length, study buddy, reminders…"
+            />
+          </div>
+          <div className="flex justify-end">
+            <Button size="sm" onClick={handleSave}>
+              Save {DEMO_MODE ? "(demo)" : ""}
+            </Button>
+          </div>
         </div>
       )}
 
-      <div className="flex flex-wrap gap-3">
-        <button className="rounded-md border px-3 py-2 text-sm" type="button">
-          Review onboarding questions
-        </button>
-        <button className="rounded-md border px-3 py-2 text-sm" type="button">
-          Edit preferences
-        </button>
-      </div>
     </div>
   );
 }

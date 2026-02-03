@@ -8,6 +8,8 @@ import { ExerciseModal } from "@/components/ExerciseModal";
 import { listExercises, type ExerciseListItem } from "@/api";
 import { getClientUserId } from "@/lib/user";
 import { cn } from "@/lib/utils";
+import { DEMO_MODE } from "@/config/demo";
+import { toast } from "@/components/ui/sonner";
 
 type ExerciseTypeFilter = "ALL" | "MCQ" | "NUMERIC" | "SHORT";
 
@@ -242,7 +244,18 @@ const renderSkeletons = () => (
       <p className="mt-1 text-sm text-slate-600">
         A quick trio tailored to your current level. Earn bonus XP and keep your streak alive.
       </p>
-      <Button className="mt-4" onClick={() => navigate("/practice/micro-quest")}>
+      <Button
+        className="mt-4"
+        onClick={() => {
+          if (DEMO_MODE) {
+            toast("Demo action", {
+              description: "Micro-quests are simulated here. Open any exercise to try the flow.",
+            });
+            return;
+          }
+          navigate("/practice/micro-quest");
+        }}
+      >
         Start micro-quest
       </Button>
     </div>

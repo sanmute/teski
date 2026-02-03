@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { API_BASE } from "@/api";
+import { DEMO_MODE } from "@/config/demo";
 
 type ExplainResp = {
   score_deep: number;
@@ -22,6 +23,14 @@ export function ExplainCard({ userId, topicId, enabled = true }: Props) {
 
   async function submit(mode: "text" | "voice", payloadText?: string) {
     if (!payloadText && !text.trim()) return;
+    if (DEMO_MODE) {
+      setResp({
+        score_deep: 82,
+        rubric: {},
+        next_prompts: { prompts: ["Can you draw the main diagram?", "Where does intuition break?", "Name one real device it applies to."] },
+      });
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -47,6 +56,14 @@ export function ExplainCard({ userId, topicId, enabled = true }: Props) {
   async function transcribeAndSubmit() {
     const file = fileRef.current?.files?.[0];
     if (!file) return;
+    if (DEMO_MODE) {
+      setResp({
+        score_deep: 78,
+        rubric: {},
+        next_prompts: { prompts: ["Summarize the signal flow in one sentence.", "What would fail first if you doubled the load?"] },
+      });
+      return;
+    }
     setLoading(true);
     setError(null);
     try {

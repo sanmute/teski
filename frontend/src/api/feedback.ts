@@ -1,4 +1,5 @@
 import { api } from "./client";
+import { DEMO_MODE } from "@/config/demo";
 
 export type FeedbackPayload = {
   kind: "feedback" | "bug" | "idea";
@@ -15,6 +16,9 @@ export type FeedbackPayload = {
 };
 
 export async function submitFeedback(payload: FeedbackPayload): Promise<{ ok: boolean; id: number }> {
+  if (DEMO_MODE) {
+    return Promise.resolve({ ok: true, id: Date.now() % 100000 });
+  }
   return api.post<{ ok: boolean; id: number }>("/api/feedback/submit", payload);
 }
 
@@ -36,5 +40,8 @@ export type FeedbackItem = {
 };
 
 export async function getAllFeedback(limit = 50): Promise<{ ok: boolean; items: FeedbackItem[]; total: number }> {
+  if (DEMO_MODE) {
+    return Promise.resolve({ ok: true, items: [], total: 0 });
+  }
   return api.get<{ ok: boolean; items: FeedbackItem[]; total: number }>(`/api/feedback/list?limit=${limit}`);
 }

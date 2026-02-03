@@ -1,3 +1,6 @@
+import { DEMO_MODE } from "@/config/demo";
+import { demoUser } from "@/demo/demoUser";
+
 const USER_ID_STORAGE_KEY = "teski-user-id";
 const NIL_UUID = "00000000-0000-0000-0000-000000000000";
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -31,6 +34,9 @@ function isValidUuid(value: string | null): value is string {
 }
 
 export function getClientUserId(): string {
+  if (DEMO_MODE) {
+    return demoUser.id;
+  }
   if (typeof window === "undefined") {
     return NIL_UUID;
   }
@@ -44,6 +50,7 @@ export function getClientUserId(): string {
 }
 
 export function setClientUserId(userId: string) {
+  if (DEMO_MODE) return;
   if (typeof window === "undefined") return;
   if (isValidUuid(userId)) {
     window.localStorage.setItem(USER_ID_STORAGE_KEY, userId);
