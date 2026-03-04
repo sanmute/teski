@@ -1,0 +1,33 @@
+# fly.toml — deploy from the PROJECT ROOT: `fly deploy`
+# Uses the root Dockerfile so the container includes both backend/ and app/.
+# The old backend/fly.toml is kept for reference but should no longer be used.
+
+app = 'teski-zj2gsg'
+primary_region = 'ams'
+
+[build]
+  dockerfile = "Dockerfile"
+
+[processes]
+  app = "python -m uvicorn main:app --host 0.0.0.0 --port 8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+  [[http_service.checks]]
+    method = "GET"
+    path = "/health"
+    interval = "10s"
+    timeout = "2s"
+    grace_period = "20s"
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 256

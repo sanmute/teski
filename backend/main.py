@@ -254,6 +254,10 @@ app.include_router(api_router)
 app.include_router(onboarding_route.router)
 app.include_router(analytics_route.router)
 
+# Exam pipeline — routes at /exam-pipeline/… (no /api prefix, matches frontend proxy)
+from app.exam_pipeline.router import router as exam_pipeline_router
+app.include_router(exam_pipeline_router)
+
 # mock loader for demo
 misc = APIRouter(prefix="/api", tags=["misc"])
 
