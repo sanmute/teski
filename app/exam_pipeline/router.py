@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import asyncio
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 
 from app.exam_pipeline.agent import generate_from_pdfs
@@ -20,6 +21,17 @@ from app.exam_scraper.scraper import (
     search_courses,
 )
 from app.exercises import invalidate_cache
+
+# DB integration — present in the deployed backend; silently skipped for local/test env.
+try:
+    from db import get_session as _get_db_session          # type: ignore[import]
+    from models_exercise import Exercise as _DbExercise    # type: ignore[import]
+    _HAS_DB = True
+except ImportError:
+    _HAS_DB = False
+
+    def _get_db_session():  # type: ignore[misc]
+        yield None
 
 router = APIRouter(prefix="/exam-pipeline", tags=["exam-pipeline"])
 
@@ -98,8 +110,8 @@ class _SaveResponse(BaseModel):
 
 
 @router.post("/save", response_model=_SaveResponse)
-def save_exercises(request: _SaveRequest):
-    """Write generated exercises to the content/ directory as Markdown files.
+def save_exercises(request: _SaveRequest, db=Depends(_get_db_session)):
+    """Write generated exercises to the content/ directory and the database.
 
     Skips any exercise whose target file already exists (no overwrites).
 
@@ -110,6 +122,7 @@ def save_exercises(request: _SaveRequest):
 
     saved: list[str] = []
     skipped: list[str] = []
+    saved_exercises: list[GeneratedExerciseOut] = []
 
     for exercise in request.exercises:
         target = content_dir / f"{exercise.id}.md"
@@ -118,11 +131,66 @@ def save_exercises(request: _SaveRequest):
             continue
         target.write_text(exercise.raw_markdown, encoding="utf-8")
         saved.append(str(target))
+        saved_exercises.append(exercise)
 
     if saved:
         invalidate_cache()
+        if db is not None:
+            _upsert_to_db(db, saved_exercises)
 
     return _SaveResponse(saved=saved, skipped=skipped)
+
+
+def _upsert_to_db(session: Any, exercises: list[GeneratedExerciseOut]) -> None:
+    """Upsert exercises into the SQLite database read by the /ex/list endpoint."""
+    for ex in exercises:
+        meta = ex.meta or {}
+
+        if ex.type == "mcq":
+            choices_raw = meta.get("choices") or []
+            choices = [str(c.get("text", "")) for c in choices_raw if isinstance(c, dict)]
+            correct = next(
+                (str(c.get("text", "")) for c in choices_raw if isinstance(c, dict) and c.get("correct")),
+                "",
+            )
+        elif ex.type == "numeric":
+            choices = None
+            answer = meta.get("answer") or {}
+            correct = str(answer.get("value", ""))
+        else:  # short_answer
+            choices = None
+            rubric = meta.get("rubric") or {}
+            must_include = rubric.get("must_include") or []
+            correct = "; ".join(str(k) for k in must_include) if must_include else ""
+
+        db_meta = {
+            "concept": ex.concept,
+            "keywords": ex.keywords,
+            "course": ex.course,
+            "domain": ex.domain,
+            **meta,
+        }
+
+        existing = session.get(_DbExercise, ex.id)
+        payload = dict(
+            id=ex.id,
+            question_text=ex.question,
+            type=ex.type,
+            choices=choices,
+            correct_answer=correct,
+            difficulty=ex.difficulty,
+            skill_ids=ex.skill_ids or [],
+            solution_explanation=ex.explanation or None,
+            hint=None,
+            meta=db_meta,
+            updated_at=datetime.utcnow(),
+        )
+        if existing:
+            for k, v in payload.items():
+                setattr(existing, k, v)
+        else:
+            session.add(_DbExercise(**payload))
+    session.commit()
 
 
 # ---------------------------------------------------------------------------
