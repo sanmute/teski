@@ -43,6 +43,19 @@ _KNOWN_KEYS = frozenset({
     "difficulty", "skill_ids", "keywords",
 })
 
+_TYPE_MAP: dict[str, str] = {
+    "mcq": "mcq",
+    "multiple_choice": "mcq",
+    "multiple choice": "mcq",
+    "numeric": "numeric",
+    "numerical": "numeric",
+    "short_answer": "short_answer",
+    "short answer": "short_answer",
+    "short-answer": "short_answer",
+    "open": "short_answer",
+    "open_ended": "short_answer",
+}
+
 
 # ---------------------------------------------------------------------------
 # Public API
@@ -301,10 +314,23 @@ def _build_exercise(meta: dict[str, Any], raw_markdown: str) -> GeneratedExercis
 
     extra_meta = {k: v for k, v in meta.items() if k not in _KNOWN_KEYS}
 
+    raw_type = str(meta.get("type", "")).lower().strip()
+    normalised_type = _TYPE_MAP.get(raw_type, raw_type)
+
+    # Patch the YAML front matter in raw_markdown so the saved file uses the
+    # normalised type (e.g. "multiple_choice" → "mcq").
+    if raw_type != normalised_type:
+        import re as _re
+        raw_markdown = _re.sub(
+            r"(?m)^(type:\s*)" + _re.escape(str(meta.get("type", ""))),
+            r"\g<1>" + normalised_type,
+            raw_markdown,
+        )
+
     return GeneratedExercise(
         id=str(meta["id"]),
         concept=str(meta["concept"]),
-        type=str(meta["type"]),
+        type=normalised_type,
         question=str(meta["question"]).strip(),
         difficulty=int(meta.get("difficulty", 1)),
         skill_ids=list(skill_ids),

@@ -43,6 +43,19 @@ except ImportError:  # pragma: no cover
 logger = logging.getLogger(__name__)
 
 _MODEL = "claude-opus-4-5"
+
+_TYPE_MAP: dict[str, str] = {
+    "mcq": "mcq",
+    "multiple_choice": "mcq",
+    "multiple choice": "mcq",
+    "numeric": "numeric",
+    "numerical": "numeric",
+    "short_answer": "short_answer",
+    "short answer": "short_answer",
+    "short-answer": "short_answer",
+    "open": "short_answer",
+    "open_ended": "short_answer",
+}
 _MAX_TOKENS = 4096
 _MAX_PDFS = 3
 # Retry when fewer than this fraction of requested exercises are valid.
@@ -229,6 +242,8 @@ def _parse_and_validate(raw: str, course_name: str) -> list[dict]:
         if not isinstance(item, dict):
             logger.warning("Exercise %d is not a dict, skipping", idx)
             continue
+        raw_type = str(item.get("type", "")).lower().strip()
+        item["type"] = _TYPE_MAP.get(raw_type, raw_type)
         try:
             _validate_exercise(item, idx)
         except _ValidationError as exc:
