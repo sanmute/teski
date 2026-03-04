@@ -2,7 +2,16 @@
 
 The archive is an open, public WordPress site that renders exam records in an
 HTML table inside a ``div.facetwp-template`` container.  There is no public
-REST API — we fetch the static HTML and parse it with ``html.parser``.
+REST API and URL query parameters are ignored server-side — filtering happens
+in client-side JavaScript after the full page loads.
+
+Our approach
+------------
+1. Fetch the full index once (≈25 KB of HTML).
+2. Parse the entire ``<table>`` in Python using only stdlib ``html.parser``.
+3. Cache the parsed rows in memory for :data:`CACHE_TTL` seconds (30 min) to
+   avoid hammering the site.
+4. Apply our own substring filter in :func:`search_courses`.
 
 Column order in the table (positional, no class names):
     0  course_code  — e.g. "BH30A1801"
@@ -10,26 +19,21 @@ Column order in the table (positional, no class names):
     2  department   — e.g. "Energiatekniikka"
     3  date         — ISO 8601 "YYYY-MM-DD" string
     4  download     — <a href="…wp-content/uploads/…/file.pdf">Download</a>
-
-Limitations
------------
-The initial page load may only contain a subset of all archived exams because
-FacetWP paginates results.  For full-archive access a future enhancement could
-POST to ``/wp-json/facetwp/v1/refresh`` with a high per_page value; that is
-out of scope here.
 """
 
 from __future__ import annotations
 
 import re
+import time
 from html.parser import HTMLParser
 
 import httpx
 from fastapi import HTTPException
 
 _INDEX_URL = "https://exams.ltky.fi/"
-_FETCH_TIMEOUT = 20   # seconds
+_FETCH_TIMEOUT = 20    # seconds
 _DOWNLOAD_TIMEOUT = 30  # seconds
+_USER_AGENT = "Mozilla/5.0 (compatible; Teski/1.0; educational research)"
 
 # Minimum columns a row must have to be treated as a data row.
 _MIN_DATA_COLS = 5
@@ -42,27 +46,36 @@ _COL_DATE = 3
 _COL_PDF = 4
 
 # Header keyword hints used to confirm or remap column order if a header row
-# is present.  Each entry is (keyword_substring, canonical_field).
+# is present.
 _HEADER_HINTS: list[tuple[str, str]] = [
-    ("code",       "course_code"),
-    ("kurssikoodi","course_code"),
-    ("name",       "course_name"),
-    ("nimi",       "course_name"),
-    ("department", "department"),
-    ("laitos",     "department"),
-    ("osasto",     "department"),
-    ("date",       "date"),
-    ("päivämäärä", "date"),
-    ("pvm",        "date"),
-    ("download",   "pdf_url"),
-    ("lataa",      "pdf_url"),
-    ("pdf",        "pdf_url"),
+    ("code",        "course_code"),
+    ("kurssikoodi", "course_code"),
+    ("name",        "course_name"),
+    ("nimi",        "course_name"),
+    ("department",  "department"),
+    ("laitos",      "department"),
+    ("osasto",      "department"),
+    ("date",        "date"),
+    ("päivämäärä",  "date"),
+    ("pvm",         "date"),
+    ("download",    "pdf_url"),
+    ("lataa",       "pdf_url"),
+    ("pdf",         "pdf_url"),
 ]
 
 # Date pattern regexes for normalisation.
 _RE_YYYYMMDD = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
 _RE_DDMMYYYY = re.compile(r"(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{4})")
 _RE_DDMMYY   = re.compile(r"(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{2})")
+
+# ---------------------------------------------------------------------------
+# In-memory cache
+# ---------------------------------------------------------------------------
+
+CACHE_TTL: int = 1800  # 30 minutes
+
+_cache: list[dict] | None = None
+_cache_at: float = 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -73,19 +86,18 @@ _RE_DDMMYY   = re.compile(r"(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{2})")
 async def fetch_exam_index() -> str:
     """GET the exam archive index page and return its raw HTML.
 
-    Returns
-    -------
-    str
-        Raw HTML of https://exams.ltky.fi/.
+    Sets a realistic ``User-Agent`` header so the request is not blocked by
+    bot-detection rules on the WordPress host.
 
     Raises
     ------
     HTTPException(502)
         On any network failure — timeout, DNS error, or non-2xx HTTP status.
     """
+    headers = {"User-Agent": _USER_AGENT}
     try:
         async with httpx.AsyncClient(
-            timeout=_FETCH_TIMEOUT, follow_redirects=True
+            timeout=_FETCH_TIMEOUT, follow_redirects=True, headers=headers
         ) as client:
             response = await client.get(_INDEX_URL)
             response.raise_for_status()
@@ -107,20 +119,26 @@ def parse_exam_table(html: str) -> list[dict]:
     (absolute URL ending in ``.pdf``).
 
     Rows that have no ``.pdf`` download link are silently skipped.
-
-    Parameters
-    ----------
-    html:
-        Raw HTML returned by :func:`fetch_exam_index`.
-
-    Returns
-    -------
-    list[dict]
-        One dict per valid exam row.
     """
     parser = _ExamTableParser()
     parser.feed(html)
     return parser.rows
+
+
+async def get_cached_index() -> list[dict]:
+    """Return the parsed exam table, fetching and caching it if stale.
+
+    The cache is module-level and lives for :data:`CACHE_TTL` seconds.
+    Use this function instead of calling :func:`fetch_exam_index` directly
+    from route handlers.
+    """
+    global _cache, _cache_at
+    if _cache is not None and (time.time() - _cache_at) < CACHE_TTL:
+        return _cache
+    html = await fetch_exam_index()
+    _cache = parse_exam_table(html)
+    _cache_at = time.time()
+    return _cache
 
 
 def search_courses(rows: list[dict], query: str) -> list[dict]:
@@ -133,23 +151,16 @@ def search_courses(rows: list[dict], query: str) -> list[dict]:
     Parameters
     ----------
     rows:
-        Output from :func:`parse_exam_table`.
+        Output from :func:`parse_exam_table` or :func:`get_cached_index`.
     query:
-        Search string; must be a non-empty substring.
-
-    Returns
-    -------
-    list[dict]
-        Up to 10 matching rows, newest first.
+        Search string; leading/trailing whitespace is stripped.
     """
-    q = query.lower()
+    q = query.strip().lower()
     matches = [
         row for row in rows
         if q in row.get("course_code", "").lower()
         or q in row.get("course_name", "").lower()
     ]
-    # Empty date strings sort before "0000-…" when reversed, so we treat them
-    # as the empty string directly — they naturally sink to the bottom.
     matches.sort(key=lambda r: r.get("date") or "", reverse=True)
     return matches[:10]
 
@@ -157,27 +168,17 @@ def search_courses(rows: list[dict], query: str) -> list[dict]:
 async def download_pdf(pdf_url: str) -> bytes:
     """Download a PDF from the exam archive and return its raw bytes.
 
-    Parameters
-    ----------
-    pdf_url:
-        Absolute URL to a ``.pdf`` file, typically taken from an
-        :class:`~app.exam_scraper.schemas.ExamResult` ``pdf_url`` field.
-
-    Returns
-    -------
-    bytes
-        Raw PDF content.
-
     Raises
     ------
     HTTPException(502)
         On any network failure — timeout, connection error, or non-2xx status.
     """
+    headers = {"User-Agent": _USER_AGENT}
     try:
         async with httpx.AsyncClient(
-            timeout=_DOWNLOAD_TIMEOUT, follow_redirects=True
+            timeout=_DOWNLOAD_TIMEOUT, follow_redirects=True, headers=headers
         ) as client:
-            response = await client.get(pdf_url)
+            response = await client.get(pdf_url, headers=headers)
             response.raise_for_status()
             return response.content
     except HTTPException:
@@ -213,55 +214,35 @@ class _ExamTableParser(HTMLParser):
     the presence of ``<th>`` elements or by matching cell text against
     :data:`_HEADER_HINTS`).  If no header row is found the default positional
     order is used (code=0, name=1, dept=2, date=3, pdf=4).
-
-    The PDF URL is taken from the ``href`` attribute of any ``<a>`` tag
-    inside the download cell; if the download column is not identified, any
-    ``.pdf`` href in the row is used as a fallback.
     """
 
     def __init__(self) -> None:
         super().__init__()
 
-        # ---- table-depth tracking ----
         self._table_depth: int = 0
-
-        # ---- facetwp-template div tracking ----
         self._in_template_div: bool = False
-        self._template_div_depth: int = 0  # nesting depth of divs inside it
+        self._template_div_depth: int = 0
 
-        # ---- active row tracking ----
-        # True when we're in a <tr> that we should process (depth==1 or template div).
         self._in_row: bool = False
         self._row_has_th: bool = False
-        self._row_start_depth: int = 0  # table depth when row started
+        self._row_start_depth: int = 0
 
-        # ---- active cell tracking ----
         self._in_cell: bool = False
         self._cell_is_th: bool = False
-        self._cell_depth: int = 0      # table depth when cell started
+        self._cell_depth: int = 0
         self._cell_href: str | None = None
         self._cell_text: list[str] = []
 
-        # ---- accumulated row cells ----
-        self._row_cells: list[tuple[str, str | None]] = []  # (text, href|None)
-
-        # ---- column index map (field_name -> column index) ----
-        # Populated from the header row; falls back to _COL_* constants.
+        self._row_cells: list[tuple[str, str | None]] = []
         self._col_index: dict[str, int] | None = None
 
-        # ---- output ----
         self.rows: list[dict] = []
-
-    # ------------------------------------------------------------------
-    # HTMLParser callbacks
-    # ------------------------------------------------------------------
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
         a = dict(attrs)
 
-        # ---- div tracking for facetwp-template ----
         if tag == "div":
             classes = (a.get("class") or "").split()
             if "facetwp-template" in classes:
@@ -272,12 +253,10 @@ class _ExamTableParser(HTMLParser):
                 self._template_div_depth += 1
             return
 
-        # ---- table depth ----
         if tag == "table":
             self._table_depth += 1
             return
 
-        # ---- row start ----
         if tag == "tr":
             active = (
                 self._table_depth == 1
@@ -290,10 +269,7 @@ class _ExamTableParser(HTMLParser):
                 self._row_cells = []
             return
 
-        # ---- cell start ----
         if tag in ("th", "td") and self._in_row:
-            # Only open cells at the same table depth the row started at,
-            # to avoid processing cells of nested tables.
             if self._table_depth == self._row_start_depth:
                 self._in_cell = True
                 self._cell_is_th = tag == "th"
@@ -304,7 +280,6 @@ class _ExamTableParser(HTMLParser):
                     self._row_has_th = True
             return
 
-        # ---- anchor inside cell ----
         if tag == "a" and self._in_cell and self._table_depth == self._cell_depth:
             href = a.get("href") or ""
             if href:
@@ -324,7 +299,6 @@ class _ExamTableParser(HTMLParser):
             return
 
         if tag in ("th", "td") and self._in_cell:
-            # Only close if at the same depth the cell was opened.
             if self._table_depth == self._cell_depth:
                 self._in_cell = False
                 text = " ".join(self._cell_text).strip()
@@ -332,7 +306,6 @@ class _ExamTableParser(HTMLParser):
             return
 
         if tag == "tr" and self._in_row:
-            # Only finalise the row if we're back at the depth it started.
             if self._table_depth == self._row_start_depth:
                 self._in_row = False
                 self._process_row()
@@ -343,19 +316,13 @@ class _ExamTableParser(HTMLParser):
             if stripped:
                 self._cell_text.append(stripped)
 
-    # ------------------------------------------------------------------
-    # Row processing
-    # ------------------------------------------------------------------
-
     def _process_row(self) -> None:
         cells = self._row_cells
         if not cells:
             return
 
-        # ---- detect and store header row ----
         is_header = self._row_has_th
         if not is_header and self._col_index is None:
-            # Check if cell texts look like column headers.
             texts_lower = [c[0].lower() for c in cells]
             for key, _ in _HEADER_HINTS:
                 if any(key in t for t in texts_lower):
@@ -365,9 +332,8 @@ class _ExamTableParser(HTMLParser):
         if is_header:
             if self._col_index is None:
                 self._col_index = self._parse_header_cells(cells)
-            return  # don't emit header as a data row
+            return
 
-        # ---- emit data row ----
         if len(cells) < _MIN_DATA_COLS:
             return
 
@@ -381,8 +347,6 @@ class _ExamTableParser(HTMLParser):
             idx = col.get(field, default_pos)
             return cells[idx][1] if idx < len(cells) else None
 
-        # PDF URL: prefer the href from the designated download column; fall
-        # back to any .pdf href anywhere in the row.
         pdf_url = href_at("pdf_url", _COL_PDF) or ""
         if not pdf_url:
             for _, href in cells:
@@ -391,7 +355,7 @@ class _ExamTableParser(HTMLParser):
                     break
 
         if not pdf_url or not pdf_url.lower().endswith(".pdf"):
-            return  # skip rows without a PDF download
+            return
 
         self.rows.append({
             "course_code": text_at("course_code", _COL_CODE),
@@ -405,7 +369,6 @@ class _ExamTableParser(HTMLParser):
     def _parse_header_cells(
         cells: list[tuple[str, str | None]]
     ) -> dict[str, int]:
-        """Return a field → column-index map derived from header cell texts."""
         col_index: dict[str, int] = {}
         for col_idx, (text, _) in enumerate(cells):
             text_lower = text.lower()
@@ -423,12 +386,6 @@ class _ExamTableParser(HTMLParser):
 
 def _normalise_date(raw: str) -> str:
     """Return a YYYY-MM-DD string from several common date formats.
-
-    Recognised patterns
-    -------------------
-    - ``YYYY-MM-DD`` — returned unchanged.
-    - ``DD.MM.YYYY`` or ``DD-MM-YYYY`` or ``DD/MM/YYYY`` — Finnish / European.
-    - ``DD.MM.YY`` — two-digit year; 00–69 → 2000s, 70–99 → 1900s.
 
     Returns an empty string for unrecognised input.
     """

@@ -16,8 +16,7 @@ from app.exam_pipeline.schemas import (
 from app.exam_scraper.schemas import CourseSearchResponse, ExamResult
 from app.exam_scraper.scraper import (
     download_pdf,
-    fetch_exam_index,
-    parse_exam_table,
+    get_cached_index,
     search_courses,
 )
 from app.exercises import invalidate_cache
@@ -36,8 +35,7 @@ async def search_exams(q: str = Query(..., min_length=1)):
 
     No authentication required — public discovery endpoint.
     """
-    html = await fetch_exam_index()
-    rows = parse_exam_table(html)
+    rows = await get_cached_index()
     matches = search_courses(rows, q)
     return CourseSearchResponse(
         query=q,
