@@ -36,6 +36,7 @@ from app.users.router import router as users_router
 from app.reports.router import router as reports_router
 from app.mastery.router import router as mastery_router
 from app.behavioral.router import router as behavioral_router
+from app.exam_pipeline.router import router as exam_pipeline_router
 
 ENABLE_ANALYTICS_JOBS = os.getenv("ENABLE_ANALYTICS_JOBS", "false").lower() in {"1", "true", "yes"}
 ANALYTICS_CRON = os.getenv("ANALYTICS_CRON", "0 2 * * *")
@@ -125,6 +126,7 @@ def create_app() -> FastAPI:
     api_router.include_router(mastery_router)
     api_router.include_router(behavioral_router)
     app.include_router(api_router)
+    app.include_router(exam_pipeline_router)
 
     @app.on_event("startup")
     async def _startup() -> None:

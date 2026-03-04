@@ -67,6 +67,12 @@ def load_exercises(content_dir: str | Path = "content") -> List[Exercise]:
     return exercises
 
 
+def invalidate_cache() -> None:
+    """Clear the exercise cache so the next call to load_exercises reloads from disk."""
+    global _EXERCISE_CACHE
+    _EXERCISE_CACHE = None
+
+
 def _extract_front_matter(text: str) -> Tuple[Dict[str, Any], str]:
     """Return (metadata, body) from a markdown file with YAML front matter."""
     if not text.startswith("---"):

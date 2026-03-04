@@ -11,6 +11,7 @@ import {
   RotateCcw,
   Timer,
   User,
+  FileSearch,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ const navItems = [
   { label: "Tasks", to: "/tasks/upcoming", icon: ListCheck },
   { label: "Study", to: "/study", icon: Timer },
   { label: "Exercises", to: "/exercises", icon: NotebookPen },
+  { label: "Import course", to: "/generate", icon: FileSearch },
   { label: "Reviews", to: "/reviews", icon: RotateCcw },
   { label: "My Stats", to: "/stats", icon: BarChart3 },
   { label: "Help", to: "/help", icon: HelpCircle },
@@ -35,6 +37,7 @@ const TITLE_MAP: Record<string, string> = {
   "/tasks/upcoming": "Upcoming tasks",
   "/study": "Study",
   "/exercises": "Exercises",
+  "/generate": "Import course",
   "/help": "Help & explanations",
   "/reviews": "Reviews",
   "/stats": "My stats",

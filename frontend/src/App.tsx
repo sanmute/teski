@@ -36,6 +36,7 @@ import SkillTreePage from "./pages/SkillTreePage";
 import FeedbackViewerPage from "./pages/FeedbackViewerPage";
 import { RequireAuth } from "./components/RequireAuth";
 import OnboardingPage from "./pages/OnboardingPage";
+import CourseImportPage from "./pages/CourseImportPage";
 
 const queryClient = new QueryClient();
 
@@ -125,6 +126,7 @@ const App = () => {
                 <Route path="/study/session/:sessionId" element={<StudySessionPage />} />
                 <Route path="/reviews" element={<ReviewsPage />} />
                 <Route path="/exercises" element={<ExercisesPage />} />
+                <Route path="/generate" element={<CourseImportPage />} />
                 <Route
                   path="/practice/micro-quest/:microquestId"
                   element={
