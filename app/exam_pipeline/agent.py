@@ -14,10 +14,26 @@ import logging
 import re
 from typing import Any
 
+import os
+
+from anthropic import AsyncAnthropic
 from fastapi import HTTPException
 
 from app.exercises import ALLOWED_TYPES
-from app.feedback.clients import _get_anthropic
+
+_TIMEOUT = 180.0  # PDF analysis + exercise generation can take ~60–90 s
+
+_anthropic_client: AsyncAnthropic | None = None
+
+
+def _get_anthropic() -> AsyncAnthropic:
+    global _anthropic_client
+    if _anthropic_client is None:
+        _anthropic_client = AsyncAnthropic(
+            api_key=os.getenv("ANTHROPIC_API_KEY"),
+            timeout=_TIMEOUT,
+        )
+    return _anthropic_client
 
 try:
     import yaml  # type: ignore
