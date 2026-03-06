@@ -52,10 +52,21 @@ async def search_exams(q: str = Query(..., min_length=1)):
 
     No authentication required — public discovery endpoint.
     """
-    exam_rows, sisu_rows = await asyncio.gather(
-        get_cached_index(),
-        get_sisu_index(),
-    )
+    exam_rows_coro = get_cached_index()
+    try:
+        exam_rows, sisu_rows = await asyncio.gather(
+            exam_rows_coro,
+            get_sisu_index(),
+        )
+    except Exception:
+        # get_sisu_index() failed — run exam_rows_coro alone and fall back.
+        import logging as _logging
+        _logging.getLogger(__name__).warning(
+            "Sisu index unavailable; falling back to exam-archive-only search",
+            exc_info=True,
+        )
+        exam_rows = await get_cached_index()
+        sisu_rows = []
     matches = search_courses(exam_rows, q, sisu_rows=sisu_rows)
     return CourseSearchResponse(
         query=q,
