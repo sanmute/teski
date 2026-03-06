@@ -6,6 +6,9 @@ export type ExamResult = {
   department: string;
   date: string;
   pdf_url: string;
+  has_exams: boolean;
+  exam_count: number;
+  exam_pdf_urls: string[];
 };
 
 export type CourseSearchResponse = {

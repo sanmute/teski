@@ -133,14 +133,22 @@ export default function CourseImportPage() {
     // Kick off slow progress bar animation
     const progressTimer = setTimeout(() => setProgressPct(85), 300);
 
-    const selectedExam = searchResults.find((r) => selectedUrls.has(r.pdf_url));
+    const validUrls = Array.from(selectedUrls).filter(
+      (url) => url && url.endsWith(".pdf"),
+    );
+    const selectedExam = searchResults.find((r) => validUrls.includes(r.pdf_url));
     const courseName = selectedExam?.course_name ?? query;
 
     (async () => {
       try {
+        if (validUrls.length === 0) {
+          throw new Error(
+            "None of the selected courses have exam PDFs available.",
+          );
+        }
         const res = await generateFromExams({
           course_name: courseName,
-          pdf_urls: Array.from(selectedUrls),
+          pdf_urls: validUrls,
           num_exercises: 10,
         });
         setPipelineResponse(res);
@@ -297,10 +305,39 @@ export default function CourseImportPage() {
 
           <div className="space-y-3">
             {searchResults.map((exam) => {
-              const isSelected = selectedUrls.has(exam.pdf_url);
+              const hasExams = exam.has_exams && !!exam.pdf_url && exam.pdf_url.endsWith(".pdf");
+              const isSelected = hasExams && selectedUrls.has(exam.pdf_url);
+
+              if (!hasExams) {
+                return (
+                  <div
+                    key={exam.course_code}
+                    className="w-full rounded-2xl border border-slate-100 bg-slate-50 p-4 text-left opacity-60"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-semibold text-slate-500">
+                          {exam.course_name}
+                        </p>
+                        <p className="mt-0.5 text-xs text-slate-400">
+                          {exam.course_code && (
+                            <span className="mr-2 font-mono">{exam.course_code}</span>
+                          )}
+                          {exam.department}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-400 italic">
+                          No past exams uploaded yet
+                        </p>
+                      </div>
+                      <Circle className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-200" />
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <button
-                  key={exam.pdf_url}
+                  key={exam.course_code}
                   type="button"
                   onClick={() => toggleSelect(exam.pdf_url)}
                   className={cn(
