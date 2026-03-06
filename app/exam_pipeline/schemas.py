@@ -17,10 +17,14 @@ class PipelineRequest(BaseModel):
     @field_validator("pdf_urls")
     @classmethod
     def validate_pdf_urls(cls, v: list[str]) -> list[str]:
+        v = [url.strip() for url in v if url and url.strip()]
         if not v:
-            raise ValueError("pdf_urls must contain at least one URL")
+            raise ValueError("pdf_urls must contain at least one valid URL")
         if len(v) > 3:
             raise ValueError("pdf_urls must contain at most 3 URLs")
+        invalid = [url for url in v if not url.startswith(("http://", "https://"))]
+        if invalid:
+            raise ValueError(f"pdf_urls contains invalid URLs: {invalid}")
         return v
 
     @field_validator("num_exercises")
