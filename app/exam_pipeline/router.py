@@ -15,6 +15,7 @@ from app.exam_pipeline.schemas import (
     PipelineResponse,
 )
 from app.exam_scraper.schemas import CourseSearchResponse, ExamResult
+from app.exam_scraper.course_index import get_sisu_index
 from app.exam_scraper.scraper import (
     download_pdf,
     get_cached_index,
@@ -43,12 +44,19 @@ router = APIRouter(prefix="/exam-pipeline", tags=["exam-pipeline"])
 
 @router.get("/search", response_model=CourseSearchResponse)
 async def search_exams(q: str = Query(..., min_length=1)):
-    """Search the LTKY exam archive by course name or code.
+    """Search LUT courses (Sisu catalog + LTKY exam archive).
+
+    Phase 1 searches the full Sisu course index (~1 900 courses, 24-h cache).
+    Phase 2 supplements with any exam-archive courses not in the Sisu cache.
+    Results are annotated with has_exams / exam_count / exam_pdf_urls.
 
     No authentication required — public discovery endpoint.
     """
-    rows = await get_cached_index()
-    matches = search_courses(rows, q)
+    exam_rows, sisu_rows = await asyncio.gather(
+        get_cached_index(),
+        get_sisu_index(),
+    )
+    matches = search_courses(exam_rows, q, sisu_rows=sisu_rows)
     return CourseSearchResponse(
         query=q,
         results=[ExamResult(**row) for row in matches],

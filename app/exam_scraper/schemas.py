@@ -9,6 +9,9 @@ class ExamResult(BaseModel):
     department: str
     date: str      # YYYY-MM-DD or empty string if unparseable
     pdf_url: str   # absolute URL ending in .pdf
+    has_exams: bool = False
+    exam_count: int = 0
+    exam_pdf_urls: list[str] = []
 
 
 class CourseSearchResponse(BaseModel):

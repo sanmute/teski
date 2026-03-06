@@ -141,28 +141,108 @@ async def get_cached_index() -> list[dict]:
     return _cache
 
 
-def search_courses(rows: list[dict], query: str) -> list[dict]:
-    """Case-insensitive substring search across course_code and course_name.
+def search_courses(
+    rows: list[dict],
+    query: str,
+    sisu_rows: list[dict] | None = None,
+) -> list[dict]:
+    """Two-phase search: Sisu catalog first, then annotate with exam archive data.
 
-    A row matches if ``query`` appears anywhere in either field.  Returns the
-    top 10 matches sorted by date descending (most-recent first).  Rows with
-    an empty date string sort after all dated rows.
+    Phase 1: match ``query`` against the Sisu course index (codes + names).
+             For each Sisu match, look up exam archive rows by code to annotate
+             ``has_exams``, ``exam_count``, and ``exam_pdf_urls``.
+
+    Phase 2: match ``query`` against exam archive rows whose course code was
+             not already found in Phase 1.
+
+    Results are sorted: courses with exams first, then alphabetically by name.
+    Returns up to 20 results.
 
     Parameters
     ----------
     rows:
-        Output from :func:`parse_exam_table` or :func:`get_cached_index`.
+        Output of :func:`get_cached_index` — the parsed exam archive.
     query:
         Search string; leading/trailing whitespace is stripped.
+    sisu_rows:
+        Output of :func:`~app.exam_scraper.course_index.get_sisu_index`.
+        ``None`` (or empty) disables Phase 1 and falls back to exam-only search.
     """
     q = query.strip().lower()
-    matches = [
-        row for row in rows
-        if q in row.get("course_code", "").lower()
-        or q in row.get("course_name", "").lower()
-    ]
-    matches.sort(key=lambda r: r.get("date") or "", reverse=True)
-    return matches[:10]
+    if not q:
+        return []
+
+    # Group exam archive rows by course_code so we can annotate quickly.
+    exam_by_code: dict[str, list[dict]] = {}
+    for row in rows:
+        code = (row.get("course_code") or "").strip()
+        if code:
+            exam_by_code.setdefault(code, []).append(row)
+
+    results: list[dict] = []
+    seen_codes: set[str] = set()
+
+    # ------------------------------------------------------------------
+    # Phase 1 — Sisu catalog search
+    # ------------------------------------------------------------------
+    if sisu_rows:
+        for sisu in sisu_rows:
+            code = (sisu.get("code") or "").strip()
+            name_en = sisu.get("name_en") or ""
+            name_fi = sisu.get("name_fi") or ""
+            if not code:
+                continue
+            if not (q in code.lower() or q in name_en.lower() or q in name_fi.lower()):
+                continue
+            if code in seen_codes:
+                continue
+            seen_codes.add(code)
+
+            exams = exam_by_code.get(code, [])
+            # Use exam-archive name when available (richer / more current).
+            display_name = exams[0]["course_name"] if exams else (name_en or name_fi)
+            department = exams[0].get("department", "") if exams else ""
+            # Most-recent exam date for display.
+            latest_date = max((r["date"] for r in exams if r.get("date")), default="")
+            first_pdf = exams[0]["pdf_url"] if exams else ""
+
+            results.append({
+                "course_code": code,
+                "course_name": display_name,
+                "department": department,
+                "date": latest_date,
+                "pdf_url": first_pdf,
+                "has_exams": bool(exams),
+                "exam_count": len(exams),
+                "exam_pdf_urls": [r["pdf_url"] for r in exams],
+            })
+
+    # ------------------------------------------------------------------
+    # Phase 2 — exam archive search (for codes not found via Sisu)
+    # ------------------------------------------------------------------
+    for code, exams in exam_by_code.items():
+        if code in seen_codes:
+            continue
+        # Use the first row for display fields; check if query matches.
+        first = exams[0]
+        if not (q in code.lower() or q in first.get("course_name", "").lower()):
+            continue
+        seen_codes.add(code)
+        latest_date = max((r["date"] for r in exams if r.get("date")), default="")
+        results.append({
+            "course_code": code,
+            "course_name": first["course_name"],
+            "department": first.get("department", ""),
+            "date": latest_date,
+            "pdf_url": first["pdf_url"],
+            "has_exams": True,
+            "exam_count": len(exams),
+            "exam_pdf_urls": [r["pdf_url"] for r in exams],
+        })
+
+    # Sort: exams-first, then alphabetically by name.
+    results.sort(key=lambda r: (not r["has_exams"], r["course_name"].lower()))
+    return results[:20]
 
 
 async def download_pdf(pdf_url: str) -> bytes:
