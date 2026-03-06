@@ -183,7 +183,18 @@ def _grade_and_respond(session: Session, *, user_id: str, exercise_id: str, raw_
     elif isinstance(raw_answer, dict) and "text" in raw_answer:
         raw_answer = raw_answer.get("text")
 
-    if ex.type == "multiple_choice":
+    # Normalise stored type so legacy "multiple_choice" rows work like "mcq".
+    _NORM = {
+        "multiple_choice": "mcq", "multiple choice": "mcq",
+        "true_false": "mcq", "true/false": "mcq",
+        "numerical": "numeric", "calculation": "numeric",
+        "short answer": "short_answer", "short-answer": "short_answer",
+        "open": "short_answer", "open_ended": "short_answer",
+        "free_response": "short_answer", "essay": "short_answer",
+    }
+    ex_type = _NORM.get(ex.type, ex.type)
+
+    if ex_type == "mcq":
         if raw_answer is None or raw_answer == "":
             mistake = MistakeOut(family="behavioral", subtype="blank", label="behavioral:blank")
         else:
@@ -192,6 +203,25 @@ def _grade_and_respond(session: Session, *, user_id: str, exercise_id: str, raw_
             is_correct = submitted == correct
             if not is_correct:
                 mistake = MistakeOut(family="behavioral", subtype="wrong_choice", label="behavioral:wrong_choice")
+    elif ex_type == "numeric":
+        if raw_answer is None or raw_answer == "":
+            mistake = MistakeOut(family="behavioral", subtype="blank", label="behavioral:blank")
+        else:
+            try:
+                is_correct = abs(float(raw_answer) - float(ex.correct_answer)) < 1e-6
+            except (TypeError, ValueError):
+                is_correct = str(raw_answer).strip() == str(ex.correct_answer).strip()
+            if not is_correct:
+                mistake = MistakeOut(family="conceptual", subtype="wrong_value", label="conceptual:wrong_value")
+    elif ex_type == "short_answer":
+        if raw_answer is None or str(raw_answer).strip() == "":
+            mistake = MistakeOut(family="behavioral", subtype="blank", label="behavioral:blank")
+        else:
+            submitted_lc = str(raw_answer).strip().lower()
+            correct_lc = str(ex.correct_answer).strip().lower()
+            is_correct = correct_lc in submitted_lc or submitted_lc == correct_lc
+            if not is_correct:
+                mistake = MistakeOut(family="conceptual", subtype="wrong_answer", label="conceptual:wrong_answer")
     else:
         raise HTTPException(status_code=400, detail=f"unsupported exercise type: {ex.type}")
 

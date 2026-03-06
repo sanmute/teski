@@ -48,13 +48,20 @@ _TYPE_MAP: dict[str, str] = {
     "mcq": "mcq",
     "multiple_choice": "mcq",
     "multiple choice": "mcq",
+    "true_false": "mcq",
+    "true/false": "mcq",
     "numeric": "numeric",
     "numerical": "numeric",
+    "calculation": "numeric",
     "short_answer": "short_answer",
     "short answer": "short_answer",
     "short-answer": "short_answer",
     "open": "short_answer",
     "open_ended": "short_answer",
+    "open ended": "short_answer",
+    "free_response": "short_answer",
+    "free response": "short_answer",
+    "essay": "short_answer",
 }
 _MAX_TOKENS = 4096
 _MAX_PDFS = 3
