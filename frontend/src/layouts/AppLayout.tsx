@@ -37,7 +37,7 @@ const TITLE_MAP: Record<string, string> = {
   "/help": "Help & explanations",
   "/reviews": "Reviews",
   "/stats": "My stats",
-  "/profile": "My study profile",
+  "/profile": "My study profile 2",
 };
 
 export function AppLayout({ children }: PropsWithChildren) {

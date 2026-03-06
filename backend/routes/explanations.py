@@ -73,6 +73,7 @@ def generate_explanation_blocks_llm(text: str, style: str) -> Optional[List[Expl
     """Generate blocks via OpenAI if configured; return None on failure so we can fall back."""
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key or OpenAI is None:
+        logger.info("LLM explanations skipped: OPENAI_API_KEY not set or openai not installed")
         return None
     client = OpenAI(api_key=api_key)
     model = os.getenv("EXPLANATIONS_MODEL", "gpt-4o-mini")
@@ -105,7 +106,7 @@ def generate_explanation_blocks_llm(text: str, style: str) -> Optional[List[Expl
         logger.warning("LLM explanation failed: %s", exc)
         return None
 
-router_api = APIRouter(prefix="/api/explanations", tags=["explanations"])
+router_api = APIRouter(prefix="/explanations", tags=["explanations"])
 router_compat = APIRouter(prefix="/explanations", tags=["explanations-compat"])
 logger = logging.getLogger("explanations")
 

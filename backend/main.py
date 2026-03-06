@@ -89,6 +89,8 @@ async def ensure_cors_on_error(request: Request, call_next):
     try:
         response = await call_next(request)
     except Exception as exc:  # pragma: no cover - last-resort guard
+        import logging
+        logging.getLogger("main").error("Unhandled exception in request", exc_info=True)
         response = JSONResponse({"detail": "Internal Server Error"}, status_code=500)
     def _origin_allowed(o: str | None) -> bool:
         if not o:

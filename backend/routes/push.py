@@ -16,8 +16,8 @@ VAPID_PRIVATE_PEM = getenv("VAPID_PRIVATE_PEM")
 @router.get("/vapid-public-key")
 def vapid_public_key():
     if not VAPID_PUBLIC_KEY:
-        raise HTTPException(500, "VAPID public key not configured")
-    return {"publicKey": VAPID_PUBLIC_KEY}
+        return {"publicKey": None, "enabled": False}
+    return {"publicKey": VAPID_PUBLIC_KEY, "enabled": True}
 
 @router.post("/register")
 async def register_push(body: dict, session: Session = Depends(get_session)):
